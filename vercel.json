@@ -1,0 +1,63 @@
+{
+  "version": 2,
+  "name": "streamer-ott",
+  
+  "routes": [
+    {
+      "src": "/s/(.*)",
+      "dest": "/index.html",
+      "status": 200
+    },
+    {
+      "src": "/watch/(.*)",
+      "dest": "/watch.html",
+      "status": 200
+    },
+    {
+      "src": "/admin",
+      "dest": "/admin.html",
+      "status": 200
+    },
+    {
+      "src": "/disclaimer",
+      "dest": "/disclaimer.html",
+      "status": 200
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html",
+      "status": 200
+    }
+  ],
+  
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    }
+  ],
+  
+  "builds": [
+    {
+      "src": "*.html",
+      "use": "@vercel/static"
+    }
+  ]
+}
