@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch - STREAMER</title>
+    <meta name="description" content="Watch your favorite content on STREAMER">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="player-page">
+    <!-- 🎬 LOADING SCREEN -->
+    <div id="loading-screen" class="fixed inset-0 bg-black z-[5000] flex items-center justify-center">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- 🧭 MINI NAVBAR -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="flex items-center gap-4">
+            <a href="./index.html" class="text-white hover:text-[#e50914] transition">
+                <i class="fas fa-arrow-left text-xl"></i>
+            </a>
+            <a href="./index.html" class="logo text-xl">STREAM<span>ER</span></a>
+        </div>
+        <div class="nav-right">
+            <button class="search-btn" onclick="window.location.href='./index.html#search'" title="Search">
+                <i class="fas fa-search"></i>
+            </button>
+            <button class="notification-btn" id="watchlist-btn" title="My Watchlist">
+                <i class="fas fa-bookmark"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 📺 VIDEO PLAYER -->
+    <div class="player-container" id="player-container">
+        <iframe 
+            id="dailymotion-player"
+            src="" 
+            frameborder="0" 
+            allowfullscreen 
+            allow="autoplay; fullscreen; picture-in-picture"
+            sandbox="allow-same-origin allow-scripts allow-popups allow-presentation">
+        </iframe>
+        
+        <!-- 🎚️ CUSTOM CONTROLS OVERLAY -->
+        <div id="custom-controls" class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-4 opacity-0 hover:opacity-100 transition-opacity duration-300">
+            <div class="flex items-center justify-between max-w-4xl mx-auto">
+                <div class="flex items-center gap-4">
+                    <button id="play-pause-btn" class="text-white text-xl hover:text-[#e50914] transition">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button id="volume-btn" class="text-white text-lg hover:text-[#e50914] transition">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                </div>
+                
+                <!-- 📝 SUBTITLE TOGGLE -->
+                <div class="subtitle-toggle">
+                    <span class="text-sm">Subtitles</span>
+                    <div class="toggle-switch" id="subtitle-toggle" onclick="toggleSubtitles()">
+                        <div class="toggle-switch-handle"></div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-4">
+                    <button id="pip-btn" class="text-white hover:text-[#e50914] transition" title="Picture in Picture">
+                        <i class="fas fa-images"></i>
+                    </button>
+                    <button id="fullscreen-btn" class="text-white text-lg hover:text-[#e50914] transition" onclick="toggleFullscreen()">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ℹ️ VIDEO INFO -->
+    <div class="player-info">
+        <h1 class="player-title" id="video-title">Loading...</h1>
+        
+        <div class="player-meta">
+            <span class="text-[#e50914] font-bold" id="video-match">98% Match</span>
+            <span id="video-year">2024</span>
+            <span class="border border-gray-500 px-1 text-xs" id="video-rating">U/A 16+</span>
+            <span id="video-duration">2h 15m</span>
+            <span class="badge badge-hd">HD</span>
+            <span id="video-views"><i class="fas fa-eye mr-1"></i>1.2M views</span>
+        </div>
+
+        <div class="player-actions">
+            <button class="btn btn-primary" onclick="playVideo()">
+                <i class="fas fa-play"></i> Play Now
+            </button>
+            <button class="btn btn-secondary" id="add-watchlist-btn" onclick="toggleWatchlist()">
+                <i class="fas fa-plus"></i> Add to List
+            </button>
+            <button class="btn btn-secondary" onclick="shareVideo()">
+                <i class="fas fa-share"></i> Share
+            </button>
+            <button class="btn btn-secondary" onclick="downloadSubtitle()">
+                <i class="fas fa-closed-captioning"></i> Download Subtitle
+            </button>
+        </div>
+
+        <div class="mt-6 max-w-3xl">
+            <p class="text-gray-300 leading-relaxed" id="video-description">
+                Loading description...
+            </p>
+        </div>
+
+        <div class="mt-4 flex flex-wrap gap-2" id="video-tags">
+            <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">Action</span>
+            <span class="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-300">Thriller</span>
+        </div>
+
+        <!-- 📝 SUBTITLE SECTION (Hidden by default) -->
+        <div id="subtitle-section" class="hidden mt-6 p-4 bg-gray-900 rounded-lg">
+            <h3 class="text-lg font-bold mb-3"><i class="fas fa-closed-captioning mr-2"></i>Available Subtitles</h3>
+            <div id="subtitle-list" class="flex flex-wrap gap-2">
+                <!-- Subtitles loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 🎬 MORE LIKE THIS -->
+    <section class="content-section">
+        <div class="section-header">
+            <h2 class="section-title">More Like This</h2>
+        </div>
+        <div class="row-container">
+            <button class="scroll-btn scroll-left" onclick="scrollRow('related-row', -1)">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="row-scroll" id="related-row"></div>
+            <button class="scroll-btn scroll-right" onclick="scrollRow('related-row', 1)">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- 📄 FOOTER -->
+    <footer class="footer mt-8">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h3>STREAMER</h3>
+                <a href="./disclaimer.html">Disclaimer</a>
+                <a href="./index.html">Home</a>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <a href="./disclaimer.html">Terms of Service</a>
+                <a href="./disclaimer.html">Privacy Policy</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 STREAMER. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- 🍞 TOAST CONTAINER -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- 📜 SCRIPTS -->
+    <script type="module" src="./js/player.js"></script>
+</body>
+</html>
