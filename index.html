@@ -42,7 +42,7 @@
             border-radius: 3px; 
         }
 
-        /* ===== SCREEN SYSTEM FIX (PART 1) ===== */
+        /* ===== SCREEN SYSTEM ===== */
         .screen {
             display: none;
             min-height: 100vh;
@@ -116,11 +116,78 @@
             to { opacity: 1; transform: translateY(0); } 
         }
 
+        /* ===== ANIMATED GRADIENT TEXT ===== */
         .gradient-text { 
             background: linear-gradient(135deg, #ef4444 0%, #a855f7 50%, #ec4899 100%); 
             -webkit-background-clip: text; 
             -webkit-text-fill-color: transparent; 
             background-clip: text; 
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* ===== ANIMATED LOGO ===== */
+        .logo-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 24px;
+        }
+
+        .logo-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-top-color: #ef4444;
+            border-right-color: #a855f7;
+            animation: logoSpin 2s linear infinite;
+        }
+
+        .logo-ring:nth-child(2) {
+            inset: 8px;
+            border-top-color: #a855f7;
+            border-right-color: #ec4899;
+            animation: logoSpin 2.5s linear infinite reverse;
+        }
+
+        .logo-ring:nth-child(3) {
+            inset: 16px;
+            border-top-color: #ec4899;
+            border-right-color: #ef4444;
+            animation: logoSpin 3s linear infinite;
+        }
+
+        .logo-icon {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            z-index: 10;
+        }
+
+        @keyframes logoSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* ===== LOGO PULSE ===== */
+        .logo-pulse {
+            animation: logoPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         .glass { 
@@ -180,7 +247,7 @@
             transform: scale(1.08); 
         }
 
-        /* ===== CATEGORY PILLS FIX (PART 2) ===== */
+        /* ===== CATEGORY PILLS ===== */
         .category-scroll-container {
             display: flex;
             gap: 8px;
@@ -301,7 +368,7 @@
             border: none; 
         }
 
-        /* ===== ADMIN PANEL FIX (PART 4) ===== */
+        /* ===== ADMIN PANEL - COMPLETELY HIDDEN ===== */
         #admin-panel-container {
             display: none;
             padding: 20px 16px;
@@ -736,9 +803,16 @@
         </div>
         <div class="relative z-10 text-center max-w-md w-full">
             <div class="mb-8">
-                <div class="w-24 h-24 mx-auto bg-gradient-to-br from-red-500 via-purple-500 to-pink-500 rounded-3xl flex items-center justify-center mb-6 shadow-2xl shadow-red-500/20">
-                    <i class="fas fa-play text-3xl text-white ml-1"></i>
+                <!-- Animated Logo -->
+                <div class="logo-container logo-pulse">
+                    <div class="logo-ring"></div>
+                    <div class="logo-ring"></div>
+                    <div class="logo-ring"></div>
+                    <div class="logo-icon">
+                        <i class="fas fa-play text-white ml-1"></i>
+                    </div>
                 </div>
+                <!-- Animated Gradient Text -->
                 <h1 class="text-6xl md:text-7xl font-black mb-4 tracking-tighter gradient-text">STREAMER</h1>
                 <p class="text-gray-400 text-lg font-light">Premium OTT Experience</p>
             </div>
@@ -746,12 +820,10 @@
                 <button onclick="app.guestLogin()" class="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 transition-all transform hover:scale-105 shadow-xl shadow-red-600/20">
                     <i class="fas fa-play-circle"></i> Start Watching
                 </button>
-                <button onclick="app.showAdminLogin()" class="w-full bg-gray-800/50 hover:bg-gray-800 text-gray-400 hover:text-white py-3 rounded-2xl font-semibold text-sm flex items-center justify-center gap-2 transition-all border border-gray-700/50">
-                    <i class="fas fa-lock"></i> Admin Access
-                </button>
             </div>
         </div>
     </div>
+
     <!-- ========== MAIN SCREEN ========== -->
     <div id="main-screen" class="screen pb-24">
         <!-- Sticky Header -->
@@ -867,8 +939,7 @@
             <p class="mt-2">By using this platform, you agree to our Terms of Service and Privacy Policy. Content is provided "as is" without warranties of any kind.</p>
         </div>
     </div>
-
-    <!-- ========== ADMIN PANEL CONTAINER (PART 4 FIX) ========== -->
+    <!-- ========== ADMIN PANEL CONTAINER (COMPLETELY HIDDEN) ========== -->
     <div id="admin-panel-container">
         <div id="admin-panel" class="admin-panel">
             <div class="admin-badge">Admin Mode</div>
@@ -977,6 +1048,7 @@
             </div>
         </div>
     </div>
+
     <!-- ========== SEARCH SCREEN ========== -->
     <div id="search-screen" class="screen pb-24 min-h-screen">
         <div class="sticky top-0 z-40 glass px-4 py-4">
@@ -1037,9 +1109,6 @@
                 <div class="w-full space-y-3">
                     <button onclick="app.shareApp()" class="w-full bg-white/5 hover:bg-white/10 text-gray-300 py-4 rounded-xl font-semibold flex items-center justify-center gap-3 transition border border-white/5">
                         <i class="fas fa-share-alt text-green-500"></i> Share App
-                    </button>
-                    <button onclick="app.showAdminLogin()" class="w-full bg-white/5 hover:bg-white/10 text-gray-300 py-4 rounded-xl font-semibold flex items-center justify-center gap-3 transition border border-white/5">
-                        <i class="fas fa-crown text-yellow-500"></i> Admin Panel
                     </button>
                     <button onclick="app.clearAllData()" class="w-full bg-red-500/10 hover:bg-red-500/20 text-red-500 py-4 rounded-xl font-semibold flex items-center justify-center gap-2 transition">
                         <i class="fas fa-trash"></i> Clear Watch History
@@ -1189,7 +1258,7 @@
     </div>
 <script>
 // ==========================================
-// STREAMER APP - COMPLETE FIXED JAVASCRIPT
+// STREAMER APP - COMPLETE JAVASCRIPT
 // ==========================================
 
 const app = {
@@ -1204,11 +1273,13 @@ const app = {
     heroInterval: null,
     currentHeroIndex: 0,
     currentMovie: null,
+    searchTrigger: 'streamer_sumit@81#',
+    triggerTyped: '',
     
     // Admin credentials (CHANGE THESE!)
     adminCredentials: {
         username: "admin",
-        password: "admin123"
+        password: "streamer_sumit@81#"
     },
     
     // Initialize
@@ -1218,6 +1289,7 @@ const app = {
         this.initHeroSlider();
         this.renderMovies();
         this.updateProfileStats();
+        this.setupSearchTrigger();
         
         // Check URL params for shared content
         const urlParams = new URLSearchParams(window.location.search);
@@ -1227,16 +1299,42 @@ const app = {
         }
     },
     
-    // ===== PART 1: SCREEN NAVIGATION FIX =====
+    // ===== SECRET SEARCH TRIGGER =====
+    setupSearchTrigger() {
+        const searchInput = document.getElementById('search-input');
+        if (!searchInput) return;
+        
+        searchInput.addEventListener('input', (e) => {
+            const value = e.target.value;
+            
+            // Check if trigger code is being typed
+            if (this.searchTrigger.includes(value) && value.length > 0) {
+                this.triggerTyped = value;
+            }
+            
+            // If full trigger is typed
+            if (value === this.searchTrigger) {
+                searchInput.value = '';
+                this.triggerTyped = '';
+                this.showAdminLogin();
+                return;
+            }
+            
+            // Reset if wrong character
+            if (!this.searchTrigger.startsWith(value)) {
+                this.triggerTyped = '';
+            }
+        });
+    },
+    
+    // ===== SCREEN NAVIGATION =====
     showScreen(screenId) {
-        // Hide ALL screens first
         const allScreens = document.querySelectorAll('.screen');
         allScreens.forEach(s => {
             s.classList.remove('active');
             s.style.display = 'none';
         });
         
-        // Show target screen
         const targetScreen = document.getElementById(screenId);
         if (!targetScreen) {
             console.error('Screen not found:', screenId);
@@ -1286,7 +1384,7 @@ const app = {
         this.showToast('Welcome to STREAMER!', 'success');
     },
     
-    // ===== ADMIN LOGIN =====
+    // ===== ADMIN LOGIN (SECRET) =====
     showAdminLogin() {
         if (this.isAdmin) {
             this.showScreen('main-screen');
@@ -1329,7 +1427,7 @@ const app = {
         }
     },
     
-    // ===== PART 4: ADMIN PANEL FIX =====
+    // ===== ADMIN PANEL =====
     showAdminPanel() {
         if (!this.isAdmin) {
             this.showAdminLogin();
@@ -1648,7 +1746,7 @@ const app = {
         this.heroInterval = setInterval(() => this.nextHeroSlide(), 4000);
     },
     
-    // ===== PART 2: CATEGORY FILTER FIX =====
+    // ===== CATEGORY FILTER =====
     renderMovies(category = 'All') {
         const filtered = category === 'All' ? this.movies : this.movies.filter(m => m.category === category);
         
@@ -1753,7 +1851,7 @@ const app = {
         `).join('');
     },
     
-    // ===== PART 3: VIDEO PLAYER FIX =====
+    // ===== VIDEO PLAYER =====
     playMovieById(id) {
         console.log('Playing movie ID:', id);
         const movie = this.movies.find(m => m.id === id);
@@ -1993,7 +2091,7 @@ const app = {
         }
     },
     
-    // ===== PART 5: DEMO DATA =====
+    // ===== DEMO DATA =====
     loadDemoData() {
         if (this.movies.length === 0) {
             this.movies = [
@@ -2137,6 +2235,5 @@ document.addEventListener('DOMContentLoaded', () => {
     app.init();
 });
 </script>
-
 </body>
 </html>
