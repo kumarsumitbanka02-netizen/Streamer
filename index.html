@@ -10,44 +10,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- FIREBASE SDK -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-analytics.js";
-        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, query, orderBy, Timestamp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
-        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-storage.js";
-        
-        const firebaseConfig = {
-            apiKey: "AIzaSyC203H8isoltOx66YZ_wddqpWB4nBIMQZU",
-            authDomain: "streamer-a5ea9.firebaseapp.com",
-            projectId: "streamer-a5ea9",
-            storageBucket: "streamer-a5ea9.firebasestorage.app",
-            messagingSenderId: "821781298641",
-            appId: "1:821781298641:web:1fcec50709460dcdd8f4f0",
-            measurementId: "G-21LF69JH1Q"
-        };
-        
-        const firebaseApp = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(firebaseApp);
-        const db = getFirestore(firebaseApp);
-        const storage = getStorage(firebaseApp);
-        
-        window.firebaseDB = db;
-        window.firebaseStorage = storage;
-        window.firebaseCollection = collection;
-        window.firebaseAddDoc = addDoc;
-        window.firebaseGetDocs = getDocs;
-        window.firebaseDeleteDoc = deleteDoc;
-        window.firebaseDoc = doc;
-        window.firebaseUpdateDoc = updateDoc;
-        window.firebaseQuery = query;
-        window.firebaseOrderBy = orderBy;
-        window.firebaseTimestamp = Timestamp;
-        window.firebaseRef = ref;
-        window.firebaseUploadBytes = uploadBytes;
-        window.firebaseGetDownloadURL = getDownloadURL;
-    </script>
-    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
@@ -363,11 +325,11 @@
             border: none; 
         }
 
-        /* ===== SMART AD SYSTEM ===== */
+        /* ===== SMART AD OVERLAY ===== */
         .smart-ad-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0,0,0,0.95);
             z-index: 10000;
             display: none;
             flex-direction: column;
@@ -381,19 +343,21 @@
         }
 
         .ad-progress-ring {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             position: relative;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         .ad-progress-ring svg {
             transform: rotate(-90deg);
+            width: 100px;
+            height: 100px;
         }
 
         .ad-progress-ring circle {
             fill: none;
-            stroke-width: 4;
+            stroke-width: 6;
         }
 
         .ad-progress-ring .bg {
@@ -403,7 +367,7 @@
         .ad-progress-ring .progress {
             stroke: #ef4444;
             stroke-linecap: round;
-            transition: stroke-dashoffset 0.1s;
+            transition: stroke-dashoffset 0.1s linear;
         }
 
         .ad-timer-text {
@@ -411,7 +375,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 24px;
+            font-size: 32px;
             font-weight: 900;
             color: #ef4444;
         }
@@ -419,15 +383,15 @@
         .ad-btn {
             background: linear-gradient(135deg, #ef4444, #dc2626);
             color: white;
-            padding: 14px 32px;
+            padding: 16px 40px;
             border-radius: 50px;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 16px;
             border: none;
             cursor: pointer;
             transition: all 0.3s;
             box-shadow: 0 4px 20px rgba(239,68,68,0.4);
-            margin-top: 16px;
+            margin-top: 20px;
         }
 
         .ad-btn:hover {
@@ -442,11 +406,21 @@
         .ad-skip-btn {
             margin-top: 16px;
             color: #666;
-            font-size: 12px;
+            font-size: 13px;
             background: none;
             border: none;
             cursor: pointer;
             text-decoration: underline;
+        }
+
+        .ad-skip-btn:hover {
+            color: #999;
+        }
+
+        .ad-counter {
+            color: #666;
+            font-size: 12px;
+            margin-top: 8px;
         }
 
         /* ===== ADMIN PANEL ===== */
@@ -501,6 +475,7 @@
             transition: all 0.3s; 
             background: rgba(255,255,255,0.02); 
             position: relative; 
+            overflow: hidden;
         }
 
         .upload-area:hover { 
@@ -516,6 +491,18 @@
             background: #ef4444; 
             border-radius: 0 0 16px 16px; 
             transition: width 0.3s; 
+        }
+
+        .upload-preview-img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 12px;
+            margin-top: 16px;
+            display: none;
+        }
+
+        .upload-preview-img.visible {
+            display: block;
         }
 
         /* ===== FORM INPUTS ===== */
@@ -797,6 +784,37 @@
         img { 
             -webkit-user-drag: none; 
         }
+
+        /* ===== MULTI AD LINKS ===== */
+        .ad-links-container {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 8px;
+        }
+
+        .ad-link-item {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+            align-items: center;
+        }
+
+        .ad-link-item input {
+            flex: 1;
+        }
+
+        .ad-link-item button {
+            background: #ef4444;
+            color: white;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -805,21 +823,22 @@
     <!-- SMART AD OVERLAY -->
     <div id="smart-ad-overlay" class="smart-ad-overlay">
         <div class="ad-progress-ring">
-            <svg width="80" height="80">
-                <circle class="bg" cx="40" cy="40" r="36"></circle>
-                <circle class="progress" cx="40" cy="40" r="36" 
-                    stroke-dasharray="226" 
-                    stroke-dashoffset="0"
+            <svg width="100" height="100">
+                <circle class="bg" cx="50" cy="50" r="44"></circle>
+                <circle class="progress" cx="50" cy="50" r="44" 
+                    stroke-dasharray="276" 
+                    stroke-dashoffset="276"
                     id="ad-progress-circle"></circle>
             </svg>
             <div class="ad-timer-text" id="ad-timer">5</div>
         </div>
-        <p class="text-gray-400 text-center mb-2">Loading your stream...</p>
-        <p class="text-gray-600 text-xs text-center mb-4">Please wait</p>
+        <p class="text-gray-400 text-center mb-2 text-lg">Loading your stream...</p>
+        <p class="text-gray-600 text-xs text-center mb-4">Please wait while we prepare</p>
         <button id="ad-continue-btn" class="ad-btn" onclick="app.watchAdAndContinue()" disabled>
             <i class="fas fa-play mr-2"></i> Continue Watching
         </button>
-        <button class="ad-skip-btn" onclick="app.skipAd()">Skip (No Ads)</button>
+        <button class="ad-skip-btn" onclick="app.skipAd()">Skip Ad (Support Us)</button>
+        <p class="ad-counter" id="ad-counter">Ad 1 of 3</p>
     </div>
 
     <!-- ========== WELCOME SCREEN ========== -->
@@ -949,49 +968,54 @@
                     </button>
                 </div>
                 
-                <!-- ShrinkMe Settings -->
+                <!-- MULTI AD NETWORKS -->
                 <div class="mb-6 p-4 bg-white/5 rounded-xl border border-white/5">
                     <div class="flex items-center justify-between mb-4">
                         <div>
-                            <p class="font-semibold text-sm">Smart Ads (ShrinkMe)</p>
-                            <p class="text-xs text-gray-500">Auto ads every 15 mins</p>
+                            <p class="font-semibold text-sm">Multi Ad Networks</p>
+                            <p class="text-xs text-gray-500">15+ links for maximum earning</p>
                         </div>
-                        <div class="toggle-switch" id="shrinkme-toggle" onclick="app.toggleShrinkMe()"></div>
+                        <div class="toggle-switch" id="ads-toggle" onclick="app.toggleAds()"></div>
                     </div>
+                    
                     <div class="mb-4">
-                        <label class="form-label">ShrinkMe Short Link</label>
-                        <input type="url" id="admin-shrinkme-link" class="form-input" placeholder="https://shrinkme.io/XXXXXX">
-                        <p class="text-xs text-gray-500 mt-2">Paste your ShrinkMe shortened URL</p>
+                        <label class="form-label">Ad Interval (minutes)</label>
+                        <input type="number" id="admin-ad-interval" class="form-input" value="3" min="1" max="10">
+                        <p class="text-xs text-gray-500 mt-1">Default: 3 minutes</p>
                     </div>
-                    <div class="grid grid-cols-2 gap-4 mb-4">
-                        <div>
-                            <label class="form-label">Ad Interval (minutes)</label>
-                            <input type="number" id="admin-ad-interval" class="form-input" value="15" min="5" max="60">
-                        </div>
-                        <div>
-                            <label class="form-label">Skip After (seconds)</label>
-                            <input type="number" id="admin-ad-skip" class="form-input" value="5" min="3" max="10">
-                        </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label">Skip Timer (seconds)</label>
+                        <input type="number" id="admin-ad-skip" class="form-input" value="5" min="3" max="10">
                     </div>
-                    <div class="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-3">
+                    
+                    <label class="form-label">Ad Links (15+ networks)</label>
+                    <div class="ad-links-container" id="ad-links-container">
+                        <!-- Dynamic ad links will be added here -->
+                    </div>
+                    <button onclick="app.addAdLinkField()" class="mt-2 text-xs text-red-400 hover:text-red-300">
+                        <i class="fas fa-plus mr-1"></i> Add Link
+                    </button>
+                    
+                    <div class="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-3 mt-4">
                         <p class="text-yellow-400 text-xs">
                             <i class="fas fa-info-circle mr-1"></i>
-                            User sees circular timer. After clicking, ad opens in background. Video plays instantly!
+                            Supports: ShrinkMe, AdFly, Linkvertise, Shorte.st, OUO.io, BC.VC, AdShrink, etc.
                         </p>
                     </div>
                 </div>
                 
-                <!-- Image Upload -->
+                <!-- Image Upload - FIXED -->
                 <div class="mb-6">
                     <label class="form-label">Poster Image *</label>
                     <div class="upload-area" id="upload-area" onclick="document.getElementById('image-upload').click()">
-                        <i class="fas fa-cloud-upload-alt text-4xl text-gray-600 mb-4"></i>
-                        <p class="text-gray-400 mb-2">Click to upload poster image</p>
+                        <i class="fas fa-cloud-upload-alt text-4xl text-gray-600 mb-4" id="upload-icon"></i>
+                        <p class="text-gray-400 mb-2" id="upload-text">Click to upload poster image</p>
                         <p class="text-xs text-gray-600">JPG, PNG, WebP (Max 5MB)</p>
                         <div class="upload-progress" id="upload-progress" style="width: 0%"></div>
                     </div>
                     <input type="file" id="image-upload" accept="image/*" style="display: none;" onchange="app.handleImageUpload(event)">
-                    <img id="upload-preview" class="mt-4 rounded-xl max-h-48 hidden mx-auto shadow-lg">
+                    <img id="upload-preview" class="upload-preview-img" alt="Preview">
                 </div>
                 
                 <!-- Form Fields -->
@@ -1284,16 +1308,17 @@
     </div>
 <script>
 // ==========================================
-// STREAMER APP - FIREBASE + SMART ADS SYSTEM
+// STREAMER APP - MULTI AD NETWORK SYSTEM
 // ==========================================
 
 const app = {
     // State
     isAdmin: false,
-    shrinkmeEnabled: false,
-    shrinkmeLink: '',
-    adInterval: 15, // minutes
+    adsEnabled: false,
+    adLinks: [],
+    adInterval: 3, // minutes - har 3 minute mein ad
     adSkipTime: 5, // seconds
+    currentAdIndex: 0,
     currentScreen: 'welcome-screen',
     currentCategory: 'All',
     movies: [],
@@ -1307,6 +1332,7 @@ const app = {
     lastAdTime: 0,
     watchTime: 0,
     adTimerInterval: null,
+    isFirebaseReady: false,
     
     // Admin credentials
     adminCredentials: {
@@ -1314,8 +1340,27 @@ const app = {
         password: "admin123"
     },
     
+    // Default ad networks (15+)
+    defaultAdNetworks: [
+        'https://shrinkme.io/',
+        'https://adf.ly/',
+        'https://linkvertise.com/',
+        'https://shorte.st/',
+        'https://ouo.io/',
+        'https://bc.vc/',
+        'https://adshrink.it/',
+        'https://cut-win.com/',
+        'https://exe.io/',
+        'https://fc.lc/',
+        'https://short.pe/',
+        'https://clk.sh/',
+        'https://uii.io/',
+        'https://oke.io/',
+        'https://cpmlink.net/'
+    ],
+    
     // Initialize
-    async init() {
+    init() {
         this.loadFromLocalStorage();
         this.loadDemoData();
         this.initHeroSlider();
@@ -1323,9 +1368,7 @@ const app = {
         this.updateProfileStats();
         this.setupSearchTrigger();
         this.startWatchTimer();
-        
-        // Load from Firebase if available
-        await this.loadFromFirebase();
+        this.initFirebase();
         
         // Check URL params
         const urlParams = new URLSearchParams(window.location.search);
@@ -1335,43 +1378,57 @@ const app = {
         }
     },
     
-    // ===== FIREBASE INTEGRATION =====
-    async loadFromFirebase() {
+    // ===== FIREBASE - SAFE INIT =====
+    async initFirebase() {
         try {
-            if (!window.firebaseDB) return;
-            
+            // Wait for Firebase SDK to load
+            let attempts = 0;
+            const checkFirebase = setInterval(() => {
+                attempts++;
+                if (window.firebaseDB) {
+                    this.isFirebaseReady = true;
+                    clearInterval(checkFirebase);
+                    this.loadFromFirebase();
+                    console.log('Firebase connected!');
+                }
+                if (attempts > 20) { // 10 seconds max wait
+                    clearInterval(checkFirebase);
+                    console.log('Firebase not available, using local only');
+                }
+            }, 500);
+        } catch (e) {
+            console.log('Firebase init error:', e);
+        }
+    },
+    
+    async loadFromFirebase() {
+        if (!this.isFirebaseReady) return;
+        try {
             const q = window.firebaseQuery(
                 window.firebaseCollection(window.firebaseDB, 'movies'),
                 window.firebaseOrderBy('createdAt', 'desc')
             );
-            
             const querySnapshot = await window.firebaseGetDocs(q);
             const firebaseMovies = [];
-            
             querySnapshot.forEach((doc) => {
                 firebaseMovies.push({ id: doc.id, ...doc.data() });
             });
-            
             if (firebaseMovies.length > 0) {
                 this.movies = firebaseMovies;
                 this.renderMovies();
                 this.saveToLocalStorage();
             }
         } catch (e) {
-            console.log('Firebase load failed, using local:', e);
+            console.log('Firebase load failed:', e);
         }
     },
     
     async saveToFirebase(movie) {
+        if (!this.isFirebaseReady) return;
         try {
-            if (!window.firebaseDB) return;
-            
             await window.firebaseAddDoc(
                 window.firebaseCollection(window.firebaseDB, 'movies'),
-                {
-                    ...movie,
-                    createdAt: window.firebaseTimestamp.now()
-                }
+                { ...movie, createdAt: window.firebaseTimestamp.now() }
             );
         } catch (e) {
             console.log('Firebase save failed:', e);
@@ -1379,26 +1436,17 @@ const app = {
     },
     
     async deleteFromFirebase(id) {
+        if (!this.isFirebaseReady) return;
         try {
-            if (!window.firebaseDB) return;
             await window.firebaseDeleteDoc(window.firebaseDoc(window.firebaseDB, 'movies', id));
         } catch (e) {
             console.log('Firebase delete failed:', e);
         }
     },
     
-    async updateFirebase(id, data) {
-        try {
-            if (!window.firebaseDB) return;
-            await window.firebaseUpdateDoc(window.firebaseDoc(window.firebaseDB, 'movies', id), data);
-        } catch (e) {
-            console.log('Firebase update failed:', e);
-        }
-    },
-    
-    // ===== SMART AD SYSTEM =====
+    // ===== SMART AD SYSTEM - 3 MINUTE INTERVAL =====
     startWatchTimer() {
-        // Track watch time for smart ads
+        // Check every minute for ad display
         setInterval(() => {
             if (this.currentScreen === 'player-screen') {
                 this.watchTime++;
@@ -1410,10 +1458,9 @@ const app = {
     checkSmartAd() {
         const now = Date.now();
         const timeSinceLastAd = now - this.lastAdTime;
-        const intervalMs = this.adInterval * 60 * 1000;
+        const intervalMs = this.adInterval * 60 * 1000; // 3 minutes default
         
-        if (this.shrinkmeEnabled && this.shrinkmeLink && timeSinceLastAd >= intervalMs) {
-            // Show ad overlay while video continues in background
+        if (this.adsEnabled && this.adLinks.length > 0 && timeSinceLastAd >= intervalMs) {
             this.showSmartAd();
         }
     },
@@ -1423,15 +1470,21 @@ const app = {
         const timer = document.getElementById('ad-timer');
         const circle = document.getElementById('ad-progress-circle');
         const btn = document.getElementById('ad-continue-btn');
+        const counter = document.getElementById('ad-counter');
         
         overlay.classList.add('active');
         
+        // Show current ad number
+        const currentLinkNum = this.currentAdIndex + 1;
+        const totalLinks = this.adLinks.length;
+        counter.textContent = `Ad ${currentLinkNum} of ${totalLinks}`;
+        
         let count = this.adSkipTime;
-        const totalDash = 226; // 2 * PI * 36
+        const totalDash = 276; // 2 * PI * 44
         timer.textContent = count;
         btn.disabled = true;
         
-        // Animate circle
+        // Reset circle
         circle.style.strokeDashoffset = totalDash;
         
         this.adTimerInterval = setInterval(() => {
@@ -1452,12 +1505,17 @@ const app = {
     },
     
     watchAdAndContinue() {
-        // Open ShrinkMe in background (new tab)
-        const link = this.shrinkmeLink || 'https://shrinkme.io/';
+        // Get current ad link
+        const link = this.adLinks[this.currentAdIndex] || 'https://shrinkme.io/';
+        
+        // Open in background (new tab)
         const adWindow = window.open(link, '_blank');
         
-        // Close overlay immediately - video is already playing!
+        // Close overlay immediately - video continues!
         document.getElementById('smart-ad-overlay').classList.remove('active');
+        
+        // Move to next ad for next time (rotate)
+        this.currentAdIndex = (this.currentAdIndex + 1) % this.adLinks.length;
         
         // Reset timer
         this.lastAdTime = Date.now();
@@ -1482,29 +1540,143 @@ const app = {
         this.saveToLocalStorage();
     },
     
-    // ===== SECRET SEARCH TRIGGER =====
-    setupSearchTrigger() {
-        const searchInput = document.getElementById('search-input');
-        if (!searchInput) return;
+    // ===== MULTI AD LINKS MANAGEMENT =====
+    toggleAds() {
+        this.adsEnabled = !this.adsEnabled;
+        const toggle = document.getElementById('ads-toggle');
+        if (toggle) toggle.classList.toggle('active', this.adsEnabled);
         
-        searchInput.addEventListener('input', (e) => {
-            const value = e.target.value;
-            
-            if (this.searchTrigger.includes(value) && value.length > 0) {
-                this.triggerTyped = value;
-            }
-            
-            if (value === this.searchTrigger) {
-                searchInput.value = '';
-                this.triggerTyped = '';
-                this.showAdminLogin();
-                return;
-            }
-            
-            if (!this.searchTrigger.startsWith(value)) {
-                this.triggerTyped = '';
+        // Save settings
+        const intervalInput = document.getElementById('admin-ad-interval');
+        if (intervalInput) this.adInterval = parseInt(intervalInput.value) || 3;
+        
+        const skipInput = document.getElementById('admin-ad-skip');
+        if (skipInput) this.adSkipTime = parseInt(skipInput.value) || 5;
+        
+        // Collect all ad links
+        this.collectAdLinks();
+        
+        this.saveToLocalStorage();
+        this.showToast(this.adsEnabled ? `Multi Ads enabled! ${this.adLinks.length} networks` : 'Ads disabled!', 'info');
+    },
+    
+    collectAdLinks() {
+        const inputs = document.querySelectorAll('.ad-link-input');
+        this.adLinks = [];
+        inputs.forEach(input => {
+            if (input.value.trim()) {
+                this.adLinks.push(input.value.trim());
             }
         });
+        
+        // If no links, use defaults
+        if (this.adLinks.length === 0) {
+            this.adLinks = [...this.defaultAdNetworks];
+        }
+    },
+    
+    addAdLinkField(value = '') {
+        const container = document.getElementById('ad-links-container');
+        if (!container) return;
+        
+        const div = document.createElement('div');
+        div.className = 'ad-link-item';
+        div.innerHTML = `
+            <input type="url" class="form-input ad-link-input" placeholder="https://shrinkme.io/XXXXXX" value="${value}">
+            <button onclick="this.parentElement.remove()" title="Remove"><i class="fas fa-times"></i></button>
+        `;
+        container.appendChild(div);
+    },
+    
+    renderAdLinks() {
+        const container = document.getElementById('ad-links-container');
+        if (!container) return;
+        
+        container.innerHTML = '';
+        
+        if (this.adLinks.length === 0) {
+            // Add default empty fields
+            for (let i = 0; i < 5; i++) {
+                this.addAdLinkField();
+            }
+        } else {
+            this.adLinks.forEach(link => {
+                this.addAdLinkField(link);
+            });
+        }
+    },
+    
+    // ===== IMAGE UPLOAD - FIXED =====
+    handleImageUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        
+        if (file.size > 5 * 1024 * 1024) {
+            this.showToast('File too large! Max 5MB', 'error');
+            return;
+        }
+        
+        const progressBar = document.getElementById('upload-progress');
+        const preview = document.getElementById('upload-preview');
+        const uploadIcon = document.getElementById('upload-icon');
+        const uploadText = document.getElementById('upload-text');
+        
+        // Show progress
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += Math.random() * 15;
+            if (progress >= 100) {
+                progress = 100;
+                clearInterval(interval);
+            }
+            progressBar.style.width = progress + '%';
+        }, 100);
+        
+        // Read file
+        const reader = new FileReader();
+        
+        reader.onloadstart = () => {
+            this.showToast('Reading image...', 'info');
+        };
+        
+        reader.onload = (e) => {
+            const imageData = e.target.result;
+            
+            // Verify image loaded correctly
+            const img = new Image();
+            img.onload = () => {
+                // Success - show preview
+                preview.src = imageData;
+                preview.classList.add('visible');
+                preview.dataset.imageData = imageData;
+                
+                // Hide upload area content
+                if (uploadIcon) uploadIcon.style.display = 'none';
+                if (uploadText) uploadText.style.display = 'none';
+                
+                progressBar.style.width = '100%';
+                this.showToast('Image uploaded successfully!', 'success');
+                
+                // Reset progress after delay
+                setTimeout(() => {
+                    progressBar.style.width = '0%';
+                }, 1000);
+            };
+            
+            img.onerror = () => {
+                this.showToast('Invalid image file!', 'error');
+                progressBar.style.width = '0%';
+            };
+            
+            img.src = imageData;
+        };
+        
+        reader.onerror = () => {
+            this.showToast('Failed to read image!', 'error');
+            progressBar.style.width = '0%';
+        };
+        
+        reader.readAsDataURL(file);
     },
     
     // ===== SCREEN NAVIGATION =====
@@ -1625,21 +1797,20 @@ const app = {
         wrapper.classList.add('visible');
         wrapper.style.display = 'block';
         
-        const shrinkmeInput = document.getElementById('admin-shrinkme-link');
-        if (shrinkmeInput && this.shrinkmeLink) {
-            shrinkmeInput.value = this.shrinkmeLink;
-        }
-        
+        // Load settings
         const intervalInput = document.getElementById('admin-ad-interval');
         if (intervalInput) intervalInput.value = this.adInterval;
         
         const skipInput = document.getElementById('admin-ad-skip');
         if (skipInput) skipInput.value = this.adSkipTime;
         
-        this.renderAdminTable();
+        // Render ad links
+        this.renderAdLinks();
         
-        const toggle = document.getElementById('shrinkme-toggle');
-        if (toggle) toggle.classList.toggle('active', this.shrinkmeEnabled);
+        const toggle = document.getElementById('ads-toggle');
+        if (toggle) toggle.classList.toggle('active', this.adsEnabled);
+        
+        this.renderAdminTable();
         
         setTimeout(() => {
             wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1652,79 +1823,6 @@ const app = {
             wrapper.classList.remove('visible');
             wrapper.style.display = 'none';
         }
-    },
-    
-    // ===== SHRINKME SETTINGS =====
-    toggleShrinkMe() {
-        this.shrinkmeEnabled = !this.shrinkmeEnabled;
-        const toggle = document.getElementById('shrinkme-toggle');
-        if (toggle) toggle.classList.toggle('active', this.shrinkmeEnabled);
-        
-        const linkInput = document.getElementById('admin-shrinkme-link');
-        if (linkInput && linkInput.value.trim()) {
-            this.shrinkmeLink = linkInput.value.trim();
-        }
-        
-        const intervalInput = document.getElementById('admin-ad-interval');
-        if (intervalInput) this.adInterval = parseInt(intervalInput.value) || 15;
-        
-        const skipInput = document.getElementById('admin-ad-skip');
-        if (skipInput) this.adSkipTime = parseInt(skipInput.value) || 5;
-        
-        this.saveToLocalStorage();
-        this.showToast(this.shrinkmeEnabled ? 'Smart Ads enabled!' : 'Smart Ads disabled!', 'info');
-    },
-    
-    // ===== IMAGE UPLOAD (Firebase Storage) =====
-    async handleImageUpload(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        
-        if (file.size > 5 * 1024 * 1024) {
-            this.showToast('File too large! Max 5MB', 'error');
-            return;
-        }
-        
-        const progressBar = document.getElementById('upload-progress');
-        const preview = document.getElementById('upload-preview');
-        
-        // Simulate progress
-        let progress = 0;
-        const interval = setInterval(() => {
-            progress += Math.random() * 20;
-            if (progress >= 100) {
-                progress = 100;
-                clearInterval(interval);
-            }
-            progressBar.style.width = progress + '%';
-        }, 200);
-        
-        // Try Firebase Storage first
-        try {
-            if (window.firebaseStorage) {
-                const storageRef = window.firebaseRef(window.firebaseStorage, 'posters/' + Date.now() + '_' + file.name);
-                await window.firebaseUploadBytes(storageRef, file);
-                const downloadURL = await window.firebaseGetDownloadURL(storageRef);
-                
-                preview.src = downloadURL;
-                preview.classList.remove('hidden');
-                preview.dataset.imageData = downloadURL;
-                this.showToast('Image uploaded to cloud!', 'success');
-                return;
-            }
-        } catch (e) {
-            console.log('Firebase storage failed, using local:', e);
-        }
-        
-        // Fallback to base64
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            preview.src = e.target.result;
-            preview.classList.remove('hidden');
-            preview.dataset.imageData = e.target.result;
-            this.showToast('Image saved locally!', 'success');
-        };
-        reader.readAsDataURL(file);
     },
     
     // ===== SAVE CONTENT =====
@@ -1743,7 +1841,11 @@ const app = {
             return;
         }
         
-        const poster = preview.dataset.imageData || 'https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image';
+        // Get image data
+        let poster = 'https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image';
+        if (preview.dataset.imageData) {
+            poster = preview.dataset.imageData;
+        }
         
         const movie = {
             id: 'movie_' + Date.now(),
@@ -1758,7 +1860,7 @@ const app = {
             featured: false
         };
         
-        // Save to Firebase
+        // Save to Firebase if available
         await this.saveToFirebase(movie);
         
         this.movies.unshift(movie);
@@ -1776,8 +1878,18 @@ const app = {
         document.getElementById('admin-rating').value = '';
         document.getElementById('admin-description').value = '';
         document.getElementById('admin-video').value = '';
-        document.getElementById('upload-preview').src = '';
-        document.getElementById('upload-preview').classList.add('hidden');
+        
+        // Reset image upload
+        const preview = document.getElementById('upload-preview');
+        preview.src = '';
+        preview.classList.remove('visible');
+        preview.dataset.imageData = '';
+        
+        const uploadIcon = document.getElementById('upload-icon');
+        const uploadText = document.getElementById('upload-text');
+        if (uploadIcon) uploadIcon.style.display = 'block';
+        if (uploadText) uploadText.style.display = 'block';
+        
         document.getElementById('upload-progress').style.width = '0%';
     },
     
@@ -1839,7 +1951,9 @@ const app = {
         movie.description = document.getElementById('edit-description').value.trim();
         movie.videoUrl = document.getElementById('edit-video').value.trim();
         
-        await this.updateFirebase(id, movie);
+        if (this.isFirebaseReady) {
+            await this.updateFirebase(id, movie);
+        }
         
         this.saveToLocalStorage();
         this.renderMovies();
@@ -1851,7 +1965,9 @@ const app = {
     async deleteContent(id) {
         if (!confirm('Are you sure you want to delete this content?')) return;
         
-        await this.deleteFromFirebase(id);
+        if (this.isFirebaseReady) {
+            await this.deleteFromFirebase(id);
+        }
         
         this.movies = this.movies.filter(m => m.id !== id);
         this.saveToLocalStorage();
@@ -2075,9 +2191,9 @@ const app = {
         }
         this.saveToLocalStorage();
         
-        // Check if first ad should show (immediate on first play)
+        // Check if ad should show (every 3 minutes)
         const now = Date.now();
-        if (this.shrinkmeEnabled && this.shrinkmeLink && (now - this.lastAdTime > this.adInterval * 60 * 1000)) {
+        if (this.adsEnabled && this.adLinks.length > 0 && (now - this.lastAdTime > this.adInterval * 60 * 1000)) {
             this.showSmartAd();
         }
         
@@ -2266,12 +2382,13 @@ const app = {
         const data = {
             movies: this.movies,
             continueWatching: this.continueWatching,
-            shrinkmeEnabled: this.shrinkmeEnabled,
-            shrinkmeLink: this.shrinkmeLink,
+            adsEnabled: this.adsEnabled,
+            adLinks: this.adLinks,
             adInterval: this.adInterval,
             adSkipTime: this.adSkipTime,
             lastAdTime: this.lastAdTime,
-            watchTime: this.watchTime
+            watchTime: this.watchTime,
+            currentAdIndex: this.currentAdIndex
         };
         localStorage.setItem('streamer_data', JSON.stringify(data));
     },
@@ -2282,12 +2399,13 @@ const app = {
             if (data) {
                 this.movies = data.movies || [];
                 this.continueWatching = data.continueWatching || [];
-                this.shrinkmeEnabled = data.shrinkmeEnabled || false;
-                this.shrinkmeLink = data.shrinkmeLink || '';
-                this.adInterval = data.adInterval || 15;
+                this.adsEnabled = data.adsEnabled || false;
+                this.adLinks = data.adLinks || [];
+                this.adInterval = data.adInterval || 3;
                 this.adSkipTime = data.adSkipTime || 5;
                 this.lastAdTime = data.lastAdTime || 0;
                 this.watchTime = data.watchTime || 0;
+                this.currentAdIndex = data.currentAdIndex || 0;
             }
         } catch (e) {
             console.error('Error loading data:', e);
@@ -2430,6 +2548,31 @@ const app = {
             toast.style.transform = 'translateX(100%)';
             setTimeout(() => toast.remove(), 300);
         }, 3000);
+    },
+    
+    // ===== SECRET SEARCH TRIGGER =====
+    setupSearchTrigger() {
+        const searchInput = document.getElementById('search-input');
+        if (!searchInput) return;
+        
+        searchInput.addEventListener('input', (e) => {
+            const value = e.target.value;
+            
+            if (this.searchTrigger.includes(value) && value.length > 0) {
+                this.triggerTyped = value;
+            }
+            
+            if (value === this.searchTrigger) {
+                searchInput.value = '';
+                this.triggerTyped = '';
+                this.showAdminLogin();
+                return;
+            }
+            
+            if (!this.searchTrigger.startsWith(value)) {
+                this.triggerTyped = '';
+            }
+        });
     }
 };
 
