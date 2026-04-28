@@ -7,11 +7,7 @@
     <meta name="description" content="STREAMER - Premium streaming platform">
     <meta name="robots" content="noindex, nofollow">
     <title>STREAMER - Premium OTT</title>
-    
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Firebase SDK v12.12.0 -->
@@ -38,7 +34,6 @@
         const auth = getAuth(app);
         const storage = getStorage(app);
 
-        // Global Firebase exports for app
         window.firebaseDB = db;
         window.firebaseAuth = auth;
         window.firebaseStorage = storage;
@@ -65,8 +60,6 @@
         window.firebaseReady = true;
 
         console.log('Firebase v12.12.0 initialized successfully!');
-        
-        // Dispatch event when ready
         window.dispatchEvent(new CustomEvent('firebase-ready'));
     </script>
 
@@ -101,7 +94,6 @@
             border-radius: 3px; 
         }
 
-        /* ===== SCREEN SYSTEM ===== */
         .screen {
             display: none;
             min-height: 100vh;
@@ -134,7 +126,6 @@
             to { opacity: 1; transform: translateY(0); } 
         }
 
-        /* ===== ANIMATED GRADIENT TEXT ===== */
         .gradient-text { 
             background: linear-gradient(135deg, #ef4444 0%, #a855f7 50%, #ec4899 100%); 
             -webkit-background-clip: text; 
@@ -150,7 +141,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* ===== ANIMATED LOGO ===== */
         .logo-container {
             position: relative;
             width: 100px;
@@ -214,7 +204,6 @@
             border: 1px solid rgba(255, 255, 255, 0.05); 
         }
 
-        /* ===== MOVIE CARD ===== */
         .movie-card { 
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
             cursor: pointer; 
@@ -264,7 +253,6 @@
             transform: scale(1.08); 
         }
 
-        /* ===== CATEGORY PILLS ===== */
         .category-scroll-container {
             display: flex;
             gap: 8px;
@@ -309,7 +297,6 @@
             z-index: 1;
         }
 
-        /* ===== HERO SLIDER ===== */
         .hero-slider { 
             position: relative; 
             width: 100%; 
@@ -366,7 +353,6 @@
             border-radius: 4px; 
         }
 
-        /* ===== VIDEO PLAYER ===== */
         .dailymotion-player { 
             position: relative; 
             width: 100%; 
@@ -385,7 +371,6 @@
             border: none; 
         }
 
-        /* ===== SMART AD OVERLAY ===== */
         .smart-ad-overlay {
             position: fixed;
             inset: 0;
@@ -483,7 +468,6 @@
             margin-top: 8px;
         }
 
-        /* ===== REWARD AD CARD ===== */
         .reward-card {
             background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(168,85,247,0.1));
             border: 1px solid rgba(239,68,68,0.2);
@@ -522,7 +506,6 @@
             box-shadow: 0 4px 20px rgba(239,68,68,0.4);
         }
 
-        /* ===== ADMIN PANEL ===== */
         #admin-panel-wrapper {
             display: none;
             padding: 20px 16px;
@@ -564,7 +547,6 @@
             to { opacity: 1; transform: translateY(0); } 
         }
 
-        /* ===== UPLOAD AREA ===== */
         .upload-area { 
             border: 2px dashed #333; 
             border-radius: 16px; 
@@ -604,7 +586,6 @@
             display: block;
         }
 
-        /* ===== FORM INPUTS ===== */
         .form-input { 
             width: 100%; 
             padding: 14px 16px; 
@@ -633,7 +614,6 @@
             letter-spacing: 0.5px; 
         }
 
-        /* ===== TOAST NOTIFICATIONS ===== */
         .toast-container { 
             position: fixed; 
             top: 20px; 
@@ -684,7 +664,6 @@
             border-color: rgba(234, 179, 8, 0.3);
         }
 
-        /* ===== SKELETON LOADING ===== */
         .skeleton { 
             background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%); 
             background-size: 200% 100%; 
@@ -697,7 +676,6 @@
             100% { background-position: -200% 0; } 
         }
 
-        /* ===== BOTTOM NAV ===== */
         .bottom-nav-item { 
             position: relative; 
             transition: all 0.3s; 
@@ -724,7 +702,6 @@
             display: none !important;
         }
 
-        /* ===== MODAL ===== */
         .modal-overlay { 
             position: fixed; 
             inset: 0; 
@@ -750,7 +727,6 @@
             border: 1px solid rgba(255,255,255,0.1); 
         }
 
-        /* ===== SHARE BUTTON ===== */
         .share-btn { 
             background: rgba(255,255,255,0.1); 
             border: none; 
@@ -771,7 +747,6 @@
             transform: scale(1.1); 
         }
 
-        /* ===== CONTENT TABLE ===== */
         .content-table { 
             width: 100%; 
             border-collapse: collapse; 
@@ -802,7 +777,6 @@
             border-radius: 8px; 
         }
 
-        /* ===== ACTION BUTTONS ===== */
         .action-btn { 
             background: rgba(255,255,255,0.05); 
             border: none; 
@@ -826,7 +800,6 @@
             background: rgba(59, 130, 246, 0.8); 
         }
 
-        /* ===== TOGGLE SWITCH ===== */
         .toggle-switch { 
             position: relative; 
             width: 50px; 
@@ -857,7 +830,6 @@
             transform: translateX(24px); 
         }
 
-        /* ===== DISCLAIMER ===== */
         .disclaimer { 
             background: rgba(239, 68, 68, 0.05); 
             border: 1px solid rgba(239, 68, 68, 0.1); 
@@ -869,7 +841,6 @@
             line-height: 1.6; 
         }
 
-        /* ===== HIDE SCROLLBAR ===== */
         .hide-scrollbar::-webkit-scrollbar { 
             display: none; 
         }
@@ -879,7 +850,6 @@
             scrollbar-width: none; 
         }
 
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 640px) { 
             .hero-slider { height: 45vh; } 
             .admin-panel { padding: 16px; } 
@@ -889,7 +859,6 @@
             -webkit-user-drag: none; 
         }
 
-        /* ===== MULTI AD LINKS ===== */
         .ad-links-container {
             max-height: 200px;
             overflow-y: auto;
@@ -920,7 +889,6 @@
             cursor: pointer;
         }
 
-        /* ===== STATS CARDS ===== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -948,7 +916,6 @@
             margin-top: 4px;
         }
 
-        /* ===== EARNING BADGE ===== */
         .earning-badge {
             position: fixed;
             bottom: 80px;
@@ -971,14 +938,10 @@
     </style>
 </head>
 <body>
-    <!-- Toast Container -->
     <div id="toast-container" class="toast-container"></div>
-
-    <!-- Earning Badge -->
     <div id="earning-badge" class="earning-badge" style="display:none;">
         <i class="fas fa-coins mr-1"></i> $<span id="earning-amount">0.00</span>
     </div>
-
     <!-- SMART AD OVERLAY -->
     <div id="smart-ad-overlay" class="smart-ad-overlay">
         <div class="ad-progress-ring">
@@ -1541,2258 +1504,1228 @@
             </div>
         </div>
     </div>
+    <script>
+    // ==========================================
+    // STREAMER APP - PART 3: CORE JAVASCRIPT LOGIC
+    // Firebase, Screens, Player, Search, Admin, Content
+    // ==========================================
 
-    <!-- ========== JAVASCRIPT PARTS ========== -->
-    <script src="app-part2.js"></script>
-    <script src="app-part3.js"></script>
-    <script src="app-part4.js"></script>
-
-// ==========================================
-// STREAMER APP - PART 2: CORE APP LOGIC
-// Screens, Player, Search, Navigation, Content Management
-// ==========================================
-
-const app = {
-    // ===== STATE =====
-    isAdmin: false,
-    currentScreen: 'welcome-screen',
-    currentCategory: 'All',
-    movies: [],
-    continueWatching: [],
-    heroSlides: [],
-    heroInterval: null,
-    currentHeroIndex: 0,
-    currentMovie: null,
-    searchTrigger: 'streamer_sumit@81#',
-    triggerTyped: '',
-    watchTime: 0,
-    isFirebaseReady: false,
-    userId: null,
-    
-    // Admin credentials (Base64 encoded for basic security)
-    adminCredentials: {
-        username: btoa("admin"),
-        password: btoa("admin123")
-    },
-    
-    // ===== INITIALIZE =====
-    init() {
-        this.loadFromLocalStorage();
-        this.loadDemoData();
-        this.initHeroSlider();
-        this.renderMovies();
-        this.updateProfileStats();
-        this.setupSearchTrigger();
-        this.initFirebase();
+    const app = {
+        // ===== STATE =====
+        isAdmin: false,
+        currentScreen: 'welcome-screen',
+        currentCategory: 'All',
+        movies: [],
+        continueWatching: [],
+        heroSlides: [],
+        heroInterval: null,
+        currentHeroIndex: 0,
+        currentMovie: null,
+        searchTrigger: 'streamer_sumit@81#',
+        triggerTyped: '',
+        watchTime: 0,
+        isFirebaseReady: false,
+        userId: null,
         
-        // Check URL params for shared content
-        const urlParams = new URLSearchParams(window.location.search);
-        const sharedId = urlParams.get('watch');
-        if (sharedId) {
-            setTimeout(() => this.playMovieById(sharedId), 500);
-        }
-    },
-    
-    // ===== FIREBASE INITIALIZATION =====
-    initFirebase() {
-        if (window.firebaseReady) {
-            this.isFirebaseReady = true;
-            this.authenticateUser();
-            this.loadFromFirebase();
-            console.log('Firebase connected!');
-        } else {
-            window.addEventListener('firebase-ready', () => {
+        // Admin credentials (Base64 encoded)
+        adminCredentials: {
+            username: btoa("admin"),
+            password: btoa("admin123")
+        },
+        
+        // ===== INITIALIZE =====
+        init() {
+            this.loadFromLocalStorage();
+            this.loadDemoData();
+            this.initHeroSlider();
+            this.renderMovies();
+            this.updateProfileStats();
+            this.setupSearchTrigger();
+            this.initFirebase();
+            
+            // Check URL params for shared content
+            const urlParams = new URLSearchParams(window.location.search);
+            const sharedId = urlParams.get('watch');
+            if (sharedId) {
+                setTimeout(() => this.playMovieById(sharedId), 500);
+            }
+        },
+        
+        // ===== FIREBASE =====
+        initFirebase() {
+            if (window.firebaseReady) {
                 this.isFirebaseReady = true;
                 this.authenticateUser();
                 this.loadFromFirebase();
-                console.log('Firebase connected via event!');
-            });
-        }
-    },
-    
-    async authenticateUser() {
-        try {
-            const auth = window.firebaseAuth;
-            const signInAnon = window.firebaseSignInAnonymously;
-            const onAuthChange = window.firebaseOnAuthStateChanged;
-            
-            onAuthChange(auth, (user) => {
-                if (user) {
-                    this.userId = user.uid;
-                    console.log('User authenticated:', user.uid);
-                    this.trackUserSession();
-                } else {
-                    signInAnon(auth).catch(e => console.log('Auth error:', e));
-                }
-            });
-        } catch (e) {
-            console.log('Auth init error:', e);
-        }
-    },
-    
-    async trackUserSession() {
-        if (!this.userId || !this.isFirebaseReady) return;
-        try {
-            const userRef = window.firebaseDoc(window.firebaseDB, 'users', this.userId);
-            const userSnap = await window.firebaseGetDoc(userRef);
-            const now = new Date();
-            const today = now.toISOString().split('T')[0];
-            
-            if (userSnap.exists()) {
-                const data = userSnap.data();
-                await window.firebaseUpdateDoc(userRef, {
-                    lastVisit: window.firebaseServerTimestamp(),
-                    visitCount: (data.visitCount || 0) + 1,
-                    totalWatchTime: (data.totalWatchTime || 0) + this.watchTime
-                });
+                console.log('Firebase connected!');
             } else {
-                await window.firebaseSetDoc(userRef, {
-                    createdAt: window.firebaseServerTimestamp(),
-                    lastVisit: window.firebaseServerTimestamp(),
-                    visitCount: 1,
-                    totalWatchTime: 0
+                window.addEventListener('firebase-ready', () => {
+                    this.isFirebaseReady = true;
+                    this.authenticateUser();
+                    this.loadFromFirebase();
+                    console.log('Firebase connected via event!');
                 });
             }
-        } catch (e) {
-            console.log('Track session error:', e);
-        }
-    },
-    
-    async loadFromFirebase() {
-        if (!this.isFirebaseReady) return;
-        try {
-            const q = window.firebaseQuery(
-                window.firebaseCollection(window.firebaseDB, 'movies'),
-                window.firebaseOrderBy('createdAt', 'desc')
-            );
-            const querySnapshot = await window.firebaseGetDocs(q);
-            const firebaseMovies = [];
-            querySnapshot.forEach((doc) => {
-                firebaseMovies.push({ id: doc.id, ...doc.data() });
-            });
-            if (firebaseMovies.length > 0) {
-                this.movies = firebaseMovies;
-                this.renderMovies();
-                this.saveToLocalStorage();
-                this.showToast('Content loaded from cloud!', 'success');
+        },
+        
+        async authenticateUser() {
+            try {
+                const auth = window.firebaseAuth;
+                const signInAnon = window.firebaseSignInAnonymously;
+                const onAuthChange = window.firebaseOnAuthStateChanged;
+                
+                onAuthChange(auth, (user) => {
+                    if (user) {
+                        this.userId = user.uid;
+                        console.log('User authenticated:', user.uid);
+                        this.trackUserSession();
+                    } else {
+                        signInAnon(auth).catch(e => console.log('Auth error:', e));
+                    }
+                });
+            } catch (e) {
+                console.log('Auth init error:', e);
             }
-        } catch (e) {
-            console.log('Firebase load failed:', e);
-        }
-    },
-    
-    async saveToFirebase(movie) {
-        if (!this.isFirebaseReady) return;
-        try {
-            await window.firebaseAddDoc(
-                window.firebaseCollection(window.firebaseDB, 'movies'),
-                { ...movie, createdAt: window.firebaseServerTimestamp() }
-            );
-        } catch (e) {
-            console.log('Firebase save failed:', e);
-        }
-    },
-    
-    async deleteFromFirebase(id) {
-        if (!this.isFirebaseReady) return;
-        try {
-            await window.firebaseDeleteDoc(window.firebaseDoc(window.firebaseDB, 'movies', id));
-        } catch (e) {
-            console.log('Firebase delete failed:', e);
-        }
-    },
-    
-    async updateFirebase(id, data) {
-        if (!this.isFirebaseReady) return;
-        try {
-            await window.firebaseUpdateDoc(window.firebaseDoc(window.firebaseDB, 'movies', id), data);
-        } catch (e) {
-            console.log('Firebase update failed:', e);
-        }
-    },
-    
-    // ===== SCREEN NAVIGATION =====
-    showScreen(screenId) {
-        const allScreens = document.querySelectorAll('.screen');
-        allScreens.forEach(s => {
-            s.classList.remove('active');
-            s.style.display = 'none';
-        });
+        },
         
-        const targetScreen = document.getElementById(screenId);
-        if (!targetScreen) {
-            console.error('Screen not found:', screenId);
-            return;
-        }
-        
-        targetScreen.style.display = 'block';
-        void targetScreen.offsetWidth;
-        targetScreen.classList.add('active');
-        
-        this.currentScreen = screenId;
-        
-        document.querySelectorAll('.bottom-nav-item').forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.screen === screenId);
-        });
-        
-        const bottomNav = document.getElementById('bottom-nav');
-        const showNavScreens = ['main-screen', 'search-screen', 'profile-screen'];
-        if (showNavScreens.includes(screenId)) {
-            bottomNav.classList.remove('hidden');
-        } else {
-            bottomNav.classList.add('hidden');
-        }
-        
-        window.scrollTo(0, 0);
-        targetScreen.scrollTop = 0;
-        
-        if (screenId === 'main-screen') {
-            this.renderMovies();
-            if (this.isAdmin) {
-                const adminWrapper = document.getElementById('admin-panel-wrapper');
-                if (adminWrapper && adminWrapper.classList.contains('visible')) {
-                    this.renderAdminTable();
-                    this.updateAdminStats();
+        async trackUserSession() {
+            if (!this.userId || !this.isFirebaseReady) return;
+            try {
+                const userRef = window.firebaseDoc(window.firebaseDB, 'users', this.userId);
+                const userSnap = await window.firebaseGetDoc(userRef);
+                
+                if (userSnap.exists()) {
+                    const data = userSnap.data();
+                    await window.firebaseUpdateDoc(userRef, {
+                        lastVisit: window.firebaseServerTimestamp(),
+                        visitCount: (data.visitCount || 0) + 1,
+                        totalWatchTime: (data.totalWatchTime || 0) + this.watchTime
+                    });
+                } else {
+                    await window.firebaseSetDoc(userRef, {
+                        createdAt: window.firebaseServerTimestamp(),
+                        lastVisit: window.firebaseServerTimestamp(),
+                        visitCount: 1,
+                        totalWatchTime: 0
+                    });
                 }
+            } catch (e) {
+                console.log('Track session error:', e);
             }
-        } else if (screenId === 'profile-screen') {
-            this.updateProfileStats();
-        }
-    },
-    
-    goBack() {
-        this.showScreen('main-screen');
-    },
-    
-    // ===== WELCOME SCREEN =====
-    guestLogin() {
-        this.showScreen('main-screen');
-        this.showToast('Welcome to STREAMER!', 'success');
+        },
         
-        // Show welcome ad after 2 seconds (if ads enabled)
-        setTimeout(() => {
-            if (typeof this.adsEnabled !== 'undefined' && this.adsEnabled && this.adLinks && this.adLinks.length > 0) {
-                this.showWelcomeAd();
+        async loadFromFirebase() {
+            if (!this.isFirebaseReady) return;
+            try {
+                const q = window.firebaseQuery(
+                    window.firebaseCollection(window.firebaseDB, 'movies'),
+                    window.firebaseOrderBy('createdAt', 'desc')
+                );
+                const querySnapshot = await window.firebaseGetDocs(q);
+                const firebaseMovies = [];
+                querySnapshot.forEach((doc) => {
+                    firebaseMovies.push({ id: doc.id, ...doc.data() });
+                });
+                if (firebaseMovies.length > 0) {
+                    this.movies = firebaseMovies;
+                    this.renderMovies();
+                    this.saveToLocalStorage();
+                    this.showToast('Content loaded from cloud!', 'success');
+                }
+            } catch (e) {
+                console.log('Firebase load failed:', e);
             }
-        }, 2000);
-    },
-    
-    // ===== ADMIN LOGIN =====
-    showAdminLogin() {
-        if (this.isAdmin) {
+        },
+        
+        async saveToFirebase(movie) {
+            if (!this.isFirebaseReady) return;
+            try {
+                await window.firebaseAddDoc(
+                    window.firebaseCollection(window.firebaseDB, 'movies'),
+                    { ...movie, createdAt: window.firebaseServerTimestamp() }
+                );
+            } catch (e) {
+                console.log('Firebase save failed:', e);
+            }
+        },
+        
+        async deleteFromFirebase(id) {
+            if (!this.isFirebaseReady) return;
+            try {
+                await window.firebaseDeleteDoc(window.firebaseDoc(window.firebaseDB, 'movies', id));
+            } catch (e) {
+                console.log('Firebase delete failed:', e);
+            }
+        },
+        
+        async updateFirebase(id, data) {
+            if (!this.isFirebaseReady) return;
+            try {
+                await window.firebaseUpdateDoc(window.firebaseDoc(window.firebaseDB, 'movies', id), data);
+            } catch (e) {
+                console.log('Firebase update failed:', e);
+            }
+        },
+        
+        // ===== SCREEN NAVIGATION =====
+        showScreen(screenId) {
+            const allScreens = document.querySelectorAll('.screen');
+            allScreens.forEach(s => {
+                s.classList.remove('active');
+                s.style.display = 'none';
+            });
+            
+            const targetScreen = document.getElementById(screenId);
+            if (!targetScreen) {
+                console.error('Screen not found:', screenId);
+                return;
+            }
+            
+            targetScreen.style.display = 'block';
+            void targetScreen.offsetWidth;
+            targetScreen.classList.add('active');
+            
+            this.currentScreen = screenId;
+            
+            document.querySelectorAll('.bottom-nav-item').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.screen === screenId);
+            });
+            
+            const bottomNav = document.getElementById('bottom-nav');
+            const showNavScreens = ['main-screen', 'search-screen', 'profile-screen'];
+            if (showNavScreens.includes(screenId)) {
+                bottomNav.classList.remove('hidden');
+            } else {
+                bottomNav.classList.add('hidden');
+            }
+            
+            window.scrollTo(0, 0);
+            targetScreen.scrollTop = 0;
+            
+            if (screenId === 'main-screen') {
+                this.renderMovies();
+                if (this.isAdmin) {
+                    const adminWrapper = document.getElementById('admin-panel-wrapper');
+                    if (adminWrapper && adminWrapper.classList.contains('visible')) {
+                        this.renderAdminTable();
+                        this.updateAdminStats();
+                    }
+                }
+            } else if (screenId === 'profile-screen') {
+                this.updateProfileStats();
+            }
+        },
+        
+        goBack() {
             this.showScreen('main-screen');
-            setTimeout(() => this.showAdminPanel(), 400);
-            return;
-        }
-        document.getElementById('admin-login-modal').classList.add('active');
-        document.getElementById('admin-username').value = '';
-        document.getElementById('admin-password').value = '';
-        setTimeout(() => document.getElementById('admin-username').focus(), 100);
-    },
-    
-    closeAdminLogin(e) {
-        if (!e || e.target === document.getElementById('admin-login-modal')) {
-            document.getElementById('admin-login-modal').classList.remove('active');
-        }
-    },
-    
-    adminLogin() {
-        const username = btoa(document.getElementById('admin-username').value.trim());
-        const password = btoa(document.getElementById('admin-password').value);
+        },
         
-        if (username === this.adminCredentials.username && password === this.adminCredentials.password) {
-            this.isAdmin = true;
-            document.body.classList.add('admin-logged');
-            this.closeAdminLogin();
-            this.showToast('Admin login successful!', 'success');
+        // ===== WELCOME =====
+        guestLogin() {
+            this.showScreen('main-screen');
+            this.showToast('Welcome to STREAMER!', 'success');
             
             setTimeout(() => {
+                if (typeof this.adsEnabled !== 'undefined' && this.adsEnabled && this.adLinks && this.adLinks.length > 0) {
+                    this.showWelcomeAd();
+                }
+            }, 2000);
+        },
+        
+        // ===== ADMIN LOGIN =====
+        showAdminLogin() {
+            if (this.isAdmin) {
                 this.showScreen('main-screen');
                 setTimeout(() => this.showAdminPanel(), 400);
-            }, 300);
-        } else {
-            this.showToast('Invalid credentials!', 'error');
-            const modal = document.querySelector('#admin-login-modal .modal-content');
-            if (modal) {
-                modal.style.animation = 'shake 0.5s';
-                setTimeout(() => modal.style.animation = '', 500);
+                return;
             }
-        }
-    },
-    
-    // ===== ADMIN PANEL =====
-    showAdminPanel() {
-        if (!this.isAdmin) {
-            this.showAdminLogin();
-            return;
-        }
-        
-        if (this.currentScreen !== 'main-screen') {
-            this.showScreen('main-screen');
-        }
-        
-        const wrapper = document.getElementById('admin-panel-wrapper');
-        if (!wrapper) return;
-        
-        wrapper.classList.add('visible');
-        wrapper.style.display = 'block';
-        
-        // Load settings
-        const intervalInput = document.getElementById('admin-ad-interval');
-        if (intervalInput && typeof this.adInterval !== 'undefined') intervalInput.value = this.adInterval;
-        
-        const skipInput = document.getElementById('admin-ad-skip');
-        if (skipInput && typeof this.adSkipTime !== 'undefined') skipInput.value = this.adSkipTime;
-        
-        const maxAdsInput = document.getElementById('admin-max-ads');
-        if (maxAdsInput && typeof this.maxAdsPerSession !== 'undefined') maxAdsInput.value = this.maxAdsPerSession;
-        
-        // Render ad links
-        if (typeof this.renderAdLinks === 'function') this.renderAdLinks();
-        
-        const toggle = document.getElementById('ads-toggle');
-        if (toggle && typeof this.adsEnabled !== 'undefined') toggle.classList.toggle('active', this.adsEnabled);
-        
-        this.renderAdminTable();
-        this.updateAdminStats();
-        
-        setTimeout(() => {
-            wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 300);
-    },
-    
-    hideAdminPanel() {
-        const wrapper = document.getElementById('admin-panel-wrapper');
-        if (wrapper) {
-            wrapper.classList.remove('visible');
-            wrapper.style.display = 'none';
-        }
-    },
-    
-    updateAdminStats() {
-        if (!this.isAdmin) return;
-        
-        const totalAdsEl = document.getElementById('stat-total-ads');
-        const todayEarningsEl = document.getElementById('stat-today-earnings');
-        const totalUsersEl = document.getElementById('stat-total-users');
-        const ctrEl = document.getElementById('stat-ctr');
-        
-        if (totalAdsEl) totalAdsEl.textContent = this.totalAdsShown || 0;
-        if (todayEarningsEl) todayEarningsEl.textContent = '$' + ((this.todayEarnings || 0)).toFixed(2);
-        if (totalUsersEl) totalUsersEl.textContent = this.totalUsers || 0;
-        if (ctrEl) ctrEl.textContent = (this.ctr || 0) + '%';
-    },
-    
-    // ===== SAVE CONTENT =====
-    async saveContent() {
-        const title = document.getElementById('admin-title').value.trim();
-        const category = document.getElementById('admin-category').value;
-        const year = parseInt(document.getElementById('admin-year').value) || 2024;
-        const duration = document.getElementById('admin-duration').value.trim() || '24 min';
-        const rating = parseFloat(document.getElementById('admin-rating').value) || 0;
-        const description = document.getElementById('admin-description').value.trim();
-        const videoUrl = document.getElementById('admin-video').value.trim();
-        const preview = document.getElementById('upload-preview');
-        
-        if (!title || !videoUrl) {
-            this.showToast('Title and Video URL are required!', 'error');
-            return;
-        }
-        
-        // Get image data
-        let poster = 'https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image';
-        if (preview && preview.dataset.imageData) {
-            poster = preview.dataset.imageData;
-        }
-        
-        const movie = {
-            id: 'movie_' + Date.now(),
-            title,
-            category,
-            year,
-            duration,
-            rating,
-            description,
-            poster,
-            videoUrl,
-            featured: false
-        };
-        
-        // Save to Firebase if available
-        await this.saveToFirebase(movie);
-        
-        this.movies.unshift(movie);
-        this.saveToLocalStorage();
-        this.renderMovies();
-        this.renderAdminTable();
-        this.resetAdminForm();
-        this.showToast('Content saved successfully!', 'success');
-    },
-    
-    resetAdminForm() {
-        document.getElementById('admin-title').value = '';
-        document.getElementById('admin-year').value = '2024';
-        document.getElementById('admin-duration').value = '';
-        document.getElementById('admin-rating').value = '';
-        document.getElementById('admin-description').value = '';
-        document.getElementById('admin-video').value = '';
-        
-        // Reset image upload
-        const preview = document.getElementById('upload-preview');
-        if (preview) {
-            preview.src = '';
-            preview.classList.remove('visible');
-            preview.dataset.imageData = '';
-        }
-        
-        const uploadIcon = document.getElementById('upload-icon');
-        const uploadText = document.getElementById('upload-text');
-        if (uploadIcon) uploadIcon.style.display = 'block';
-        if (uploadText) uploadText.style.display = 'block';
-        
-        const progressBar = document.getElementById('upload-progress');
-        if (progressBar) progressBar.style.width = '0%';
-    },
-    
-    // ===== ADMIN TABLE =====
-    renderAdminTable() {
-        const tbody = document.getElementById('admin-table-body');
-        if (!tbody) return;
-        
-        tbody.innerHTML = this.movies.map(movie => `
-            <tr>
-                <td><img src="${movie.poster}" alt="${movie.title}" loading="lazy" onerror="this.src='https://via.placeholder.com/50x75/1a1a1a/666?text=No+Image'"></td>
-                <td>${movie.title}</td>
-                <td><span class="text-xs bg-white/10 px-2 py-1 rounded">${movie.category}</span></td>
-                <td>
-                    <button onclick="app.editContent('${movie.id}')" class="action-btn edit" title="Edit">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button onclick="app.deleteContent('${movie.id}')" class="action-btn" title="Delete">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </td>
-            </tr>
-        `).join('');
-    },
-    
-    // ===== EDIT CONTENT =====
-    editContent(id) {
-        const movie = this.movies.find(m => m.id === id);
-        if (!movie) return;
-        
-        document.getElementById('edit-id').value = movie.id;
-        document.getElementById('edit-title').value = movie.title;
-        document.getElementById('edit-category').value = movie.category;
-        document.getElementById('edit-year').value = movie.year;
-        document.getElementById('edit-duration').value = movie.duration;
-        document.getElementById('edit-rating').value = movie.rating;
-        document.getElementById('edit-description').value = movie.description;
-        document.getElementById('edit-video').value = movie.videoUrl;
-        
-        document.getElementById('edit-modal').classList.add('active');
-    },
-    
-    closeEditModal(e) {
-        if (!e || e.target === document.getElementById('edit-modal')) {
-            document.getElementById('edit-modal').classList.remove('active');
-        }
-    },
-    
-    async updateContent() {
-        const id = document.getElementById('edit-id').value;
-        const movie = this.movies.find(m => m.id === id);
-        if (!movie) return;
-        
-        movie.title = document.getElementById('edit-title').value.trim();
-        movie.category = document.getElementById('edit-category').value;
-        movie.year = parseInt(document.getElementById('edit-year').value) || 2024;
-        movie.duration = document.getElementById('edit-duration').value.trim();
-        movie.rating = parseFloat(document.getElementById('edit-rating').value) || 0;
-        movie.description = document.getElementById('edit-description').value.trim();
-        movie.videoUrl = document.getElementById('edit-video').value.trim();
-        
-        if (this.isFirebaseReady) {
-            await this.updateFirebase(id, movie);
-        }
-        
-        this.saveToLocalStorage();
-        this.renderMovies();
-        this.renderAdminTable();
-        this.closeEditModal();
-        this.showToast('Content updated!', 'success');
-    },
-    
-    async deleteContent(id) {
-        if (!confirm('Are you sure you want to delete this content?')) return;
-        
-        if (this.isFirebaseReady) {
-            await this.deleteFromFirebase(id);
-        }
-        
-        this.movies = this.movies.filter(m => m.id !== id);
-        this.saveToLocalStorage();
-        this.renderMovies();
-        this.renderAdminTable();
-        this.showToast('Content deleted!', 'info');
-    },
-    
-    // ===== HERO SLIDER =====
-    initHeroSlider() {
-        const container = document.getElementById('hero-slides');
-        const dotsContainer = document.getElementById('hero-dots');
-        
-        if (!container || !dotsContainer || this.heroSlides.length === 0) return;
-        
-        this.updateHeroSlider(this.heroSlides);
-    },
-    
-    updateHeroSlider(movies) {
-        this.heroSlides = movies;
-        this.currentHeroIndex = 0;
-        
-        const container = document.getElementById('hero-slides');
-        const dotsContainer = document.getElementById('hero-dots');
-        
-        if (!container || !dotsContainer) return;
-        
-        if (movies.length === 0) {
-            container.innerHTML = '<div class="flex items-center justify-center h-full text-gray-500">No featured content</div>';
-            dotsContainer.innerHTML = '';
-            return;
-        }
-        
-        container.innerHTML = movies.map((movie, i) => `
-            <div class="hero-slide ${i === 0 ? 'active' : ''}" data-index="${i}">
-                <img src="${movie.poster}" alt="${movie.title}" loading="eager" onerror="this.src='https://via.placeholder.com/800x450/1a1a1a/666?text=No+Image'">
-                <div class="hero-gradient-overlay"></div>
-                <div class="absolute bottom-0 left-0 right-0 p-6 md:p-10">
-                    <span class="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block">FEATURED</span>
-                    <h2 class="text-2xl md:text-4xl font-black mb-2 text-white">${movie.title}</h2>
-                    <p class="text-gray-300 text-sm mb-4 max-w-lg line-clamp-2">${movie.description}</p>
-                    <button onclick="app.playMovieById('${movie.id}')" class="bg-white text-black px-6 py-3 rounded-full font-bold flex items-center gap-2 hover:bg-gray-200 transition">
-                        <i class="fas fa-play"></i> Watch Now
-                    </button>
-                </div>
-            </div>
-        `).join('');
-        
-        dotsContainer.innerHTML = movies.map((_, i) => `
-            <div class="hero-dot ${i === 0 ? 'active' : ''}" onclick="app.goToHeroSlide(${i})"></div>
-        `).join('');
-        
-        clearInterval(this.heroInterval);
-        this.heroInterval = setInterval(() => this.nextHeroSlide(), 4000);
-    },
-    
-    nextHeroSlide() {
-        const slides = document.querySelectorAll('.hero-slide');
-        const dots = document.querySelectorAll('.hero-dot');
-        if (slides.length === 0) return;
-        
-        slides[this.currentHeroIndex].classList.remove('active');
-        dots[this.currentHeroIndex].classList.remove('active');
-        
-        this.currentHeroIndex = (this.currentHeroIndex + 1) % slides.length;
-        
-        slides[this.currentHeroIndex].classList.add('active');
-        dots[this.currentHeroIndex].classList.add('active');
-    },
-    
-    goToHeroSlide(index) {
-        const slides = document.querySelectorAll('.hero-slide');
-        const dots = document.querySelectorAll('.hero-dot');
-        if (slides.length === 0) return;
-        
-        slides[this.currentHeroIndex].classList.remove('active');
-        dots[this.currentHeroIndex].classList.remove('active');
-        
-        this.currentHeroIndex = index;
-        
-        slides[this.currentHeroIndex].classList.add('active');
-        dots[this.currentHeroIndex].classList.add('active');
-        
-        clearInterval(this.heroInterval);
-        this.heroInterval = setInterval(() => this.nextHeroSlide(), 4000);
-    },
-    
-    // ===== CATEGORY FILTER =====
-    renderMovies(category = 'All') {
-        const filtered = category === 'All' ? this.movies : this.movies.filter(m => m.category === category);
-        
-        this.renderMovieRow('trending-container', filtered.slice(0, 10));
-        
-        const shuffled = [...filtered].sort(() => Math.random() - 0.5);
-        this.renderMovieRow('foryou-container', shuffled.slice(0, 10));
-        
-        const newest = [...filtered].sort((a, b) => b.year - a.year);
-        this.renderMovieRow('new-container', newest.slice(0, 10));
-        
-        this.renderContinueWatching();
-    },
-    
-    filterCategory(category) {
-        document.querySelectorAll('.category-pill').forEach(btn => {
-            btn.classList.remove('active');
-            if (btn.dataset.cat === category) btn.classList.add('active');
-        });
-        
-        let filtered = this.movies;
-        if (category !== 'All') {
-            filtered = this.movies.filter(m => m.category === category);
-        }
-        
-        this.renderMovieRow('trending-container', filtered.slice(0, 10));
-        
-        const shuffled = [...filtered].sort(() => Math.random() - 0.5);
-        this.renderMovieRow('foryou-container', shuffled.slice(0, 10));
-        
-        const newest = [...filtered].sort((a, b) => b.year - a.year);
-        this.renderMovieRow('new-container', newest.slice(0, 10));
-        
-        if (category !== 'All' && filtered.length > 0) {
-            this.updateHeroSlider(filtered.slice(0, 5));
-        } else if (category === 'All') {
-            this.heroSlides = this.movies.filter(m => m.featured).slice(0, 5);
-            this.updateHeroSlider(this.heroSlides);
-        }
-        
-        this.currentCategory = category;
-    },
-    
-    renderMovieRow(containerId, movies) {
-        const container = document.getElementById(containerId);
-        if (!container) return;
-        
-        if (movies.length === 0) {
-            container.innerHTML = '<p class="text-gray-500 text-sm">No content available</p>';
-            return;
-        }
-        
-        container.innerHTML = movies.map(movie => `
-            <div class="movie-card flex-shrink-0 w-36 md:w-44" onclick="app.playMovieById('${movie.id}')">
-                <div class="relative rounded-xl overflow-hidden aspect-[2/3] mb-2 bg-gray-900">
-                    <img src="${movie.poster}" alt="${movie.title}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image'">
-                    <div class="play-overlay">
-                        <div class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
-                            <i class="fas fa-play text-white ml-1"></i>
-                        </div>
-                    </div>
-                    <div class="absolute top-2 right-2 bg-black/60 backdrop-blur-md rounded-lg px-2 py-1">
-                        <span class="text-yellow-400 text-xs font-bold"><i class="fas fa-star mr-1"></i>${movie.rating}</span>
-                    </div>
-                </div>
-                <h4 class="font-semibold text-sm truncate">${movie.title}</h4>
-                <p class="text-gray-500 text-xs">${movie.year} &middot; ${movie.duration}</p>
-            </div>
-        `).join('');
-    },
-    
-    renderContinueWatching() {
-        const container = document.getElementById('continue-container');
-        const section = document.getElementById('continue-watching-section');
-        
-        if (!container || !section) return;
-        
-        if (this.continueWatching.length === 0) {
-            section.classList.add('hidden');
-            return;
-        }
-        
-        section.classList.remove('hidden');
-        container.innerHTML = this.continueWatching.map(movie => `
-            <div class="movie-card flex-shrink-0 w-36 md:w-44" onclick="app.playMovieById('${movie.id}')">
-                <div class="relative rounded-xl overflow-hidden aspect-[2/3] mb-2 bg-gray-900">
-                    <img src="${movie.poster}" alt="${movie.title}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image'">
-                    <div class="play-overlay">
-                        <div class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
-                            <i class="fas fa-play text-white ml-1"></i>
-                        </div>
-                    </div>
-                    <div class="absolute bottom-0 left-0 right-0 h-1 bg-gray-800">
-                        <div class="h-full bg-red-600" style="width: ${movie.progress || 30}%"></div>
-                    </div>
-                </div>
-                <h4 class="font-semibold text-sm truncate">${movie.title}</h4>
-                <p class="text-gray-500 text-xs">${movie.progress || 30}% watched</p>
-            </div>
-        `).join('');
-    },
-    
-    // ===== VIDEO PLAYER =====
-    playMovieById(id) {
-        console.log('Playing movie ID:', id);
-        const movie = this.movies.find(m => m.id === id);
-        if (!movie) {
-            console.error('Movie not found:', id);
-            this.showToast('Video not found!', 'error');
-            return;
-        }
-        this.playMovie(movie);
-    },
-    
-    playMovie(movie) {
-        console.log('Playing:', movie.title, 'URL:', movie.videoUrl);
-        
-        if (!movie.videoUrl) {
-            this.showToast('Video URL missing!', 'error');
-            return;
-        }
-        
-        this.currentMovie = movie;
-        
-        const existingIndex = this.continueWatching.findIndex(m => m.id === movie.id);
-        if (existingIndex !== -1) {
-            const existing = this.continueWatching[existingIndex];
-            this.continueWatching.splice(existingIndex, 1);
-            this.continueWatching.unshift({...existing, progress: existing.progress || 0});
-        } else {
-            this.continueWatching.unshift({...movie, progress: 0});
-            if (this.continueWatching.length > 10) this.continueWatching.pop();
-        }
-        this.saveToLocalStorage();
-        
-        // Check if ad should show
-        if (typeof this.checkAndShowAd === 'function') {
-            this.checkAndShowAd();
-        }
-        
-        this.openPlayer(movie);
-    },
-    
-    extractDailymotionId(url) {
-        if (!url) return null;
-        
-        const patterns = [
-            /video\/([a-zA-Z0-9]+)/,
-            /dailymotion\.com\/embed\/video\/([a-zA-Z0-9]+)/,
-            /dai\.ly\/([a-zA-Z0-9]+)/,
-            /([a-zA-Z0-9]{5,})/
-        ];
-        
-        for (let pattern of patterns) {
-            const match = url.match(pattern);
-            if (match && match[1] && match[1].length >= 5) {
-                return match[1];
+            document.getElementById('admin-login-modal').classList.add('active');
+            document.getElementById('admin-username').value = '';
+            document.getElementById('admin-password').value = '';
+            setTimeout(() => document.getElementById('admin-username').focus(), 100);
+        },
+        
+        closeAdminLogin(e) {
+            if (!e || e.target === document.getElementById('admin-login-modal')) {
+                document.getElementById('admin-login-modal').classList.remove('active');
             }
-        }
+        },
         
-        console.warn('Could not extract Dailymotion ID from:', url);
-        return null;
-    },
-    
-    openPlayer(movie) {
-        const titleEl = document.getElementById('player-title');
-        const metaEl = document.getElementById('player-meta');
-        const ratingEl = document.getElementById('player-rating');
-        const yearEl = document.getElementById('player-year');
-        const durationEl = document.getElementById('player-duration');
-        const iframe = document.getElementById('dailymotion-iframe');
-        
-        if (!titleEl || !iframe) {
-            console.error('Player elements not found!');
-            return;
-        }
-        
-        titleEl.textContent = movie.title || 'Untitled';
-        metaEl.textContent = `${movie.category || 'Unknown'} · ${movie.year || 'N/A'}`;
-        ratingEl.innerHTML = `<i class="fas fa-star mr-1"></i>${movie.rating || '-'}`;
-        yearEl.textContent = movie.year || '';
-        durationEl.textContent = movie.duration || '';
-        
-        const videoId = this.extractDailymotionId(movie.videoUrl);
-        
-        if (videoId) {
-            iframe.src = `https://www.dailymotion.com/embed/video/${videoId}?autoplay=1&mute=0&quality=auto`;
-            console.log('Embed URL:', iframe.src);
-        } else {
-            iframe.src = movie.videoUrl;
-            console.log('Direct URL fallback:', iframe.src);
-        }
-        
-        this.showScreen('player-screen');
-    },
-    
-    closePlayer() {
-        const iframe = document.getElementById('dailymotion-iframe');
-        if (iframe) {
-            iframe.src = 'about:blank';
-        }
-        this.currentMovie = null;
-        this.showScreen('main-screen');
-    },
-    
-    // ===== SHARE =====
-    shareContent() {
-        if (!this.currentMovie) return;
-        
-        const shareData = {
-            title: this.currentMovie.title,
-            text: `Watch ${this.currentMovie.title} on STREAMER!`,
-            url: `${window.location.origin}${window.location.pathname}?watch=${this.currentMovie.id}`
-        };
-        
-        if (navigator.share) {
-            navigator.share(shareData);
-        } else {
-            navigator.clipboard.writeText(shareData.url).then(() => {
-                this.showToast('Link copied to clipboard!', 'success');
-            });
-        }
-    },
-    
-    shareApp() {
-        const shareData = {
-            title: 'STREAMER',
-            text: 'Check out STREAMER - Premium OTT Platform!',
-            url: window.location.href
-        };
-        
-        if (navigator.share) {
-            navigator.share(shareData);
-        } else {
-            navigator.clipboard.writeText(window.location.href).then(() => {
-                this.showToast('App link copied!', 'success');
-            });
-        }
-    },
-    
-    // ===== SEARCH =====
-    searchMovies() {
-        const query = document.getElementById('search-input').value.toLowerCase().trim();
-        const container = document.getElementById('search-container');
-        
-        if (!container) return;
-        
-        if (!query) {
-            container.innerHTML = `
-                <div class="col-span-full text-center py-12 text-gray-500">
-                    <i class="fas fa-search text-4xl mb-4 opacity-50"></i>
-                    <p>Type to search content...</p>
-                </div>
-            `;
-            return;
-        }
-        
-        const results = this.movies.filter(m => 
-            m.title.toLowerCase().includes(query) || 
-            m.category.toLowerCase().includes(query) ||
-            m.description.toLowerCase().includes(query)
-        );
-        
-        if (results.length === 0) {
-            container.innerHTML = `
-                <div class="col-span-full text-center py-12 text-gray-500">
-                    <i class="fas fa-film text-4xl mb-4 opacity-50"></i>
-                    <p>No results found for "${query}"</p>
-                </div>
-            `;
-            return;
-        }
-        
-        container.innerHTML = results.map(movie => `
-            <div class="movie-card cursor-pointer" onclick="app.playMovieById('${movie.id}')">
-                <div class="relative rounded-xl overflow-hidden aspect-[2/3] mb-2 bg-gray-900">
-                    <img src="${movie.poster}" alt="${movie.title}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image'">
-                    <div class="play-overlay">
-                        <div class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
-                            <i class="fas fa-play text-white ml-1"></i>
-                        </div>
-                    </div>
-                    <div class="absolute top-2 right-2 bg-black/60 backdrop-blur-md rounded-lg px-2 py-1">
-                        <span class="text-yellow-400 text-xs font-bold"><i class="fas fa-star mr-1"></i>${movie.rating}</span>
-                    </div>
-                </div>
-                <h4 class="font-semibold text-sm truncate">${movie.title}</h4>
-                <p class="text-gray-500 text-xs">${movie.year} &middot; ${movie.duration}</p>
-            </div>
-        `).join('');
-    },
-    
-    // ===== PROFILE STATS =====
-    updateProfileStats() {
-        const continueCount = document.getElementById('continue-count');
-        const totalCount = document.getElementById('total-count');
-        const watchTime = document.getElementById('watch-time');
-        
-        if (continueCount) continueCount.textContent = this.continueWatching.length;
-        if (totalCount) totalCount.textContent = this.movies.length;
-        if (watchTime) watchTime.textContent = Math.floor(this.watchTime / 60) + 'h';
-    },
-    
-    clearContinueWatching() {
-        this.continueWatching = [];
-        this.saveToLocalStorage();
-        this.renderContinueWatching();
-        this.updateProfileStats();
-        this.showToast('History cleared!', 'info');
-    },
-    
-    clearAllData() {
-        if (!confirm('Clear all watch history?')) return;
-        this.continueWatching = [];
-        this.watchTime = 0;
-        this.saveToLocalStorage();
-        this.updateProfileStats();
-        this.showToast('All data cleared!', 'info');
-    },
-    
-    updateAdPreference() {
-        const freq = document.getElementById('user-ad-freq').value;
-        const intervals = { low: 12, normal: 8, high: 5 };
-        this.adInterval = intervals[freq] || 8;
-        this.saveToLocalStorage();
-        this.showToast(`Ad frequency set to ${freq}`, 'info');
-    },
-    
-    // ===== LOCAL STORAGE =====
-    saveToLocalStorage() {
-        const data = {
-            movies: this.movies,
-            continueWatching: this.continueWatching,
-            watchTime: this.watchTime,
-            adInterval: this.adInterval || 8,
-            adSkipTime: this.adSkipTime || 5,
-            maxAdsPerSession: this.maxAdsPerSession || 5,
-            adsEnabled: this.adsEnabled || false,
-            adLinks: this.adLinks || [],
-            currentAdIndex: this.currentAdIndex || 0,
-            lastAdTime: this.lastAdTime || 0,
-            totalAdsShown: this.totalAdsShown || 0,
-            todayEarnings: this.todayEarnings || 0,
-            userAdFreq: this.userAdFreq || 'normal',
-            adFreeUntil: this.adFreeUntil || 0
-        };
-        localStorage.setItem('streamer_data', JSON.stringify(data));
-    },
-    
-    loadFromLocalStorage() {
-        try {
-            const data = JSON.parse(localStorage.getItem('streamer_data'));
-            if (data) {
-                this.movies = data.movies || [];
-                this.continueWatching = data.continueWatching || [];
-                this.watchTime = data.watchTime || 0;
-                this.adInterval = data.adInterval || 8;
-                this.adSkipTime = data.adSkipTime || 5;
-                this.maxAdsPerSession = data.maxAdsPerSession || 5;
-                this.adsEnabled = data.adsEnabled || false;
-                this.adLinks = data.adLinks || [];
-                this.currentAdIndex = data.currentAdIndex || 0;
-                this.lastAdTime = data.lastAdTime || 0;
-                this.totalAdsShown = data.totalAdsShown || 0;
-                this.todayEarnings = data.todayEarnings || 0;
-                this.userAdFreq = data.userAdFreq || 'normal';
-                this.adFreeUntil = data.adFreeUntil || 0;
-            }
-        } catch (e) {
-            console.error('Error loading data:', e);
-        }
-    },
-    
-    // ===== DEMO DATA =====
-    loadDemoData() {
-        if (this.movies.length === 0) {
-            this.movies = [
-                {
-                    id: 'demo1',
-                    title: 'Attack on Titan',
-                    category: 'Anime',
-                    year: 2023,
-                    duration: '24 min',
-                    rating: 9.1,
-                    description: 'Humanity fights for survival against giant humanoid Titans.',
-                    poster: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=300&h=450&fit=crop',
-                    videoUrl: 'https://www.dailymotion.com/video/x8z5x2v',
-                    featured: true
-                },
-                {
-                    id: 'demo2',
-                    title: 'Demon Slayer',
-                    category: 'Anime',
-                    year: 2023,
-                    duration: '24 min',
-                    rating: 8.7,
-                    description: 'A young boy becomes a demon slayer to cure his sister.',
-                    poster: 'https://images.unsplash.com/photo-1541562232579-512a21360020?w=300&h=450&fit=crop',
-                    videoUrl: 'https://www.dailymotion.com/video/x8z5x2w',
-                    featured: true
-                },
-                {
-                    id: 'demo3',
-                    title: 'Solo Leveling',
-                    category: 'Anime',
-                    year: 2024,
-                    duration: '24 min',
-                    rating: 8.9,
-                    description: 'The weakest hunter becomes the strongest.',
-                    poster: 'https://images.unsplash.com/photo-1618336753974-aae8e04506aa?w=300&h=450&fit=crop',
-                    videoUrl: 'https://www.dailymotion.com/video/x8z5x2x',
-                    featured: true
-                },
-                {
-                    id: 'demo4',
-                    title: 'My Demon',
-                    category: 'Korean Drama',
-                    year: 2024,
-                    duration: '70 min',
-                    rating: 8.3,
-                    description: 'A demon loses his powers and falls in love.',
-                    poster: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=300&h=450&fit=crop',
-                    videoUrl: 'https://www.dailymotion.com/video/x8z5x2y',
-                    featured: false
-                },
-                {
-                    id: 'demo5',
-                    title: 'The Glory',
-                    category: 'Korean Drama',
-                    year: 2023,
-                    duration: '60 min',
-                    rating: 8.8,
-                    description: 'A woman seeks revenge on her bullies.',
-                    poster: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=300&h=450&fit=crop',
-                    videoUrl: 'https://www.dailymotion.com/video/x8z5x2z',
-                    featured: false
-                },
-                {
-                    id: 'demo6',
-                    title: 'Soul Land',
-                    category: 'Chinese Anime',
-                    year: 2024,
-                    duration: '20 min',
-                    rating: 8.5,
-                    description: 'A martial artist reincarnates in a fantasy world.',
-                    poster: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300&h=450&fit=crop',
-                    videoUrl: 'https://www.dailymotion.com/video/x8z5x3a',
-                    featured: false
-                },
-                {
-                    id: 'demo7',
-                    title: 'Battle Through Heavens',
-                    category: 'Chinese Anime',
-                    year: 2023,
-                    duration: '22 min',
-                    rating: 8.2,
-                    description: 'A genius cultivator rises from nothing.',
-                    poster: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300&h=450&fit=crop',
-                    videoUrl: 'https://www.dailymotion.com/video/x8z5x3b',
-                    featured: false
-                },
-                {
-                    id: 'demo8',
-                    title: 'Oppenheimer',
-                    category: 'Movies',
-                    year: 2023,
-                    duration: '180 min',
-                    rating: 8.6,
-                    description: 'The story of American scientist J. Robert Oppenheimer.',
-                    poster: 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=300&h=450&fit=crop',
-                    videoUrl: 'https://www.dailymotion.com/video/x8z5x3c',
-                    featured: true
+        adminLogin() {
+            const username = btoa(document.getElementById('admin-username').value.trim());
+            const password = btoa(document.getElementById('admin-password').value);
+            
+            if (username === this.adminCredentials.username && password === this.adminCredentials.password) {
+                this.isAdmin = true;
+                document.body.classList.add('admin-logged');
+                this.closeAdminLogin();
+                this.showToast('Admin login successful!', 'success');
+                
+                setTimeout(() => {
+                    this.showScreen('main-screen');
+                    setTimeout(() => this.showAdminPanel(), 400);
+                }, 300);
+            } else {
+                this.showToast('Invalid credentials!', 'error');
+                const modal = document.querySelector('#admin-login-modal .modal-content');
+                if (modal) {
+                    modal.style.animation = 'shake 0.5s';
+                    setTimeout(() => modal.style.animation = '', 500);
                 }
-            ];
-            this.saveToLocalStorage();
-        }
-        
-        this.heroSlides = this.movies.filter(m => m.featured).slice(0, 5);
-        if (this.heroSlides.length === 0) {
-            this.heroSlides = this.movies.slice(0, 4);
-        }
-    },
-    
-    // ===== TOAST NOTIFICATIONS =====
-    showToast(message, type = 'info') {
-        const container = document.getElementById('toast-container');
-        if (!container) return;
-        
-        const toast = document.createElement('div');
-        toast.className = `toast ${type}`;
-        
-        const icons = {
-            success: 'fa-check-circle',
-            error: 'fa-exclamation-circle',
-            info: 'fa-info-circle',
-            gold: 'fa-coins'
-        };
-        
-        toast.innerHTML = `
-            <i class="fas ${icons[type] || icons.info}"></i>
-            <span>${message}</span>
-        `;
-        
-        container.appendChild(toast);
-        
-        setTimeout(() => {
-            toast.style.opacity = '0';
-            toast.style.transform = 'translateX(100%)';
-            setTimeout(() => toast.remove(), 300);
-        }, 3000);
-    },
-    
-    // ===== SECRET SEARCH TRIGGER =====
-    setupSearchTrigger() {
-        const searchInput = document.getElementById('search-input');
-        if (!searchInput) return;
-        
-        searchInput.addEventListener('input', (e) => {
-            const value = e.target.value;
-            
-            if (this.searchTrigger.includes(value) && value.length > 0) {
-                this.triggerTyped = value;
             }
-            
-            if (value === this.searchTrigger) {
-                searchInput.value = '';
-                this.triggerTyped = '';
+        },
+        
+        // ===== ADMIN PANEL =====
+        showAdminPanel() {
+            if (!this.isAdmin) {
                 this.showAdminLogin();
                 return;
             }
             
-            if (!this.searchTrigger.startsWith(value)) {
-                this.triggerTyped = '';
-            }
-        });
-    },
-    
-    // ===== IMAGE UPLOAD =====
-    handleImageUpload(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        
-        if (file.size > 5 * 1024 * 1024) {
-            this.showToast('File too large! Max 5MB', 'error');
-            return;
-        }
-        
-        const progressBar = document.getElementById('upload-progress');
-        const preview = document.getElementById('upload-preview');
-        const uploadIcon = document.getElementById('upload-icon');
-        const uploadText = document.getElementById('upload-text');
-        
-        let progress = 0;
-        const interval = setInterval(() => {
-            progress += Math.random() * 15;
-            if (progress >= 100) {
-                progress = 100;
-                clearInterval(interval);
-            }
-            if (progressBar) progressBar.style.width = progress + '%';
-        }, 100);
-        
-        const reader = new FileReader();
-        
-        reader.onload = (e) => {
-            const imageData = e.target.result;
-            const img = new Image();
-            img.onload = () => {
-                if (preview) {
-                    preview.src = imageData;
-                    preview.classList.add('visible');
-                    preview.dataset.imageData = imageData;
-                }
-                if (uploadIcon) uploadIcon.style.display = 'none';
-                if (uploadText) uploadText.style.display = 'none';
-                if (progressBar) progressBar.style.width = '100%';
-                this.showToast('Image uploaded successfully!', 'success');
-                setTimeout(() => {
-                    if (progressBar) progressBar.style.width = '0%';
-                }, 1000);
-            };
-            img.onerror = () => {
-                this.showToast('Invalid image file!', 'error');
-                if (progressBar) progressBar.style.width = '0%';
-            };
-            img.src = imageData;
-        };
-        
-        reader.onerror = () => {
-            this.showToast('Failed to read image!', 'error');
-            if (progressBar) progressBar.style.width = '0%';
-        };
-        
-        reader.readAsDataURL(file);
-    },
-    
-    // ===== REWARD AD SYSTEM (Placeholders for Part 4) =====
-    showRewardModal() {
-        const modal = document.getElementById('reward-modal');
-        if (modal) modal.classList.add('active');
-    },
-    
-    closeRewardModal(e) {
-        if (!e || e.target === document.getElementById('reward-modal')) {
-            const modal = document.getElementById('reward-modal');
-            if (modal) modal.classList.remove('active');
-        }
-    },
-    
-    watchRewardAd() {
-        // Implemented in Part 4
-        if (typeof this.showSmartAd === 'function') {
-            this.showSmartAd(true); // true = reward mode
-        }
-    },
-    
-    showWelcomeAd() {
-        // Implemented in Part 4
-        if (typeof this.showSmartAd === 'function') {
-            this.showSmartAd(false, true); // false = not reward, true = welcome
-        }
-    },
-    
-    checkAndShowAd() {
-        // Implemented in Part 4
-        if (typeof this.checkSmartAd === 'function') {
-            this.checkSmartAd();
-        }
-    }
-};
-
-// Initialize app when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    app.init();
-});
-// ==========================================
-// STREAMER APP - PART 3: ADMIN & AD NETWORKS
-// Admin Panel, Firebase Sync, Multi Ad Links, Stats
-// ==========================================
-
-// Extend app object with Part 3 functionality
-Object.assign(app, {
-    
-    // ===== AD NETWORKS CONFIGURATION =====
-    defaultAdNetworks: [
-        { name: 'ShrinkMe', url: 'https://shrinkme.io/', cpm: 8, weight: 5, tier: 'premium' },
-        { name: 'Linkvertise', url: 'https://linkvertise.com/', cpm: 6, weight: 4, tier: 'premium' },
-        { name: 'AdShrink', url: 'https://adshrink.it/', cpm: 5, weight: 3, tier: 'premium' },
-        { name: 'AdFly', url: 'https://adf.ly/', cpm: 3, weight: 4, tier: 'standard' },
-        { name: 'OUO.io', url: 'https://ouo.io/', cpm: 3, weight: 3, tier: 'standard' },
-        { name: 'Shorte.st', url: 'https://shorte.st/', cpm: 2.5, weight: 3, tier: 'standard' },
-        { name: 'FC.LC', url: 'https://fc.lc/', cpm: 2, weight: 3, tier: 'standard' },
-        { name: 'BC.VC', url: 'https://bc.vc/', cpm: 1.5, weight: 2, tier: 'backup' },
-        { name: 'Cut-Win', url: 'https://cut-win.com/', cpm: 1.2, weight: 2, tier: 'backup' },
-        { name: 'EXE.io', url: 'https://exe.io/', cpm: 1, weight: 2, tier: 'backup' },
-        { name: 'CLK.sh', url: 'https://clk.sh/', cpm: 0.8, weight: 1, tier: 'backup' },
-        { name: 'UII.io', url: 'https://uii.io/', cpm: 0.7, weight: 1, tier: 'backup' },
-        { name: 'Oke.io', url: 'https://oke.io/', cpm: 0.6, weight: 1, tier: 'backup' },
-        { name: 'CPMlink', url: 'https://cpmlink.net/', cpm: 0.5, weight: 1, tier: 'backup' },
-        { name: 'Short.pe', url: 'https://short.pe/', cpm: 0.5, weight: 1, tier: 'backup' }
-    ],
-    
-    // ===== MULTI AD LINKS MANAGEMENT =====
-    toggleAds() {
-        this.adsEnabled = !this.adsEnabled;
-        const toggle = document.getElementById('ads-toggle');
-        if (toggle) toggle.classList.toggle('active', this.adsEnabled);
-        
-        // Save settings
-        const intervalInput = document.getElementById('admin-ad-interval');
-        if (intervalInput) this.adInterval = parseInt(intervalInput.value) || 8;
-        
-        const skipInput = document.getElementById('admin-ad-skip');
-        if (skipInput) this.adSkipTime = parseInt(skipInput.value) || 5;
-        
-        const maxAdsInput = document.getElementById('admin-max-ads');
-        if (maxAdsInput) this.maxAdsPerSession = parseInt(maxAdsInput.value) || 5;
-        
-        // Collect all ad links
-        this.collectAdLinks();
-        
-        this.saveToLocalStorage();
-        this.showToast(this.adsEnabled ? `Multi Ads enabled! ${this.adLinks.length} networks active` : 'Ads disabled!', this.adsEnabled ? 'success' : 'info');
-        
-        // Update stats
-        this.updateAdminStats();
-    },
-    
-    collectAdLinks() {
-        const inputs = document.querySelectorAll('.ad-link-input');
-        this.adLinks = [];
-        inputs.forEach(input => {
-            if (input.value.trim()) {
-                this.adLinks.push(input.value.trim());
-            }
-        });
-        
-        // If no links, use defaults
-        if (this.adLinks.length === 0) {
-            this.adLinks = this.defaultAdNetworks.map(n => n.url);
-        }
-    },
-    
-    addAdLinkField(value = '') {
-        const container = document.getElementById('ad-links-container');
-        if (!container) return;
-        
-        const div = document.createElement('div');
-        div.className = 'ad-link-item';
-        div.innerHTML = `
-            <input type="url" class="form-input ad-link-input" placeholder="https://shrinkme.io/XXXXXX" value="${value}">
-            <button onclick="this.parentElement.remove()" title="Remove"><i class="fas fa-times"></i></button>
-        `;
-        container.appendChild(div);
-    },
-    
-    renderAdLinks() {
-        const container = document.getElementById('ad-links-container');
-        if (!container) return;
-        
-        container.innerHTML = '';
-        
-        if (this.adLinks.length === 0) {
-            // Add default networks with sample links
-            this.defaultAdNetworks.forEach(network => {
-                this.addAdLinkField(network.url + 'sample123');
-            });
-        } else {
-            this.adLinks.forEach(link => {
-                this.addAdLinkField(link);
-            });
-        }
-    },
-    
-    // ===== WEIGHTED AD SELECTION =====
-    getWeightedAdLink() {
-        if (this.adLinks.length === 0) return 'https://shrinkme.io/';
-        
-        // Simple rotation for now (can be enhanced with geo-targeting)
-        const link = this.adLinks[this.currentAdIndex];
-        this.currentAdIndex = (this.currentAdIndex + 1) % this.adLinks.length;
-        return link;
-    },
-    
-    getBestAdByGeo() {
-        // Detect country and return best network
-        const country = this.detectCountry();
-        const geoMap = {
-            'US': ['shrinkme.io', 'linkvertise.com', 'adshrink.it'],
-            'UK': ['shrinkme.io', 'linkvertise.com', 'shorte.st'],
-            'CA': ['shrinkme.io', 'adshrink.it', 'ouo.io'],
-            'IN': ['ouo.io', 'fc.lc', 'shrinkme.io'],
-            'default': ['shrinkme.io', 'linkvertise.com', 'ouo.io']
-        };
-        
-        const preferred = geoMap[country] || geoMap['default'];
-        
-        // Find matching link
-        for (let pref of preferred) {
-            const match = this.adLinks.find(link => link.includes(pref));
-            if (match) return match;
-        }
-        
-        return this.adLinks[0] || 'https://shrinkme.io/';
-    },
-    
-    detectCountry() {
-        // Try to detect from timezone or language
-        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        const lang = navigator.language || navigator.userLanguage;
-        
-        if (timezone.includes('America') || lang === 'en-US') return 'US';
-        if (timezone.includes('Europe/London') || lang === 'en-GB') return 'UK';
-        if (timezone.includes('Asia/Calcutta') || lang === 'hi-IN') return 'IN';
-        if (timezone.includes('Canada') || lang === 'en-CA') return 'CA';
-        
-        return 'default';
-    },
-    
-    // ===== FIREBASE ANALYTICS & STATS =====
-    async trackAdImpression(adLink, type = 'regular') {
-        if (!this.isFirebaseReady || !this.userId) return;
-        
-        try {
-            const statsRef = window.firebaseCollection(window.firebaseDB, 'ad_stats');
-            await window.firebaseAddDoc(statsRef, {
-                userId: this.userId,
-                adLink: adLink,
-                type: type, // 'regular', 'reward', 'welcome'
-                timestamp: window.firebaseServerTimestamp(),
-                country: this.detectCountry(),
-                device: navigator.userAgent.includes('Mobile') ? 'mobile' : 'desktop'
-            });
-            
-            // Update daily earnings
-            await this.updateDailyEarnings(type);
-        } catch (e) {
-            console.log('Track ad error:', e);
-        }
-    },
-    
-    async updateDailyEarnings(type) {
-        if (!this.isFirebaseReady) return;
-        
-        const today = new Date().toISOString().split('T')[0];
-        const earningsRef = window.firebaseDoc(window.firebaseDB, 'earnings', today);
-        
-        try {
-            const snap = await window.firebaseGetDoc(earningsRef);
-            const earnings = {
-                regular: 0.03,
-                reward: 0.08,
-                welcome: 0.02
-            };
-            
-            const amount = earnings[type] || 0.03;
-            
-            if (snap.exists()) {
-                await window.firebaseUpdateDoc(earningsRef, {
-                    total: (snap.data().total || 0) + amount,
-                    count: (snap.data().count || 0) + 1,
-                    [type]: (snap.data()[type] || 0) + amount
-                });
-            } else {
-                await window.firebaseSetDoc(earningsRef, {
-                    date: today,
-                    total: amount,
-                    count: 1,
-                    regular: type === 'regular' ? amount : 0,
-                    reward: type === 'reward' ? amount : 0,
-                    welcome: type === 'welcome' ? amount : 0
-                });
+            if (this.currentScreen !== 'main-screen') {
+                this.showScreen('main-screen');
             }
             
-            // Update local stats
-            this.todayEarnings = (this.todayEarnings || 0) + amount;
-            this.totalAdsShown = (this.totalAdsShown || 0) + 1;
-            this.saveToLocalStorage();
+            const wrapper = document.getElementById('admin-panel-wrapper');
+            if (!wrapper) return;
             
-        } catch (e) {
-            console.log('Update earnings error:', e);
-        }
-    },
-    
-    async loadAdminStats() {
-        if (!this.isFirebaseReady || !this.isAdmin) return;
-        
-        try {
-            // Load today's earnings
-            const today = new Date().toISOString().split('T')[0];
-            const earningsRef = window.firebaseDoc(window.firebaseDB, 'earnings', today);
-            const earningsSnap = await window.firebaseGetDoc(earningsRef);
+            wrapper.classList.add('visible');
+            wrapper.style.display = 'block';
             
-            if (earningsSnap.exists()) {
-                const data = earningsSnap.data();
-                this.todayEarnings = data.total || 0;
-            }
+            const intervalInput = document.getElementById('admin-ad-interval');
+            if (intervalInput && typeof this.adInterval !== 'undefined') intervalInput.value = this.adInterval;
             
-            // Load total users
-            const usersQuery = window.firebaseQuery(
-                window.firebaseCollection(window.firebaseDB, 'users')
-            );
-            const usersSnap = await window.firebaseGetDocs(usersQuery);
-            this.totalUsers = usersSnap.size;
+            const skipInput = document.getElementById('admin-ad-skip');
+            if (skipInput && typeof this.adSkipTime !== 'undefined') skipInput.value = this.adSkipTime;
             
-            // Calculate CTR
-            const adsQuery = window.firebaseQuery(
-                window.firebaseCollection(window.firebaseDB, 'ad_stats'),
-                window.firebaseOrderBy('timestamp', 'desc')
-            );
-            const adsSnap = await window.firebaseGetDocs(adsQuery);
+            const maxAdsInput = document.getElementById('admin-max-ads');
+            if (maxAdsInput && typeof this.maxAdsPerSession !== 'undefined') maxAdsInput.value = this.maxAdsPerSession;
             
-            let clicks = 0;
-            let impressions = 0;
-            adsSnap.forEach(doc => {
-                impressions++;
-                if (doc.data().clicked) clicks++;
-            });
+            if (typeof this.renderAdLinks === 'function') this.renderAdLinks();
             
-            this.ctr = impressions > 0 ? ((clicks / impressions) * 100).toFixed(1) : 0;
+            const toggle = document.getElementById('ads-toggle');
+            if (toggle && typeof this.adsEnabled !== 'undefined') toggle.classList.toggle('active', this.adsEnabled);
             
+            this.renderAdminTable();
             this.updateAdminStats();
             
-        } catch (e) {
-            console.log('Load admin stats error:', e);
-        }
-    },
-    
-    // ===== CONTENT MANAGEMENT WITH FIREBASE =====
-    async saveContent() {
-        const title = document.getElementById('admin-title').value.trim();
-        const category = document.getElementById('admin-category').value;
-        const year = parseInt(document.getElementById('admin-year').value) || 2024;
-        const duration = document.getElementById('admin-duration').value.trim() || '24 min';
-        const rating = parseFloat(document.getElementById('admin-rating').value) || 0;
-        const description = document.getElementById('admin-description').value.trim();
-        const videoUrl = document.getElementById('admin-video').value.trim();
-        const preview = document.getElementById('upload-preview');
-        
-        if (!title || !videoUrl) {
-            this.showToast('Title and Video URL are required!', 'error');
-            return;
-        }
-        
-        // Get image data
-        let poster = 'https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image';
-        if (preview && preview.dataset.imageData) {
-            poster = preview.dataset.imageData;
-        }
-        
-        // Upload image to Firebase Storage if available
-        let posterUrl = poster;
-        if (this.isFirebaseReady && preview && preview.dataset.imageData && preview.dataset.imageData.startsWith('data:')) {
-            try {
-                posterUrl = await this.uploadImageToStorage(preview.dataset.imageData, title);
-            } catch (e) {
-                console.log('Image upload failed, using base64:', e);
-            }
-        }
-        
-        const movie = {
-            id: 'movie_' + Date.now(),
-            title,
-            category,
-            year,
-            duration,
-            rating,
-            description,
-            poster: posterUrl,
-            videoUrl,
-            featured: false,
-            createdAt: new Date().toISOString()
-        };
-        
-        // Save to Firebase
-        await this.saveToFirebase(movie);
-        
-        this.movies.unshift(movie);
-        this.saveToLocalStorage();
-        this.renderMovies();
-        this.renderAdminTable();
-        this.resetAdminForm();
-        this.showToast('Content saved successfully!', 'success');
-    },
-    
-    async uploadImageToStorage(base64Data, title) {
-        if (!this.isFirebaseReady || !window.firebaseStorage) {
-            throw new Error('Storage not available');
-        }
-        
-        // Convert base64 to blob
-        const response = await fetch(base64Data);
-        const blob = await response.blob();
-        
-        // Create unique filename
-        const filename = `posters/${Date.now()}_${title.replace(/\s+/g, '_').toLowerCase()}.jpg`;
-        const storageRef = window.firebaseRef(window.firebaseStorage, filename);
-        
-        // Upload
-        await window.firebaseUploadBytes(storageRef, blob);
-        const downloadUrl = await window.firebaseGetDownloadURL(storageRef);
-        
-        return downloadUrl;
-    },
-    
-    async updateContent() {
-        const id = document.getElementById('edit-id').value;
-        const movie = this.movies.find(m => m.id === id);
-        if (!movie) return;
-        
-        movie.title = document.getElementById('edit-title').value.trim();
-        movie.category = document.getElementById('edit-category').value;
-        movie.year = parseInt(document.getElementById('edit-year').value) || 2024;
-        movie.duration = document.getElementById('edit-duration').value.trim();
-        movie.rating = parseFloat(document.getElementById('edit-rating').value) || 0;
-        movie.description = document.getElementById('edit-description').value.trim();
-        movie.videoUrl = document.getElementById('edit-video').value.trim();
-        movie.updatedAt = new Date().toISOString();
-        
-        if (this.isFirebaseReady) {
-            await this.updateFirebase(id, movie);
-        }
-        
-        this.saveToLocalStorage();
-        this.renderMovies();
-        this.renderAdminTable();
-        this.closeEditModal();
-        this.showToast('Content updated!', 'success');
-    },
-    
-    async deleteContent(id) {
-        if (!confirm('Are you sure you want to delete this content?')) return;
-        
-        if (this.isFirebaseReady) {
-            await this.deleteFromFirebase(id);
-        }
-        
-        this.movies = this.movies.filter(m => m.id !== id);
-        this.saveToLocalStorage();
-        this.renderMovies();
-        this.renderAdminTable();
-        this.showToast('Content deleted!', 'info');
-    },
-    
-    // ===== BULK OPERATIONS =====
-    async bulkDelete() {
-        if (!this.isAdmin) return;
-        if (!confirm('Delete ALL content? This cannot be undone!')) return;
-        
-        if (this.isFirebaseReady) {
-            const batch = [];
-            this.movies.forEach(movie => {
-                batch.push(this.deleteFromFirebase(movie.id));
-            });
-            await Promise.all(batch);
-        }
-        
-        this.movies = [];
-        this.saveToLocalStorage();
-        this.renderMovies();
-        this.renderAdminTable();
-        this.showToast('All content deleted!', 'info');
-    },
-    
-    async syncWithFirebase() {
-        if (!this.isFirebaseReady) {
-            this.showToast('Firebase not connected!', 'error');
-            return;
-        }
-        
-        this.showToast('Syncing with cloud...', 'info');
-        
-        try {
-            // Upload all local movies to Firebase
-            for (let movie of this.movies) {
-                if (!movie.synced) {
-                    await this.saveToFirebase(movie);
-                    movie.synced = true;
-                }
-            }
-            
-            this.saveToLocalStorage();
-            this.showToast('Sync complete!', 'success');
-            
-        } catch (e) {
-            console.log('Sync error:', e);
-            this.showToast('Sync failed!', 'error');
-        }
-    },
-    
-    // ===== EXPORT/IMPORT DATA =====
-    exportData() {
-        const data = {
-            movies: this.movies,
-            adLinks: this.adLinks,
-            settings: {
-                adInterval: this.adInterval,
-                adSkipTime: this.adSkipTime,
-                maxAdsPerSession: this.maxAdsPerSession,
-                adsEnabled: this.adsEnabled
-            },
-            exportDate: new Date().toISOString()
-        };
-        
-        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `streamer_backup_${new Date().toISOString().split('T')[0]}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
-        
-        this.showToast('Data exported!', 'success');
-    },
-    
-    importData(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            try {
-                const data = JSON.parse(e.target.result);
-                
-                if (data.movies) {
-                    this.movies = [...this.movies, ...data.movies];
-                    this.saveToLocalStorage();
-                    this.renderMovies();
-                    this.renderAdminTable();
-                }
-                
-                if (data.adLinks) {
-                    this.adLinks = data.adLinks;
-                }
-                
-                if (data.settings) {
-                    this.adInterval = data.settings.adInterval || 8;
-                    this.adSkipTime = data.settings.adSkipTime || 5;
-                    this.maxAdsPerSession = data.settings.maxAdsPerSession || 5;
-                    this.adsEnabled = data.settings.adsEnabled || false;
-                }
-                
-                this.showToast('Data imported successfully!', 'success');
-                
-            } catch (err) {
-                this.showToast('Invalid backup file!', 'error');
-            }
-        };
-        reader.readAsText(file);
-    },
-    
-    // ===== USER MANAGEMENT (Admin) =====
-    async loadUsersList() {
-        if (!this.isFirebaseReady || !this.isAdmin) return;
-        
-        try {
-            const usersQuery = window.firebaseQuery(
-                window.firebaseCollection(window.firebaseDB, 'users'),
-                window.firebaseOrderBy('lastVisit', 'desc')
-            );
-            const snap = await window.firebaseGetDocs(usersQuery);
-            
-            const users = [];
-            snap.forEach(doc => {
-                users.push({ id: doc.id, ...doc.data() });
-            });
-            
-            this.renderUsersTable(users);
-            
-        } catch (e) {
-            console.log('Load users error:', e);
-        }
-    },
-    
-    renderUsersTable(users) {
-        // This can be added to admin panel if needed
-        console.log('Users loaded:', users.length);
-    },
-    
-    // ===== SYSTEM HEALTH CHECK =====
-    async runHealthCheck() {
-        const checks = {
-            firebase: this.isFirebaseReady,
-            storage: !!window.firebaseStorage,
-            auth: !!window.firebaseAuth,
-            movies: this.movies.length,
-            adLinks: this.adLinks.length,
-            localStorage: !!window.localStorage
-        };
-        
-        console.log('=== HEALTH CHECK ===');
-        Object.entries(checks).forEach(([key, value]) => {
-            console.log(`${key}: ${value ? '✅' : '❌'} ${value}`);
-        });
-        
-        return checks;
-    }
-});
-
-// Health check on load
-setTimeout(() => {
-    if (app && typeof app.runHealthCheck === 'function') {
-        app.runHealthCheck();
-    }
-}, 3000);
-// ==========================================
-// STREAMER APP - PART 4: SMART AD SYSTEM & EARNING ENGINE
-// Ad Display, Reward System, Anti-Irritation, Real-time Stats
-// ==========================================
-
-Object.assign(app, {
-    
-    // ===== AD SYSTEM STATE =====
-    sessionAdCount: 0,
-    adsEnabled: false,
-    adInterval: 8, // minutes (default: 8 for user comfort)
-    adSkipTime: 5, // seconds
-    maxAdsPerSession: 5,
-    currentAdIndex: 0,
-    lastAdTime: 0,
-    totalAdsShown: 0,
-    todayEarnings: 0,
-    adFreeUntil: 0, // timestamp until user is ad-free
-    userAdFreq: 'normal', // 'low', 'normal', 'high'
-    isRewardMode: false,
-    adTimerInterval: null,
-    
-    // ===== EARNING DISPLAY =====
-    updateEarningBadge() {
-        const badge = document.getElementById('earning-badge');
-        const amount = document.getElementById('earning-amount');
-        
-        if (!badge || !amount) return;
-        
-        if (this.isAdmin && this.todayEarnings > 0) {
-            badge.style.display = 'block';
-            amount.textContent = this.todayEarnings.toFixed(2);
-        } else {
-            badge.style.display = 'none';
-        }
-    },
-    
-    // ===== SMART AD CHECKER =====
-    checkSmartAd() {
-        // Don't show if ads disabled
-        if (!this.adsEnabled) return false;
-        
-        // Don't show if no ad links
-        if (!this.adLinks || this.adLinks.length === 0) return false;
-        
-        // Don't show if user has ad-free period
-        if (Date.now() < this.adFreeUntil) {
-            console.log('User has ad-free time remaining');
-            return false;
-        }
-        
-        // Don't show if max ads reached for this session
-        if (this.sessionAdCount >= this.maxAdsPerSession) {
-            console.log('Max ads reached for this session');
-            return false;
-        }
-        
-        // Check time interval
-        const now = Date.now();
-        const timeSinceLastAd = now - this.lastAdTime;
-        const intervalMs = this.adInterval * 60 * 1000;
-        
-        if (timeSinceLastAd < intervalMs) {
-            console.log('Ad interval not reached yet');
-            return false;
-        }
-        
-        // All checks passed - show ad
-        this.showSmartAd(false);
-        return true;
-    },
-    
-    // ===== SHOW SMART AD =====
-    showSmartAd(isReward = false, isWelcome = false) {
-        const overlay = document.getElementById('smart-ad-overlay');
-        const timer = document.getElementById('ad-timer');
-        const circle = document.getElementById('ad-progress-circle');
-        const btn = document.getElementById('ad-continue-btn');
-        const counter = document.getElementById('ad-counter');
-        
-        if (!overlay) return;
-        
-        this.isRewardMode = isReward;
-        
-        // Get appropriate ad link
-        const adLink = isWelcome ? this.getWelcomeAdLink() : this.getWeightedAdLink();
-        
-        overlay.classList.add('active');
-        
-        // Show current ad number
-        const currentLinkNum = this.currentAdIndex + 1;
-        const totalLinks = this.adLinks.length;
-        if (counter) counter.textContent = `Ad ${currentLinkNum} of ${totalLinks}`;
-        
-        // Set skip time based on type
-        const skipTime = isReward ? 15 : (isWelcome ? 3 : this.adSkipTime);
-        let count = skipTime;
-        const totalDash = 276; // 2 * PI * 44
-        
-        if (timer) timer.textContent = count;
-        if (btn) {
-            btn.disabled = true;
-            btn.innerHTML = isReward ? 
-                '<i class="fas fa-gift mr-2"></i> Claim Reward' : 
-                '<i class="fas fa-play mr-2"></i> Continue Watching';
-        }
-        
-        // Reset circle
-        if (circle) circle.style.strokeDashoffset = totalDash;
-        
-        // Clear any existing interval
-        if (this.adTimerInterval) clearInterval(this.adTimerInterval);
-        
-        this.adTimerInterval = setInterval(() => {
-            count--;
-            if (timer) timer.textContent = count;
-            
-            // Update circle progress
-            if (circle) {
-                const progress = (skipTime - count) / skipTime;
-                circle.style.strokeDashoffset = totalDash - (totalDash * progress);
-            }
-            
-            if (count <= 0) {
-                clearInterval(this.adTimerInterval);
-                if (btn) {
-                    btn.disabled = false;
-                    btn.innerHTML = isReward ? 
-                        '<i class="fas fa-gift mr-2"></i> Get 2H Ad-Free!' : 
-                        '<i class="fas fa-play mr-2"></i> Continue Watching';
-                }
-                if (timer) timer.textContent = '✓';
-                if (circle) circle.style.strokeDashoffset = 0;
-            }
-        }, 1000);
-        
-        // Track impression
-        this.trackAdImpression(adLink, isReward ? 'reward' : (isWelcome ? 'welcome' : 'regular'));
-    },
-    
-    getWelcomeAdLink() {
-        // Shorter, higher value welcome ad
-        const welcomeLinks = this.adLinks.filter(link => 
-            link.includes('shrinkme') || link.includes('linkvertise')
-        );
-        return welcomeLinks[0] || this.adLinks[0] || 'https://shrinkme.io/';
-    },
-    
-    // ===== WATCH AD AND CONTINUE =====
-    watchAdAndContinue() {
-        const adLink = this.getWeightedAdLink();
-        
-        // Open ad in new tab
-        const adWindow = window.open(adLink, '_blank');
-        
-        // Close overlay
-        const overlay = document.getElementById('smart-ad-overlay');
-        if (overlay) overlay.classList.remove('active');
-        
-        // Update stats
-        this.sessionAdCount++;
-        this.totalAdsShown++;
-        this.lastAdTime = Date.now();
-        
-        // If reward mode, grant ad-free time
-        if (this.isRewardMode) {
-            this.adFreeUntil = Date.now() + (2 * 60 * 60 * 1000); // 2 hours
-            this.showToast('🎉 You got 2 hours ad-free!', 'gold');
-            this.closeRewardModal();
-        } else {
-            this.showToast('Thanks for supporting us!', 'success');
-        }
-        
-        // Update earnings
-        const earnings = this.isRewardMode ? 0.08 : 0.03;
-        this.todayEarnings += earnings;
-        
-        // Save state
-        this.saveToLocalStorage();
-        this.updateEarningBadge();
-        this.updateAdminStats();
-        
-        // Check if popup blocked
-        if (!adWindow || adWindow.closed || typeof adWindow.closed === 'undefined') {
-            this.showToast('Please allow popups for ad revenue', 'info');
-            
-            // Show fallback - redirect current page temporarily
             setTimeout(() => {
-                if (confirm('Popup blocked! Click OK to open ad manually.')) {
-                    window.open(adLink, '_blank');
-                }
-            }, 500);
-        }
-    },
-    
-    // ===== SKIP AD =====
-    skipAd() {
-        if (this.isRewardMode) {
-            this.showToast('Reward cancelled. No ad-free time granted.', 'info');
-            this.closeRewardModal();
-        } else {
-            if (!confirm('Skip ad? You can support us by watching ads!')) return;
-        }
+                wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 300);
+        },
         
-        if (this.adTimerInterval) clearInterval(this.adTimerInterval);
-        
-        const overlay = document.getElementById('smart-ad-overlay');
-        if (overlay) overlay.classList.remove('active');
-        
-        // Still reset timer but no revenue
-        this.lastAdTime = Date.now();
-        this.saveToLocalStorage();
-        
-        if (!this.isRewardMode) {
-            this.showToast('Ad skipped. Consider supporting us later!', 'info');
-        }
-    },
-    
-    // ===== REWARD AD SYSTEM =====
-    showRewardModal() {
-        const modal = document.getElementById('reward-modal');
-        if (modal) modal.classList.add('active');
-    },
-    
-    closeRewardModal(e) {
-        if (!e || e.target === document.getElementById('reward-modal')) {
-            const modal = document.getElementById('reward-modal');
-            if (modal) modal.classList.remove('active');
-        }
-    },
-    
-    watchRewardAd() {
-        this.showSmartAd(true); // true = reward mode
-    },
-    
-    showWelcomeAd() {
-        // Only show welcome ad on first visit
-        const hasVisited = localStorage.getItem('streamer_visited');
-        if (!hasVisited) {
-            localStorage.setItem('streamer_visited', 'true');
-            this.showSmartAd(false, true); // false = not reward, true = welcome
-        }
-    },
-    
-    // ===== WATCH TIMER FOR MID-ROLL ADS =====
-    startWatchTimer() {
-        // Check every minute for ad display
-        setInterval(() => {
-            if (this.currentScreen === 'player-screen') {
-                this.watchTime++;
-                
-                // Check for mid-roll ad every interval
-                if (this.watchTime % this.adInterval === 0) {
-                    this.checkSmartAd();
-                }
-                
-                // Update profile stats periodically
-                if (this.watchTime % 5 === 0) {
-                    this.updateProfileStats();
-                }
+        hideAdminPanel() {
+            const wrapper = document.getElementById('admin-panel-wrapper');
+            if (wrapper) {
+                wrapper.classList.remove('visible');
+                wrapper.style.display = 'none';
             }
-        }, 60000); // Every minute
-    },
-    
-    // ===== ANTI-IRRITATION FEATURES =====
-    shouldShowAd() {
-        // Multiple checks to prevent ad fatigue
+        },
         
-        // 1. Check if user just joined (give them time)
-        if (this.watchTime < 2) return false; // First 2 minutes ad-free
+        updateAdminStats() {
+            if (!this.isAdmin) return;
+            
+            const totalAdsEl = document.getElementById('stat-total-ads');
+            const todayEarningsEl = document.getElementById('stat-today-earnings');
+            const totalUsersEl = document.getElementById('stat-total-users');
+            const ctrEl = document.getElementById('stat-ctr');
+            
+            if (totalAdsEl) totalAdsEl.textContent = this.totalAdsShown || 0;
+            if (todayEarningsEl) todayEarningsEl.textContent = '$' + ((this.todayEarnings || 0)).toFixed(2);
+            if (totalUsersEl) totalUsersEl.textContent = this.totalUsers || 0;
+            if (ctrEl) ctrEl.textContent = (this.ctr || 0) + '%';
+        },
         
-        // 2. Check ad-free period from reward
-        if (Date.now() < this.adFreeUntil) return false;
-        
-        // 3. Check session cap
-        if (this.sessionAdCount >= this.maxAdsPerSession) return false;
-        
-        // 4. Check if user skipped last ad (be nice)
-        const lastAdSkipped = localStorage.getItem('last_ad_skipped');
-        if (lastAdSkipped) {
-            const skipTime = parseInt(lastAdSkipped);
-            if (Date.now() - skipTime < 10 * 60 * 1000) { // 10 min grace
-                return false;
+        // ===== SAVE CONTENT =====
+        async saveContent() {
+            const title = document.getElementById('admin-title').value.trim();
+            const category = document.getElementById('admin-category').value;
+            const year = parseInt(document.getElementById('admin-year').value) || 2024;
+            const duration = document.getElementById('admin-duration').value.trim() || '24 min';
+            const rating = parseFloat(document.getElementById('admin-rating').value) || 0;
+            const description = document.getElementById('admin-description').value.trim();
+            const videoUrl = document.getElementById('admin-video').value.trim();
+            const preview = document.getElementById('upload-preview');
+            
+            if (!title || !videoUrl) {
+                this.showToast('Title and Video URL are required!', 'error');
+                return;
             }
-        }
-        
-        // 5. Check user preference
-        const freqMap = { low: 12, normal: 8, high: 5 };
-        const userInterval = freqMap[this.userAdFreq] || 8;
-        
-        const timeSinceLastAd = Date.now() - this.lastAdTime;
-        if (timeSinceLastAd < userInterval * 60 * 1000) return false;
-        
-        return true;
-    },
-    
-    // ===== AD FREQUENCY CONTROL =====
-    updateAdPreference() {
-        const freqSelect = document.getElementById('user-ad-freq');
-        if (!freqSelect) return;
-        
-        this.userAdFreq = freqSelect.value;
-        const freqMap = { low: 12, normal: 8, high: 5 };
-        this.adInterval = freqMap[this.userAdFreq] || 8;
-        
-        this.saveToLocalStorage();
-        this.showToast(`Ad frequency: ${this.userAdFreq.toUpperCase()} (${this.adInterval} min)`, 'info');
-    },
-    
-    // ===== BACKGROUND AD ROTATION =====
-    startBackgroundRotation() {
-        // Rotate ad links every 30 minutes for freshness
-        setInterval(() => {
-            if (this.adLinks.length > 1) {
-                // Shuffle array slightly
-                const first = this.adLinks.shift();
-                this.adLinks.push(first);
-                this.saveToLocalStorage();
-                console.log('Ad links rotated');
+            
+            let poster = 'https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image';
+            if (preview && preview.dataset.imageData) {
+                poster = preview.dataset.imageData;
             }
-        }, 30 * 60 * 1000); // Every 30 minutes
-    },
-    
-    // ===== MULTI-REDIRECT STRATEGY =====
-    openMultipleRedirects() {
-        // For maximum earning - open multiple ad links in sequence
-        if (this.adLinks.length < 2) return;
-        
-        const primaryLink = this.adLinks[0];
-        const secondaryLink = this.adLinks[1];
-        
-        // Open primary immediately
-        window.open(primaryLink, '_blank');
-        
-        // Open secondary after 2 seconds (if user stays)
-        setTimeout(() => {
-            if (document.visibilityState === 'visible') {
-                window.open(secondaryLink, '_blank');
-                this.trackAdImpression(secondaryLink, 'secondary');
-            }
-        }, 2000);
-    },
-    
-    // ===== EMERGENCY FALLBACK AD =====
-    showFallbackAd() {
-        // When popups are blocked, show inline ad
-        const fallbackUrls = [
-            'https://shrinkme.io/',
-            'https://linkvertise.com/',
-            'https://ouo.io/'
-        ];
-        
-        const randomUrl = fallbackUrls[Math.floor(Math.random() * fallbackUrls.length)];
-        
-        // Create inline banner
-        const banner = document.createElement('div');
-        banner.style.cssText = `
-            position: fixed;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, #ef4444, #a855f7);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 25px;
-            font-weight: 700;
-            z-index: 9999;
-            cursor: pointer;
-            box-shadow: 0 4px 20px rgba(239,68,68,0.4);
-        `;
-        banner.innerHTML = '<i class="fas fa-external-link-alt mr-2"></i> Click to Support Us';
-        banner.onclick = () => {
-            window.open(randomUrl, '_blank');
-            banner.remove();
-        };
-        
-        document.body.appendChild(banner);
-        
-        // Auto remove after 10 seconds
-        setTimeout(() => banner.remove(), 10000);
-    },
-    
-    // ===== SESSION MANAGEMENT =====
-    resetSession() {
-        this.sessionAdCount = 0;
-        this.watchTime = 0;
-        console.log('New session started');
-    },
-    
-    // ===== DAILY RESET =====
-    checkDailyReset() {
-        const lastDate = localStorage.getItem('streamer_last_date');
-        const today = new Date().toISOString().split('T')[0];
-        
-        if (lastDate !== today) {
-            // New day - reset daily stats
-            this.todayEarnings = 0;
-            this.sessionAdCount = 0;
-            localStorage.setItem('streamer_last_date', today);
-            this.saveToLocalStorage();
-            console.log('Daily stats reset');
-        }
-    },
-    
-    // ===== PERFORMANCE MONITORING =====
-    trackPerformance() {
-        const metrics = {
-            pageLoad: performance.now(),
-            adLoadTime: 0,
-            userEngagement: 0
-        };
-        
-        // Track ad load time
-        window.addEventListener('load', () => {
-            metrics.pageLoad = performance.now();
-        });
-        
-        return metrics;
-    },
-    
-    // ===== AUTO-SAVE =====
-    startAutoSave() {
-        // Auto-save every 2 minutes
-        setInterval(() => {
-            this.saveToLocalStorage();
-            console.log('Auto-saved state');
-        }, 2 * 60 * 1000);
-    },
-    
-    // ===== KEYBOARD SHORTCUTS =====
-    setupKeyboardShortcuts() {
-        document.addEventListener('keydown', (e) => {
-            // ESC to close modals
-            if (e.key === 'Escape') {
-                this.closeAdminLogin();
-                this.closeEditModal();
-                this.closeRewardModal();
-                
-                const overlay = document.getElementById('smart-ad-overlay');
-                if (overlay && overlay.classList.contains('active')) {
-                    this.skipAd();
+            
+            let posterUrl = poster;
+            if (this.isFirebaseReady && preview && preview.dataset.imageData && preview.dataset.imageData.startsWith('data:')) {
+                try {
+                    posterUrl = await this.uploadImageToStorage(preview.dataset.imageData, title);
+                } catch (e) {
+                    console.log('Image upload failed, using base64:', e);
                 }
             }
             
-            // Space to pause/play (if in player)
-            if (e.key === ' ' && this.currentScreen === 'player-screen') {
-                // Toggle play/pause logic here if needed
+            const movie = {
+                id: 'movie_' + Date.now(),
+                title,
+                category,
+                year,
+                duration,
+                rating,
+                description,
+                poster: posterUrl,
+                videoUrl,
+                featured: false,
+                createdAt: new Date().toISOString()
+            };
+            
+            await this.saveToFirebase(movie);
+            
+            this.movies.unshift(movie);
+            this.saveToLocalStorage();
+            this.renderMovies();
+            this.renderAdminTable();
+            this.resetAdminForm();
+            this.showToast('Content saved successfully!', 'success');
+        },
+        
+        async uploadImageToStorage(base64Data, title) {
+            if (!this.isFirebaseReady || !window.firebaseStorage) {
+                throw new Error('Storage not available');
             }
-        });
-    },
-    
-    // ===== VISIBILITY API (Pause ads when tab hidden) =====
-    setupVisibilityHandler() {
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                // Pause ad timer when tab is hidden
-                if (this.adTimerInterval) {
-                    clearInterval(this.adTimerInterval);
-                    this.adTimerInterval = null;
-                }
+            
+            const response = await fetch(base64Data);
+            const blob = await response.blob();
+            
+            const filename = `posters/${Date.now()}_${title.replace(/\s+/g, '_').toLowerCase()}.jpg`;
+            const storageRef = window.firebaseRef(window.firebaseStorage, filename);
+            
+            await window.firebaseUploadBytes(storageRef, blob);
+            const downloadUrl = await window.firebaseGetDownloadURL(storageRef);
+            
+            return downloadUrl;
+        },
+        
+        resetAdminForm() {
+            document.getElementById('admin-title').value = '';
+            document.getElementById('admin-year').value = '2024';
+            document.getElementById('admin-duration').value = '';
+            document.getElementById('admin-rating').value = '';
+            document.getElementById('admin-description').value = '';
+            document.getElementById('admin-video').value = '';
+            
+            const preview = document.getElementById('upload-preview');
+            if (preview) {
+                preview.src = '';
+                preview.classList.remove('visible');
+                preview.dataset.imageData = '';
+            }
+            
+            const uploadIcon = document.getElementById('upload-icon');
+            const uploadText = document.getElementById('upload-text');
+            if (uploadIcon) uploadIcon.style.display = 'block';
+            if (uploadText) uploadText.style.display = 'block';
+            
+            const progressBar = document.getElementById('upload-progress');
+            if (progressBar) progressBar.style.width = '0%';
+        },
+        
+        // ===== ADMIN TABLE =====
+        renderAdminTable() {
+            const tbody = document.getElementById('admin-table-body');
+            if (!tbody) return;
+            
+            tbody.innerHTML = this.movies.map(movie => `
+                <tr>
+                    <td><img src="${movie.poster}" alt="${movie.title}" loading="lazy" onerror="this.src='https://via.placeholder.com/50x75/1a1a1a/666?text=No+Image'"></td>
+                    <td>${movie.title}</td>
+                    <td><span class="text-xs bg-white/10 px-2 py-1 rounded">${movie.category}</span></td>
+                    <td>
+                        <button onclick="app.editContent('${movie.id}')" class="action-btn edit" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button onclick="app.deleteContent('${movie.id}')" class="action-btn" title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        },
+        
+        // ===== EDIT CONTENT =====
+        editContent(id) {
+            const movie = this.movies.find(m => m.id === id);
+            if (!movie) return;
+            
+            document.getElementById('edit-id').value = movie.id;
+            document.getElementById('edit-title').value = movie.title;
+            document.getElementById('edit-category').value = movie.category;
+            document.getElementById('edit-year').value = movie.year;
+            document.getElementById('edit-duration').value = movie.duration;
+            document.getElementById('edit-rating').value = movie.rating;
+            document.getElementById('edit-description').value = movie.description;
+            document.getElementById('edit-video').value = movie.videoUrl;
+            
+            document.getElementById('edit-modal').classList.add('active');
+        },
+        
+        closeEditModal(e) {
+            if (!e || e.target === document.getElementById('edit-modal')) {
+                document.getElementById('edit-modal').classList.remove('active');
+            }
+        },
+        
+        async updateContent() {
+            const id = document.getElementById('edit-id').value;
+            const movie = this.movies.find(m => m.id === id);
+            if (!movie) return;
+            
+            movie.title = document.getElementById('edit-title').value.trim();
+            movie.category = document.getElementById('edit-category').value;
+            movie.year = parseInt(document.getElementById('edit-year').value) || 2024;
+            movie.duration = document.getElementById('edit-duration').value.trim();
+            movie.rating = parseFloat(document.getElementById('edit-rating').value) || 0;
+            movie.description = document.getElementById('edit-description').value.trim();
+            movie.videoUrl = document.getElementById('edit-video').value.trim();
+            movie.updatedAt = new Date().toISOString();
+            
+            if (this.isFirebaseReady) {
+                await this.updateFirebase(id, movie);
+            }
+            
+            this.saveToLocalStorage();
+            this.renderMovies();
+            this.renderAdminTable();
+            this.closeEditModal();
+            this.showToast('Content updated!', 'success');
+        },
+        
+        async deleteContent(id) {
+            if (!confirm('Are you sure you want to delete this content?')) return;
+            
+            if (this.isFirebaseReady) {
+                await this.deleteFromFirebase(id);
+            }
+            
+            this.movies = this.movies.filter(m => m.id !== id);
+            this.saveToLocalStorage();
+            this.renderMovies();
+            this.renderAdminTable();
+            this.showToast('Content deleted!', 'info');
+        },
+        
+        // ===== HERO SLIDER =====
+        initHeroSlider() {
+            const container = document.getElementById('hero-slides');
+            const dotsContainer = document.getElementById('hero-dots');
+            
+            if (!container || !dotsContainer || this.heroSlides.length === 0) return;
+            
+            this.updateHeroSlider(this.heroSlides);
+        },
+        
+        updateHeroSlider(movies) {
+            this.heroSlides = movies;
+            this.currentHeroIndex = 0;
+            
+            const container = document.getElementById('hero-slides');
+            const dotsContainer = document.getElementById('hero-dots');
+            
+            if (!container || !dotsContainer) return;
+            
+            if (movies.length === 0) {
+                container.innerHTML = '<div class="flex items-center justify-center h-full text-gray-500">No featured content</div>';
+                dotsContainer.innerHTML = '';
+                return;
+            }
+            
+            container.innerHTML = movies.map((movie, i) => `
+                <div class="hero-slide ${i === 0 ? 'active' : ''}" data-index="${i}">
+                    <img src="${movie.poster}" alt="${movie.title}" loading="eager" onerror="this.src='https://via.placeholder.com/800x450/1a1a1a/666?text=No+Image'">
+                    <div class="hero-gradient-overlay"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 md:p-10">
+                        <span class="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block">FEATURED</span>
+                        <h2 class="text-2xl md:text-4xl font-black mb-2 text-white">${movie.title}</h2>
+                        <p class="text-gray-300 text-sm mb-4 max-w-lg line-clamp-2">${movie.description}</p>
+                        <button onclick="app.playMovieById('${movie.id}')" class="bg-white text-black px-6 py-3 rounded-full font-bold flex items-center gap-2 hover:bg-gray-200 transition">
+                            <i class="fas fa-play"></i> Watch Now
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            
+            dotsContainer.innerHTML = movies.map((_, i) => `
+                <div class="hero-dot ${i === 0 ? 'active' : ''}" onclick="app.goToHeroSlide(${i})"></div>
+            `).join('');
+            
+            clearInterval(this.heroInterval);
+            this.heroInterval = setInterval(() => this.nextHeroSlide(), 4000);
+        },
+        
+        nextHeroSlide() {
+            const slides = document.querySelectorAll('.hero-slide');
+            const dots = document.querySelectorAll('.hero-dot');
+            if (slides.length === 0) return;
+            
+            slides[this.currentHeroIndex].classList.remove('active');
+            dots[this.currentHeroIndex].classList.remove('active');
+            
+            this.currentHeroIndex = (this.currentHeroIndex + 1) % slides.length;
+            
+            slides[this.currentHeroIndex].classList.add('active');
+            dots[this.currentHeroIndex].classList.add('active');
+        },
+        
+        goToHeroSlide(index) {
+            const slides = document.querySelectorAll('.hero-slide');
+            const dots = document.querySelectorAll('.hero-dot');
+            if (slides.length === 0) return;
+            
+            slides[this.currentHeroIndex].classList.remove('active');
+            dots[this.currentHeroIndex].classList.remove('active');
+            
+            this.currentHeroIndex = index;
+            
+            slides[this.currentHeroIndex].classList.add('active');
+            dots[this.currentHeroIndex].classList.add('active');
+            
+            clearInterval(this.heroInterval);
+            this.heroInterval = setInterval(() => this.nextHeroSlide(), 4000);
+        },
+        
+        // ===== CATEGORY FILTER =====
+        renderMovies(category = 'All') {
+            const filtered = category === 'All' ? this.movies : this.movies.filter(m => m.category === category);
+            
+            this.renderMovieRow('trending-container', filtered.slice(0, 10));
+            
+            const shuffled = [...filtered].sort(() => Math.random() - 0.5);
+            this.renderMovieRow('foryou-container', shuffled.slice(0, 10));
+            
+            const newest = [...filtered].sort((a, b) => b.year - a.year);
+            this.renderMovieRow('new-container', newest.slice(0, 10));
+            
+            this.renderContinueWatching();
+        },
+        
+        filterCategory(category) {
+            document.querySelectorAll('.category-pill').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.cat === category) btn.classList.add('active');
+            });
+            
+            let filtered = this.movies;
+            if (category !== 'All') {
+                filtered = this.movies.filter(m => m.category === category);
+            }
+            
+            this.renderMovieRow('trending-container', filtered.slice(0, 10));
+            
+            const shuffled = [...filtered].sort(() => Math.random() - 0.5);
+            this.renderMovieRow('foryou-container', shuffled.slice(0, 10));
+            
+            const newest = [...filtered].sort((a, b) => b.year - a.year);
+            this.renderMovieRow('new-container', newest.slice(0, 10));
+            
+            if (category !== 'All' && filtered.length > 0) {
+                this.updateHeroSlider(filtered.slice(0, 5));
+            } else if (category === 'All') {
+                this.heroSlides = this.movies.filter(m => m.featured).slice(0, 5);
+                this.updateHeroSlider(this.heroSlides);
+            }
+            
+            this.currentCategory = category;
+        },
+        
+        renderMovieRow(containerId, movies) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            if (movies.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-sm">No content available</p>';
+                return;
+            }
+            
+            container.innerHTML = movies.map(movie => `
+                <div class="movie-card flex-shrink-0 w-36 md:w-44" onclick="app.playMovieById('${movie.id}')">
+                    <div class="relative rounded-xl overflow-hidden aspect-[2/3] mb-2 bg-gray-900">
+                        <img src="${movie.poster}" alt="${movie.title}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image'">
+                        <div class="play-overlay">
+                            <div class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
+                                <i class="fas fa-play text-white ml-1"></i>
+                            </div>
+                        </div>
+                        <div class="absolute top-2 right-2 bg-black/60 backdrop-blur-md rounded-lg px-2 py-1">
+                            <span class="text-yellow-400 text-xs font-bold"><i class="fas fa-star mr-1"></i>${movie.rating}</span>
+                        </div>
+                    </div>
+                    <h4 class="font-semibold text-sm truncate">${movie.title}</h4>
+                    <p class="text-gray-500 text-xs">${movie.year} &middot; ${movie.duration}</p>
+                </div>
+            `).join('');
+        },
+        
+        renderContinueWatching() {
+            const container = document.getElementById('continue-container');
+            const section = document.getElementById('continue-watching-section');
+            
+            if (!container || !section) return;
+            
+            if (this.continueWatching.length === 0) {
+                section.classList.add('hidden');
+                return;
+            }
+            
+            section.classList.remove('hidden');
+            container.innerHTML = this.continueWatching.map(movie => `
+                <div class="movie-card flex-shrink-0 w-36 md:w-44" onclick="app.playMovieById('${movie.id}')">
+                    <div class="relative rounded-xl overflow-hidden aspect-[2/3] mb-2 bg-gray-900">
+                        <img src="${movie.poster}" alt="${movie.title}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image'">
+                        <div class="play-overlay">
+                            <div class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
+                                <i class="fas fa-play text-white ml-1"></i>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 h-1 bg-gray-800">
+                            <div class="h-full bg-red-600" style="width: ${movie.progress || 30}%"></div>
+                        </div>
+                    </div>
+                    <h4 class="font-semibold text-sm truncate">${movie.title}</h4>
+                    <p class="text-gray-500 text-xs">${movie.progress || 30}% watched</p>
+                </div>
+            `).join('');
+        },
+        
+        // ===== VIDEO PLAYER =====
+        playMovieById(id) {
+            console.log('Playing movie ID:', id);
+            const movie = this.movies.find(m => m.id === id);
+            if (!movie) {
+                console.error('Movie not found:', id);
+                this.showToast('Video not found!', 'error');
+                return;
+            }
+            this.playMovie(movie);
+        },
+        
+        playMovie(movie) {
+            console.log('Playing:', movie.title, 'URL:', movie.videoUrl);
+            
+            if (!movie.videoUrl) {
+                this.showToast('Video URL missing!', 'error');
+                return;
+            }
+            
+            this.currentMovie = movie;
+            
+            const existingIndex = this.continueWatching.findIndex(m => m.id === movie.id);
+            if (existingIndex !== -1) {
+                const existing = this.continueWatching[existingIndex];
+                this.continueWatching.splice(existingIndex, 1);
+                this.continueWatching.unshift({...existing, progress: existing.progress || 0});
             } else {
-                // Resume if needed
-                const overlay = document.getElementById('smart-ad-overlay');
-                if (overlay && overlay.classList.contains('active')) {
-                    // Restart timer or close ad
-                    this.skipAd();
+                this.continueWatching.unshift({...movie, progress: 0});
+                if (this.continueWatching.length > 10) this.continueWatching.pop();
+            }
+            this.saveToLocalStorage();
+            
+            if (typeof this.checkAndShowAd === 'function') {
+                this.checkAndShowAd();
+            }
+            
+            this.openPlayer(movie);
+        },
+        
+        extractDailymotionId(url) {
+            if (!url) return null;
+            
+            const patterns = [
+                /video\/([a-zA-Z0-9]+)/,
+                /dailymotion\.com\/embed\/video\/([a-zA-Z0-9]+)/,
+                /dai\.ly\/([a-zA-Z0-9]+)/,
+                /([a-zA-Z0-9]{5,})/
+            ];
+            
+            for (let pattern of patterns) {
+                const match = url.match(pattern);
+                if (match && match[1] && match[1].length >= 5) {
+                    return match[1];
                 }
             }
-        });
-    },
-    
-    // ===== BEFORE UNLOAD (Exit ad) =====
-    setupExitAd() {
-        let exitAdShown = false;
+            
+            console.warn('Could not extract Dailymotion ID from:', url);
+            return null;
+        },
         
-        window.addEventListener('beforeunload', (e) => {
-            if (!exitAdShown && this.adsEnabled && this.adLinks.length > 0) {
-                exitAdShown = true;
-                // Try to show exit ad
-                const exitLink = this.adLinks[Math.floor(Math.random() * this.adLinks.length)];
-                window.open(exitLink, '_blank');
+        openPlayer(movie) {
+            const titleEl = document.getElementById('player-title');
+            const metaEl = document.getElementById('player-meta');
+            const ratingEl = document.getElementById('player-rating');
+            const yearEl = document.getElementById('player-year');
+            const durationEl = document.getElementById('player-duration');
+            const iframe = document.getElementById('dailymotion-iframe');
+            
+            if (!titleEl || !iframe) {
+                console.error('Player elements not found!');
+                return;
             }
-        });
-    },
-    
-    // ===== ENHANCED INIT =====
-    initPart4() {
-        // Start all Part 4 systems
-        this.startWatchTimer();
-        this.startBackgroundRotation();
-        this.startAutoSave();
-        this.setupKeyboardShortcuts();
-        this.setupVisibilityHandler();
-        this.setupExitAd();
-        this.checkDailyReset();
-        this.trackPerformance();
+            
+            titleEl.textContent = movie.title || 'Untitled';
+            metaEl.textContent = `${movie.category || 'Unknown'} · ${movie.year || 'N/A'}`;
+            ratingEl.innerHTML = `<i class="fas fa-star mr-1"></i>${movie.rating || '-'}`;
+            yearEl.textContent = movie.year || '';
+            durationEl.textContent = movie.duration || '';
+            
+            const videoId = this.extractDailymotionId(movie.videoUrl);
+            
+            if (videoId) {
+                iframe.src = `https://www.dailymotion.com/embed/video/${videoId}?autoplay=1&mute=0&quality=auto`;
+                console.log('Embed URL:', iframe.src);
+            } else {
+                iframe.src = movie.videoUrl;
+                console.log('Direct URL fallback:', iframe.src);
+            }
+            
+            this.showScreen('player-screen');
+        },
         
-        // Update earning badge if admin
-        this.updateEarningBadge();
+        closePlayer() {
+            const iframe = document.getElementById('dailymotion-iframe');
+            if (iframe) {
+                iframe.src = 'about:blank';
+            }
+            this.currentMovie = null;
+            this.showScreen('main-screen');
+        },
         
-        console.log('Part 4 initialized - Smart Ad System active');
-    }
-});
-
-// Initialize Part 4 when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => {
-        if (app && typeof app.initPart4 === 'function') {
-            app.initPart4();
+        // ===== SHARE =====
+        shareContent() {
+            if (!this.currentMovie) return;
+            
+            const shareData = {
+                title: this.currentMovie.title,
+                text: `Watch ${this.currentMovie.title} on STREAMER!`,
+                url: `${window.location.origin}${window.location.pathname}?watch=${this.currentMovie.id}`
+            };
+            
+            if (navigator.share) {
+                navigator.share(shareData);
+            } else {
+                navigator.clipboard.writeText(shareData.url).then(() => {
+                    this.showToast('Link copied to clipboard!', 'success');
+                });
+            }
+        },
+        
+        shareApp() {
+            const shareData = {
+                title: 'STREAMER',
+                text: 'Check out STREAMER - Premium OTT Platform!',
+                url: window.location.href
+            };
+            
+            if (navigator.share) {
+                navigator.share(shareData);
+            } else {
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    this.showToast('App link copied!', 'success');
+                });
+            }
+        },
+        
+        // ===== SEARCH =====
+        searchMovies() {
+            const query = document.getElementById('search-input').value.toLowerCase().trim();
+            const container = document.getElementById('search-container');
+            
+            if (!container) return;
+            
+            if (!query) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12 text-gray-500">
+                        <i class="fas fa-search text-4xl mb-4 opacity-50"></i>
+                        <p>Type to search content...</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const results = this.movies.filter(m => 
+                m.title.toLowerCase().includes(query) || 
+                m.category.toLowerCase().includes(query) ||
+                m.description.toLowerCase().includes(query)
+            );
+            
+            if (results.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12 text-gray-500">
+                        <i class="fas fa-film text-4xl mb-4 opacity-50"></i>
+                        <p>No results found for "${query}"</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = results.map(movie => `
+                <div class="movie-card cursor-pointer" onclick="app.playMovieById('${movie.id}')">
+                    <div class="relative rounded-xl overflow-hidden aspect-[2/3] mb-2 bg-gray-900">
+                        <img src="${movie.poster}" alt="${movie.title}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image'">
+                        <div class="play-overlay">
+                            <div class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
+                                <i class="fas fa-play text-white ml-1"></i>
+                            </div>
+                        </div>
+                        <div class="absolute top-2 right-2 bg-black/60 backdrop-blur-md rounded-lg px-2 py-1">
+                            <span class="text-yellow-400 text-xs font-bold"><i class="fas fa-star mr-1"></i>${movie.rating}</span>
+                        </div>
+                    </div>
+                    <h4 class="font-semibold text-sm truncate">${movie.title}</h4>
+                    <p class="text-gray-500 text-xs">${movie.year} &middot; ${movie.duration}</p>
+                </div>
+            `).join('');
+        },
+        
+        // ===== PROFILE STATS =====
+        updateProfileStats() {
+            const continueCount = document.getElementById('continue-count');
+            const totalCount = document.getElementById('total-count');
+            const watchTime = document.getElementById('watch-time');
+            
+            if (continueCount) continueCount.textContent = this.continueWatching.length;
+            if (totalCount) totalCount.textContent = this.movies.length;
+            if (watchTime) watchTime.textContent = Math.floor(this.watchTime / 60) + 'h';
+        },
+        
+        clearContinueWatching() {
+            this.continueWatching = [];
+            this.saveToLocalStorage();
+            this.renderContinueWatching();
+            this.updateProfileStats();
+            this.showToast('History cleared!', 'info');
+        },
+        
+        clearAllData() {
+            if (!confirm('Clear all watch history?')) return;
+            this.continueWatching = [];
+            this.watchTime = 0;
+            this.saveToLocalStorage();
+            this.updateProfileStats();
+            this.showToast('All data cleared!', 'info');
+        },
+        
+        updateAdPreference() {
+            const freq = document.getElementById('user-ad-freq').value;
+            const intervals = { low: 12, normal: 8, high: 5 };
+            this.adInterval = intervals[freq] || 8;
+            this.saveToLocalStorage();
+            this.showToast(`Ad frequency set to ${freq}`, 'info');
+        },
+        
+        // ===== LOCAL STORAGE =====
+        saveToLocalStorage() {
+            const data = {
+                movies: this.movies,
+                continueWatching: this.continueWatching,
+                watchTime: this.watchTime,
+                adInterval: this.adInterval || 8,
+                adSkipTime: this.adSkipTime || 5,
+                maxAdsPerSession: this.maxAdsPerSession || 5,
+                adsEnabled: this.adsEnabled || false,
+                adLinks: this.adLinks || [],
+                currentAdIndex: this.currentAdIndex || 0,
+                lastAdTime: this.lastAdTime || 0,
+                totalAdsShown: this.totalAdsShown || 0,
+                todayEarnings: this.todayEarnings || 0,
+                userAdFreq: this.userAdFreq || 'normal',
+                adFreeUntil: this.adFreeUntil || 0
+            };
+            localStorage.setItem('streamer_data', JSON.stringify(data));
+        },
+        
+        loadFromLocalStorage() {
+            try {
+                const data = JSON.parse(localStorage.getItem('streamer_data'));
+                if (data) {
+                    this.movies = data.movies || [];
+                    this.continueWatching = data.continueWatching || [];
+                    this.watchTime = data.watchTime || 0;
+                    this.adInterval = data.adInterval || 8;
+                    this.adSkipTime = data.adSkipTime || 5;
+                    this.maxAdsPerSession = data.maxAdsPerSession || 5;
+                    this.adsEnabled = data.adsEnabled || false;
+                    this.adLinks = data.adLinks || [];
+                    this.currentAdIndex = data.currentAdIndex || 0;
+                    this.lastAdTime = data.lastAdTime || 0;
+                    this.totalAdsShown = data.totalAdsShown || 0;
+                    this.todayEarnings = data.todayEarnings || 0;
+                    this.userAdFreq = data.userAdFreq || 'normal';
+                    this.adFreeUntil = data.adFreeUntil || 0;
+                }
+            } catch (e) {
+                console.error('Error loading data:', e);
+            }
+        },
+        
+        // ===== DEMO DATA =====
+        loadDemoData() {
+            if (this.movies.length === 0) {
+                this.movies = [
+                    {
+                        id: 'demo1',
+                        title: 'Attack on Titan',
+                        category: 'Anime',
+                        year: 2023,
+                        duration: '24 min',
+                        rating: 9.1,
+                        description: 'Humanity fights for survival against giant humanoid Titans.',
+                        poster: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=300&h=450&fit=crop',
+                        videoUrl: 'https://www.dailymotion.com/video/x8z5x2v',
+                        featured: true
+                    },
+                    {
+                        id: 'demo2',
+                        title: 'Demon Slayer',
+                        category: 'Anime',
+                        year: 2023,
+                        duration: '24 min',
+                        rating: 8.7,
+                        description: 'A young boy becomes a demon slayer to cure his sister.',
+                        poster: 'https://images.unsplash.com/photo-1541562232579-512a21360020?w=300&h=450&fit=crop',
+                        videoUrl: 'https://www.dailymotion.com/video/x8z5x2w',
+                        featured: true
+                    },
+                    {
+                        id: 'demo3',
+                        title: 'Solo Leveling',
+                        category: 'Anime',
+                        year: 2024,
+                        duration: '24 min',
+                        rating: 8.9,
+                        description: 'The weakest hunter becomes the strongest.',
+                        poster: 'https://images.unsplash.com/photo-1618336753974-aae8e04506aa?w=300&h=450&fit=crop',
+                        videoUrl: 'https://www.dailymotion.com/video/x8z5x2x',
+                        featured: true
+                    },
+                    {
+                        id: 'demo4',
+                        title: 'My Demon',
+                        category: 'Korean Drama',
+                        year: 2024,
+                        duration: '70 min',
+                        rating: 8.3,
+                        description: 'A demon loses his powers and falls in love.',
+                        poster: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=300&h=450&fit=crop',
+                        videoUrl: 'https://www.dailymotion.com/video/x8z5x2y',
+                        featured: false
+                    },
+                    {
+                        id: 'demo5',
+                        title: 'The Glory',
+                        category: 'Korean Drama',
+                        year: 2023,
+                        duration: '60 min',
+                        rating: 8.8,
+                        description: 'A woman seeks revenge on her bullies.',
+                        poster: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=300&h=450&fit=crop',
+                        videoUrl: 'https://www.dailymotion.com/video/x8z5x2z',
+                        featured: false
+                    },
+                    {
+                        id: 'demo6',
+                        title: 'Soul Land',
+                        category: 'Chinese Anime',
+                        year: 2024,
+                        duration: '20 min',
+                        rating: 8.5,
+                        description: 'A martial artist reincarnates in a fantasy world.',
+                        poster: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300&h=450&fit=crop',
+                        videoUrl: 'https://www.dailymotion.com/video/x8z5x3a',
+                        featured: false
+                    },
+                    {
+                        id: 'demo7',
+                        title: 'Battle Through Heavens',
+                        category: 'Chinese Anime',
+                        year: 2023,
+                        duration: '22 min',
+                        rating: 8.2,
+                        description: 'A genius cultivator rises from nothing.',
+                        poster: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300&h=450&fit=crop',
+                        videoUrl: 'https://www.dailymotion.com/video/x8z5x3b',
+                        featured: false
+                    },
+                    {
+                        id: 'demo8',
+                        title: 'Oppenheimer',
+                        category: 'Movies',
+                        year: 2023,
+                        duration: '180 min',
+                        rating: 8.6,
+                        description: 'The story of American scientist J. Robert Oppenheimer.',
+                        poster: 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=300&h=450&fit=crop',
+                        videoUrl: 'https://www.dailymotion.com/video/x8z5x3c',
+                        featured: true
+                    }
+                ];
+                this.saveToLocalStorage();
+            }
+            
+            this.heroSlides = this.movies.filter(m => m.featured).slice(0, 5);
+            if (this.heroSlides.length === 0) {
+                this.heroSlides = this.movies.slice(0, 4);
+            }
+        },
+        
+        // ===== TOAST =====
+        showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                info: 'fa-info-circle',
+                gold: 'fa-coins'
+            };
+            
+            toast.innerHTML = `
+                <i class="fas ${icons[type] || icons.info}"></i>
+                <span>${message}</span>
+            `;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        },
+        
+        // ===== SECRET SEARCH TRIGGER =====
+        setupSearchTrigger() {
+            const searchInput = document.getElementById('search-input');
+            if (!searchInput) return;
+            
+            searchInput.addEventListener('input', (e) => {
+                const value = e.target.value;
+                
+                if (this.searchTrigger.includes(value) && value.length > 0) {
+                    this.triggerTyped = value;
+                }
+                
+                if (value === this.searchTrigger) {
+                    searchInput.value = '';
+                    this.triggerTyped = '';
+                    this.showAdminLogin();
+                    return;
+                }
+                
+                if (!this.searchTrigger.startsWith(value)) {
+                    this.triggerTyped = '';
+                }
+            });
+        },
+        
+        // ===== IMAGE UPLOAD =====
+        handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            if (file.size > 5 * 1024 * 1024) {
+                this.showToast('File too large! Max 5MB', 'error');
+                return;
+            }
+            
+            const progressBar = document.getElementById('upload-progress');
+            const preview = document.getElementById('upload-preview');
+            const uploadIcon = document.getElementById('upload-icon');
+            const uploadText = document.getElementById('upload-text');
+            
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                }
+                if (progressBar) progressBar.style.width = progress + '%';
+            }, 100);
+            
+            const reader = new FileReader();
+            
+            reader.onload = (e) => {
+                const imageData = e.target.result;
+                const img = new Image();
+                img.onload = () => {
+                    if (preview) {
+                        preview.src = imageData;
+                        preview.classList.add('visible');
+                        preview.dataset.imageData = imageData;
+                    }
+                    if (uploadIcon) uploadIcon.style.display = 'none';
+                    if (uploadText) uploadText.style.display = 'none';
+                    if (progressBar) progressBar.style.width = '100%';
+                    this.showToast('Image uploaded successfully!', 'success');
+                    setTimeout(() => {
+                        if (progressBar) progressBar.style.width = '0%';
+                    }, 1000);
+                };
+                img.onerror = () => {
+                    this.showToast('Invalid image file!', 'error');
+                    if (progressBar) progressBar.style.width = '0%';
+                };
+                img.src = imageData;
+            };
+            
+            reader.onerror = () => {
+                this.showToast('Failed to read image!', 'error');
+                if (progressBar) progressBar.style.width = '0%';
+            };
+            
+            reader.readAsDataURL(file);
+        },
+        
+        // ===== PLACEHOLDERS FOR PART 4 =====
+        showRewardModal() {
+            const modal = document.getElementById('reward-modal');
+            if (modal) modal.classList.add('active');
+        },
+        
+        closeRewardModal(e) {
+            if (!e || e.target === document.getElementById('reward-modal')) {
+                const modal = document.getElementById('reward-modal');
+                if (modal) modal.classList.remove('active');
+            }
+        },
+        
+        watchRewardAd() {
+            if (typeof this.showSmartAd === 'function') {
+                this.showSmartAd(true);
+            }
+        },
+        
+        showWelcomeAd() {
+            if (typeof this.showSmartAd === 'function') {
+                this.showSmartAd(false, true);
+            }
+        },
+        
+        checkAndShowAd() {
+            if (typeof this.checkSmartAd === 'function') {
+                this.checkSmartAd();
+            }
         }
-    }, 1000); // Wait 1 second for other parts to load
-});
+    };
+
+    // Initialize app
+    document.addEventListener('DOMContentLoaded', () => {
+        app.init();
+    });
+    </script>
 </body>
 </html>
