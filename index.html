@@ -7,9 +7,69 @@
     <meta name="description" content="STREAMER - Premium streaming platform">
     <meta name="robots" content="noindex, nofollow">
     <title>STREAMER - Premium OTT</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Firebase SDK v12.12.0 -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-analytics.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, updateDoc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-storage.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC203H8isoltOx66YZ_wddqpWB4nBIMQZU",
+            authDomain: "streamer-a5ea9.firebaseapp.com",
+            projectId: "streamer-a5ea9",
+            storageBucket: "streamer-a5ea9.firebasestorage.app",
+            messagingSenderId: "821781298641",
+            appId: "1:821781298641:web:1fcec50709460dcdd8f4f0",
+            measurementId: "G-21LF69JH1Q"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        const storage = getStorage(app);
+
+        // Global Firebase exports for app
+        window.firebaseDB = db;
+        window.firebaseAuth = auth;
+        window.firebaseStorage = storage;
+        window.firebaseAnalytics = analytics;
+        window.firebaseCollection = collection;
+        window.firebaseAddDoc = addDoc;
+        window.firebaseGetDocs = getDocs;
+        window.firebaseDeleteDoc = deleteDoc;
+        window.firebaseDoc = doc;
+        window.firebaseQuery = query;
+        window.firebaseOrderBy = orderBy;
+        window.firebaseUpdateDoc = updateDoc;
+        window.firebaseGetDoc = getDoc;
+        window.firebaseSetDoc = setDoc;
+        window.firebaseServerTimestamp = serverTimestamp;
+        window.firebaseRef = ref;
+        window.firebaseUploadBytes = uploadBytes;
+        window.firebaseGetDownloadURL = getDownloadURL;
+        window.firebaseSignInAnonymously = signInAnonymously;
+        window.firebaseOnAuthStateChanged = onAuthStateChanged;
+        window.firebaseCreateUser = createUserWithEmailAndPassword;
+        window.firebaseSignIn = signInWithEmailAndPassword;
+        window.firebaseSignOut = signOut;
+        window.firebaseReady = true;
+
+        console.log('Firebase v12.12.0 initialized successfully!');
+        
+        // Dispatch event when ready
+        window.dispatchEvent(new CustomEvent('firebase-ready'));
+    </script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
@@ -423,6 +483,45 @@
             margin-top: 8px;
         }
 
+        /* ===== REWARD AD CARD ===== */
+        .reward-card {
+            background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(168,85,247,0.1));
+            border: 1px solid rgba(239,68,68,0.2);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 16px;
+            text-align: center;
+        }
+
+        .reward-card h3 {
+            color: #ef4444;
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .reward-card p {
+            color: #a0a0a0;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .reward-btn {
+            background: linear-gradient(135deg, #ef4444, #a855f7);
+            color: white;
+            padding: 12px 32px;
+            border-radius: 25px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .reward-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(239,68,68,0.4);
+        }
+
         /* ===== ADMIN PANEL ===== */
         #admin-panel-wrapper {
             display: none;
@@ -578,6 +677,11 @@
         .toast.info { 
             background: rgba(59, 130, 246, 0.9); 
             border-color: rgba(59, 130, 246, 0.3); 
+        }
+
+        .toast.gold {
+            background: linear-gradient(135deg, rgba(234, 179, 8, 0.9), rgba(202, 138, 4, 0.9));
+            border-color: rgba(234, 179, 8, 0.3);
         }
 
         /* ===== SKELETON LOADING ===== */
@@ -815,10 +919,65 @@
             border-radius: 6px;
             cursor: pointer;
         }
+
+        /* ===== STATS CARDS ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 16px;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-card .value {
+            font-size: 24px;
+            font-weight: 800;
+            color: #ef4444;
+        }
+
+        .stat-card .label {
+            font-size: 11px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        /* ===== EARNING BADGE ===== */
+        .earning-badge {
+            position: fixed;
+            bottom: 80px;
+            right: 16px;
+            background: linear-gradient(135deg, #ef4444, #a855f7);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(239,68,68,0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
     </style>
 </head>
 <body>
+    <!-- Toast Container -->
     <div id="toast-container" class="toast-container"></div>
+
+    <!-- Earning Badge -->
+    <div id="earning-badge" class="earning-badge" style="display:none;">
+        <i class="fas fa-coins mr-1"></i> $<span id="earning-amount">0.00</span>
+    </div>
 
     <!-- SMART AD OVERLAY -->
     <div id="smart-ad-overlay" class="smart-ad-overlay">
@@ -839,6 +998,30 @@
         </button>
         <button class="ad-skip-btn" onclick="app.skipAd()">Skip Ad (Support Us)</button>
         <p class="ad-counter" id="ad-counter">Ad 1 of 3</p>
+    </div>
+
+    <!-- REWARD AD MODAL -->
+    <div id="reward-modal" class="modal-overlay" onclick="app.closeRewardModal(event)">
+        <div class="modal-content p-6" onclick="event.stopPropagation()">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 rounded-full bg-gradient-to-br from-red-500 to-purple-600 flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-gift text-2xl text-white"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white">Support STREAMER</h3>
+                <p class="text-gray-400 text-sm mt-2">Watch one ad and get <span class="text-red-400 font-bold">2 hours ad-free</span>!</p>
+            </div>
+            <div class="space-y-3">
+                <button onclick="app.watchRewardAd()" class="w-full bg-gradient-to-r from-red-600 to-purple-600 hover:from-red-700 hover:to-purple-700 text-white py-4 rounded-xl font-bold transition flex items-center justify-center gap-2">
+                    <i class="fas fa-play-circle"></i> Watch Ad (15 sec)
+                </button>
+                <button onclick="app.closeRewardModal()" class="w-full bg-white/5 hover:bg-white/10 text-gray-400 py-3 rounded-xl font-semibold transition">
+                    Maybe Later
+                </button>
+            </div>
+            <p class="text-center text-xs text-gray-600 mt-4">
+                <i class="fas fa-shield-alt mr-1"></i> 100% Safe & Secure
+            </p>
+        </div>
     </div>
 
     <!-- ========== WELCOME SCREEN ========== -->
@@ -897,6 +1080,15 @@
                 <div id="hero-slides"></div>
                 <div class="hero-dots" id="hero-dots"></div>
             </div>
+        </div>
+
+        <!-- REWARD AD CARD -->
+        <div class="reward-card" id="reward-card">
+            <h3><i class="fas fa-heart mr-2"></i>Support Us</h3>
+            <p>Watch one short ad and enjoy 2 hours of uninterrupted streaming!</p>
+            <button onclick="app.showRewardModal()" class="reward-btn">
+                <i class="fas fa-gift mr-2"></i>Get Ad-Free
+            </button>
         </div>
 
         <div class="px-4 max-w-7xl mx-auto space-y-10" id="main-content">
@@ -968,6 +1160,26 @@
                     </button>
                 </div>
                 
+                <!-- EARNING STATS -->
+                <div class="stats-grid mb-6">
+                    <div class="stat-card">
+                        <div class="value" id="stat-total-ads">0</div>
+                        <div class="label">Total Ads</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="value" id="stat-today-earnings">$0</div>
+                        <div class="label">Today</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="value" id="stat-total-users">0</div>
+                        <div class="label">Users</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="value" id="stat-ctr">0%</div>
+                        <div class="label">CTR</div>
+                    </div>
+                </div>
+                
                 <!-- MULTI AD NETWORKS -->
                 <div class="mb-6 p-4 bg-white/5 rounded-xl border border-white/5">
                     <div class="flex items-center justify-between mb-4">
@@ -980,13 +1192,18 @@
                     
                     <div class="mb-4">
                         <label class="form-label">Ad Interval (minutes)</label>
-                        <input type="number" id="admin-ad-interval" class="form-input" value="3" min="1" max="10">
-                        <p class="text-xs text-gray-500 mt-1">Default: 3 minutes</p>
+                        <input type="number" id="admin-ad-interval" class="form-input" value="8" min="3" max="15">
+                        <p class="text-xs text-gray-500 mt-1">Recommended: 8 minutes</p>
                     </div>
                     
                     <div class="mb-4">
                         <label class="form-label">Skip Timer (seconds)</label>
                         <input type="number" id="admin-ad-skip" class="form-input" value="5" min="3" max="10">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label">Max Ads Per Session</label>
+                        <input type="number" id="admin-max-ads" class="form-input" value="5" min="1" max="20">
                     </div>
                     
                     <label class="form-label">Ad Links (15+ networks)</label>
@@ -1005,7 +1222,7 @@
                     </div>
                 </div>
                 
-                <!-- Image Upload - FIXED -->
+                <!-- Image Upload -->
                 <div class="mb-6">
                     <label class="form-label">Poster Image *</label>
                     <div class="upload-area" id="upload-area" onclick="document.getElementById('image-upload').click()">
@@ -1099,6 +1316,7 @@
             <p>STREAMER is a content aggregation platform. All videos are embedded from third-party sources (Dailymotion). We do not host, upload, or distribute any copyrighted content. All rights belong to their respective owners.</p>
         </div>
     </div>
+
     <!-- ========== SEARCH SCREEN ========== -->
     <div id="search-screen" class="screen pb-24 min-h-screen">
         <div class="sticky top-0 z-40 glass px-4 py-4">
@@ -1156,6 +1374,23 @@
                         <p class="text-xs text-gray-400 mt-1">Watched</p>
                     </div>
                 </div>
+                
+                <!-- AD PREFERENCES -->
+                <div class="w-full bg-white/5 rounded-xl p-4 mb-4 border border-white/5">
+                    <h4 class="font-semibold mb-3 flex items-center gap-2">
+                        <i class="fas fa-sliders-h text-red-500"></i> Ad Preferences
+                    </h4>
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-sm text-gray-400">Ad Frequency</span>
+                        <select id="user-ad-freq" onchange="app.updateAdPreference()" class="bg-white/10 text-white text-sm rounded-lg px-3 py-2 border border-white/10">
+                            <option value="low">Low (12 min)</option>
+                            <option value="normal" selected>Normal (8 min)</option>
+                            <option value="high">High (5 min)</option>
+                        </select>
+                    </div>
+                    <p class="text-xs text-gray-500">Lower frequency = More comfort, Less earning</p>
+                </div>
+                
                 <div class="w-full space-y-3">
                     <button onclick="app.shareApp()" class="w-full bg-white/5 hover:bg-white/10 text-gray-300 py-4 rounded-xl font-semibold flex items-center justify-center gap-3 transition border border-white/5">
                         <i class="fas fa-share-alt text-green-500"></i> Share App
@@ -1165,7 +1400,7 @@
                     </button>
                 </div>
                 <div class="mt-8 text-center">
-                    <p class="text-xs text-gray-600">STREAMER v3.0</p>
+                    <p class="text-xs text-gray-600">STREAMER v4.0 - Firebase Edition</p>
                 </div>
             </div>
         </div>
@@ -1306,19 +1541,20 @@
             </div>
         </div>
     </div>
-<script>
+
+    <!-- ========== JAVASCRIPT PARTS ========== -->
+    <script src="app-part2.js"></script>
+    <script src="app-part3.js"></script>
+    <script src="app-part4.js"></script>
+
 // ==========================================
-// STREAMER APP - MULTI AD NETWORK SYSTEM
+// STREAMER APP - PART 2: CORE APP LOGIC
+// Screens, Player, Search, Navigation, Content Management
 // ==========================================
 
 const app = {
-    // State
+    // ===== STATE =====
     isAdmin: false,
-    adsEnabled: false,
-    adLinks: [],
-    adInterval: 3, // minutes - har 3 minute mein ad
-    adSkipTime: 5, // seconds
-    currentAdIndex: 0,
     currentScreen: 'welcome-screen',
     currentCategory: 'All',
     movies: [],
@@ -1329,37 +1565,17 @@ const app = {
     currentMovie: null,
     searchTrigger: 'streamer_sumit@81#',
     triggerTyped: '',
-    lastAdTime: 0,
     watchTime: 0,
-    adTimerInterval: null,
     isFirebaseReady: false,
+    userId: null,
     
-    // Admin credentials
+    // Admin credentials (Base64 encoded for basic security)
     adminCredentials: {
-        username: "admin",
-        password: "admin123"
+        username: btoa("admin"),
+        password: btoa("admin123")
     },
     
-    // Default ad networks (15+)
-    defaultAdNetworks: [
-        'https://shrinkme.io/',
-        'https://adf.ly/',
-        'https://linkvertise.com/',
-        'https://shorte.st/',
-        'https://ouo.io/',
-        'https://bc.vc/',
-        'https://adshrink.it/',
-        'https://cut-win.com/',
-        'https://exe.io/',
-        'https://fc.lc/',
-        'https://short.pe/',
-        'https://clk.sh/',
-        'https://uii.io/',
-        'https://oke.io/',
-        'https://cpmlink.net/'
-    ],
-    
-    // Initialize
+    // ===== INITIALIZE =====
     init() {
         this.loadFromLocalStorage();
         this.loadDemoData();
@@ -1367,10 +1583,9 @@ const app = {
         this.renderMovies();
         this.updateProfileStats();
         this.setupSearchTrigger();
-        this.startWatchTimer();
         this.initFirebase();
         
-        // Check URL params
+        // Check URL params for shared content
         const urlParams = new URLSearchParams(window.location.search);
         const sharedId = urlParams.get('watch');
         if (sharedId) {
@@ -1378,26 +1593,68 @@ const app = {
         }
     },
     
-    // ===== FIREBASE - SAFE INIT =====
-    async initFirebase() {
+    // ===== FIREBASE INITIALIZATION =====
+    initFirebase() {
+        if (window.firebaseReady) {
+            this.isFirebaseReady = true;
+            this.authenticateUser();
+            this.loadFromFirebase();
+            console.log('Firebase connected!');
+        } else {
+            window.addEventListener('firebase-ready', () => {
+                this.isFirebaseReady = true;
+                this.authenticateUser();
+                this.loadFromFirebase();
+                console.log('Firebase connected via event!');
+            });
+        }
+    },
+    
+    async authenticateUser() {
         try {
-            // Wait for Firebase SDK to load
-            let attempts = 0;
-            const checkFirebase = setInterval(() => {
-                attempts++;
-                if (window.firebaseDB) {
-                    this.isFirebaseReady = true;
-                    clearInterval(checkFirebase);
-                    this.loadFromFirebase();
-                    console.log('Firebase connected!');
+            const auth = window.firebaseAuth;
+            const signInAnon = window.firebaseSignInAnonymously;
+            const onAuthChange = window.firebaseOnAuthStateChanged;
+            
+            onAuthChange(auth, (user) => {
+                if (user) {
+                    this.userId = user.uid;
+                    console.log('User authenticated:', user.uid);
+                    this.trackUserSession();
+                } else {
+                    signInAnon(auth).catch(e => console.log('Auth error:', e));
                 }
-                if (attempts > 20) { // 10 seconds max wait
-                    clearInterval(checkFirebase);
-                    console.log('Firebase not available, using local only');
-                }
-            }, 500);
+            });
         } catch (e) {
-            console.log('Firebase init error:', e);
+            console.log('Auth init error:', e);
+        }
+    },
+    
+    async trackUserSession() {
+        if (!this.userId || !this.isFirebaseReady) return;
+        try {
+            const userRef = window.firebaseDoc(window.firebaseDB, 'users', this.userId);
+            const userSnap = await window.firebaseGetDoc(userRef);
+            const now = new Date();
+            const today = now.toISOString().split('T')[0];
+            
+            if (userSnap.exists()) {
+                const data = userSnap.data();
+                await window.firebaseUpdateDoc(userRef, {
+                    lastVisit: window.firebaseServerTimestamp(),
+                    visitCount: (data.visitCount || 0) + 1,
+                    totalWatchTime: (data.totalWatchTime || 0) + this.watchTime
+                });
+            } else {
+                await window.firebaseSetDoc(userRef, {
+                    createdAt: window.firebaseServerTimestamp(),
+                    lastVisit: window.firebaseServerTimestamp(),
+                    visitCount: 1,
+                    totalWatchTime: 0
+                });
+            }
+        } catch (e) {
+            console.log('Track session error:', e);
         }
     },
     
@@ -1417,6 +1674,7 @@ const app = {
                 this.movies = firebaseMovies;
                 this.renderMovies();
                 this.saveToLocalStorage();
+                this.showToast('Content loaded from cloud!', 'success');
             }
         } catch (e) {
             console.log('Firebase load failed:', e);
@@ -1428,7 +1686,7 @@ const app = {
         try {
             await window.firebaseAddDoc(
                 window.firebaseCollection(window.firebaseDB, 'movies'),
-                { ...movie, createdAt: window.firebaseTimestamp.now() }
+                { ...movie, createdAt: window.firebaseServerTimestamp() }
             );
         } catch (e) {
             console.log('Firebase save failed:', e);
@@ -1444,239 +1702,13 @@ const app = {
         }
     },
     
-    // ===== SMART AD SYSTEM - 3 MINUTE INTERVAL =====
-    startWatchTimer() {
-        // Check every minute for ad display
-        setInterval(() => {
-            if (this.currentScreen === 'player-screen') {
-                this.watchTime++;
-                this.checkSmartAd();
-            }
-        }, 60000); // Every minute
-    },
-    
-    checkSmartAd() {
-        const now = Date.now();
-        const timeSinceLastAd = now - this.lastAdTime;
-        const intervalMs = this.adInterval * 60 * 1000; // 3 minutes default
-        
-        if (this.adsEnabled && this.adLinks.length > 0 && timeSinceLastAd >= intervalMs) {
-            this.showSmartAd();
+    async updateFirebase(id, data) {
+        if (!this.isFirebaseReady) return;
+        try {
+            await window.firebaseUpdateDoc(window.firebaseDoc(window.firebaseDB, 'movies', id), data);
+        } catch (e) {
+            console.log('Firebase update failed:', e);
         }
-    },
-    
-    showSmartAd() {
-        const overlay = document.getElementById('smart-ad-overlay');
-        const timer = document.getElementById('ad-timer');
-        const circle = document.getElementById('ad-progress-circle');
-        const btn = document.getElementById('ad-continue-btn');
-        const counter = document.getElementById('ad-counter');
-        
-        overlay.classList.add('active');
-        
-        // Show current ad number
-        const currentLinkNum = this.currentAdIndex + 1;
-        const totalLinks = this.adLinks.length;
-        counter.textContent = `Ad ${currentLinkNum} of ${totalLinks}`;
-        
-        let count = this.adSkipTime;
-        const totalDash = 276; // 2 * PI * 44
-        timer.textContent = count;
-        btn.disabled = true;
-        
-        // Reset circle
-        circle.style.strokeDashoffset = totalDash;
-        
-        this.adTimerInterval = setInterval(() => {
-            count--;
-            timer.textContent = count;
-            
-            // Update circle progress
-            const progress = (this.adSkipTime - count) / this.adSkipTime;
-            circle.style.strokeDashoffset = totalDash - (totalDash * progress);
-            
-            if (count <= 0) {
-                clearInterval(this.adTimerInterval);
-                btn.disabled = false;
-                timer.textContent = '✓';
-                circle.style.strokeDashoffset = 0;
-            }
-        }, 1000);
-    },
-    
-    watchAdAndContinue() {
-        // Get current ad link
-        const link = this.adLinks[this.currentAdIndex] || 'https://shrinkme.io/';
-        
-        // Open in background (new tab)
-        const adWindow = window.open(link, '_blank');
-        
-        // Close overlay immediately - video continues!
-        document.getElementById('smart-ad-overlay').classList.remove('active');
-        
-        // Move to next ad for next time (rotate)
-        this.currentAdIndex = (this.currentAdIndex + 1) % this.adLinks.length;
-        
-        // Reset timer
-        this.lastAdTime = Date.now();
-        this.saveToLocalStorage();
-        
-        this.showToast('Thanks for supporting us!', 'success');
-        
-        // If popup blocked, show message
-        if (!adWindow || adWindow.closed || typeof adWindow.closed === 'undefined') {
-            this.showToast('Please allow popups for ad revenue', 'info');
-        }
-    },
-    
-    skipAd() {
-        if (!confirm('Skip ad? You can support us by watching ads!')) return;
-        
-        clearInterval(this.adTimerInterval);
-        document.getElementById('smart-ad-overlay').classList.remove('active');
-        
-        // Still reset timer but no revenue
-        this.lastAdTime = Date.now();
-        this.saveToLocalStorage();
-    },
-    
-    // ===== MULTI AD LINKS MANAGEMENT =====
-    toggleAds() {
-        this.adsEnabled = !this.adsEnabled;
-        const toggle = document.getElementById('ads-toggle');
-        if (toggle) toggle.classList.toggle('active', this.adsEnabled);
-        
-        // Save settings
-        const intervalInput = document.getElementById('admin-ad-interval');
-        if (intervalInput) this.adInterval = parseInt(intervalInput.value) || 3;
-        
-        const skipInput = document.getElementById('admin-ad-skip');
-        if (skipInput) this.adSkipTime = parseInt(skipInput.value) || 5;
-        
-        // Collect all ad links
-        this.collectAdLinks();
-        
-        this.saveToLocalStorage();
-        this.showToast(this.adsEnabled ? `Multi Ads enabled! ${this.adLinks.length} networks` : 'Ads disabled!', 'info');
-    },
-    
-    collectAdLinks() {
-        const inputs = document.querySelectorAll('.ad-link-input');
-        this.adLinks = [];
-        inputs.forEach(input => {
-            if (input.value.trim()) {
-                this.adLinks.push(input.value.trim());
-            }
-        });
-        
-        // If no links, use defaults
-        if (this.adLinks.length === 0) {
-            this.adLinks = [...this.defaultAdNetworks];
-        }
-    },
-    
-    addAdLinkField(value = '') {
-        const container = document.getElementById('ad-links-container');
-        if (!container) return;
-        
-        const div = document.createElement('div');
-        div.className = 'ad-link-item';
-        div.innerHTML = `
-            <input type="url" class="form-input ad-link-input" placeholder="https://shrinkme.io/XXXXXX" value="${value}">
-            <button onclick="this.parentElement.remove()" title="Remove"><i class="fas fa-times"></i></button>
-        `;
-        container.appendChild(div);
-    },
-    
-    renderAdLinks() {
-        const container = document.getElementById('ad-links-container');
-        if (!container) return;
-        
-        container.innerHTML = '';
-        
-        if (this.adLinks.length === 0) {
-            // Add default empty fields
-            for (let i = 0; i < 5; i++) {
-                this.addAdLinkField();
-            }
-        } else {
-            this.adLinks.forEach(link => {
-                this.addAdLinkField(link);
-            });
-        }
-    },
-    
-    // ===== IMAGE UPLOAD - FIXED =====
-    handleImageUpload(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        
-        if (file.size > 5 * 1024 * 1024) {
-            this.showToast('File too large! Max 5MB', 'error');
-            return;
-        }
-        
-        const progressBar = document.getElementById('upload-progress');
-        const preview = document.getElementById('upload-preview');
-        const uploadIcon = document.getElementById('upload-icon');
-        const uploadText = document.getElementById('upload-text');
-        
-        // Show progress
-        let progress = 0;
-        const interval = setInterval(() => {
-            progress += Math.random() * 15;
-            if (progress >= 100) {
-                progress = 100;
-                clearInterval(interval);
-            }
-            progressBar.style.width = progress + '%';
-        }, 100);
-        
-        // Read file
-        const reader = new FileReader();
-        
-        reader.onloadstart = () => {
-            this.showToast('Reading image...', 'info');
-        };
-        
-        reader.onload = (e) => {
-            const imageData = e.target.result;
-            
-            // Verify image loaded correctly
-            const img = new Image();
-            img.onload = () => {
-                // Success - show preview
-                preview.src = imageData;
-                preview.classList.add('visible');
-                preview.dataset.imageData = imageData;
-                
-                // Hide upload area content
-                if (uploadIcon) uploadIcon.style.display = 'none';
-                if (uploadText) uploadText.style.display = 'none';
-                
-                progressBar.style.width = '100%';
-                this.showToast('Image uploaded successfully!', 'success');
-                
-                // Reset progress after delay
-                setTimeout(() => {
-                    progressBar.style.width = '0%';
-                }, 1000);
-            };
-            
-            img.onerror = () => {
-                this.showToast('Invalid image file!', 'error');
-                progressBar.style.width = '0%';
-            };
-            
-            img.src = imageData;
-        };
-        
-        reader.onerror = () => {
-            this.showToast('Failed to read image!', 'error');
-            progressBar.style.width = '0%';
-        };
-        
-        reader.readAsDataURL(file);
     },
     
     // ===== SCREEN NAVIGATION =====
@@ -1720,6 +1752,7 @@ const app = {
                 const adminWrapper = document.getElementById('admin-panel-wrapper');
                 if (adminWrapper && adminWrapper.classList.contains('visible')) {
                     this.renderAdminTable();
+                    this.updateAdminStats();
                 }
             }
         } else if (screenId === 'profile-screen') {
@@ -1735,6 +1768,13 @@ const app = {
     guestLogin() {
         this.showScreen('main-screen');
         this.showToast('Welcome to STREAMER!', 'success');
+        
+        // Show welcome ad after 2 seconds (if ads enabled)
+        setTimeout(() => {
+            if (typeof this.adsEnabled !== 'undefined' && this.adsEnabled && this.adLinks && this.adLinks.length > 0) {
+                this.showWelcomeAd();
+            }
+        }, 2000);
     },
     
     // ===== ADMIN LOGIN =====
@@ -1757,8 +1797,8 @@ const app = {
     },
     
     adminLogin() {
-        const username = document.getElementById('admin-username').value.trim();
-        const password = document.getElementById('admin-password').value;
+        const username = btoa(document.getElementById('admin-username').value.trim());
+        const password = btoa(document.getElementById('admin-password').value);
         
         if (username === this.adminCredentials.username && password === this.adminCredentials.password) {
             this.isAdmin = true;
@@ -1799,18 +1839,22 @@ const app = {
         
         // Load settings
         const intervalInput = document.getElementById('admin-ad-interval');
-        if (intervalInput) intervalInput.value = this.adInterval;
+        if (intervalInput && typeof this.adInterval !== 'undefined') intervalInput.value = this.adInterval;
         
         const skipInput = document.getElementById('admin-ad-skip');
-        if (skipInput) skipInput.value = this.adSkipTime;
+        if (skipInput && typeof this.adSkipTime !== 'undefined') skipInput.value = this.adSkipTime;
+        
+        const maxAdsInput = document.getElementById('admin-max-ads');
+        if (maxAdsInput && typeof this.maxAdsPerSession !== 'undefined') maxAdsInput.value = this.maxAdsPerSession;
         
         // Render ad links
-        this.renderAdLinks();
+        if (typeof this.renderAdLinks === 'function') this.renderAdLinks();
         
         const toggle = document.getElementById('ads-toggle');
-        if (toggle) toggle.classList.toggle('active', this.adsEnabled);
+        if (toggle && typeof this.adsEnabled !== 'undefined') toggle.classList.toggle('active', this.adsEnabled);
         
         this.renderAdminTable();
+        this.updateAdminStats();
         
         setTimeout(() => {
             wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1823,6 +1867,20 @@ const app = {
             wrapper.classList.remove('visible');
             wrapper.style.display = 'none';
         }
+    },
+    
+    updateAdminStats() {
+        if (!this.isAdmin) return;
+        
+        const totalAdsEl = document.getElementById('stat-total-ads');
+        const todayEarningsEl = document.getElementById('stat-today-earnings');
+        const totalUsersEl = document.getElementById('stat-total-users');
+        const ctrEl = document.getElementById('stat-ctr');
+        
+        if (totalAdsEl) totalAdsEl.textContent = this.totalAdsShown || 0;
+        if (todayEarningsEl) todayEarningsEl.textContent = '$' + ((this.todayEarnings || 0)).toFixed(2);
+        if (totalUsersEl) totalUsersEl.textContent = this.totalUsers || 0;
+        if (ctrEl) ctrEl.textContent = (this.ctr || 0) + '%';
     },
     
     // ===== SAVE CONTENT =====
@@ -1843,7 +1901,7 @@ const app = {
         
         // Get image data
         let poster = 'https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image';
-        if (preview.dataset.imageData) {
+        if (preview && preview.dataset.imageData) {
             poster = preview.dataset.imageData;
         }
         
@@ -1881,16 +1939,19 @@ const app = {
         
         // Reset image upload
         const preview = document.getElementById('upload-preview');
-        preview.src = '';
-        preview.classList.remove('visible');
-        preview.dataset.imageData = '';
+        if (preview) {
+            preview.src = '';
+            preview.classList.remove('visible');
+            preview.dataset.imageData = '';
+        }
         
         const uploadIcon = document.getElementById('upload-icon');
         const uploadText = document.getElementById('upload-text');
         if (uploadIcon) uploadIcon.style.display = 'block';
         if (uploadText) uploadText.style.display = 'block';
         
-        document.getElementById('upload-progress').style.width = '0%';
+        const progressBar = document.getElementById('upload-progress');
+        if (progressBar) progressBar.style.width = '0%';
     },
     
     // ===== ADMIN TABLE =====
@@ -2191,10 +2252,9 @@ const app = {
         }
         this.saveToLocalStorage();
         
-        // Check if ad should show (every 3 minutes)
-        const now = Date.now();
-        if (this.adsEnabled && this.adLinks.length > 0 && (now - this.lastAdTime > this.adInterval * 60 * 1000)) {
-            this.showSmartAd();
+        // Check if ad should show
+        if (typeof this.checkAndShowAd === 'function') {
+            this.checkAndShowAd();
         }
         
         this.openPlayer(movie);
@@ -2377,18 +2437,31 @@ const app = {
         this.showToast('All data cleared!', 'info');
     },
     
+    updateAdPreference() {
+        const freq = document.getElementById('user-ad-freq').value;
+        const intervals = { low: 12, normal: 8, high: 5 };
+        this.adInterval = intervals[freq] || 8;
+        this.saveToLocalStorage();
+        this.showToast(`Ad frequency set to ${freq}`, 'info');
+    },
+    
     // ===== LOCAL STORAGE =====
     saveToLocalStorage() {
         const data = {
             movies: this.movies,
             continueWatching: this.continueWatching,
-            adsEnabled: this.adsEnabled,
-            adLinks: this.adLinks,
-            adInterval: this.adInterval,
-            adSkipTime: this.adSkipTime,
-            lastAdTime: this.lastAdTime,
             watchTime: this.watchTime,
-            currentAdIndex: this.currentAdIndex
+            adInterval: this.adInterval || 8,
+            adSkipTime: this.adSkipTime || 5,
+            maxAdsPerSession: this.maxAdsPerSession || 5,
+            adsEnabled: this.adsEnabled || false,
+            adLinks: this.adLinks || [],
+            currentAdIndex: this.currentAdIndex || 0,
+            lastAdTime: this.lastAdTime || 0,
+            totalAdsShown: this.totalAdsShown || 0,
+            todayEarnings: this.todayEarnings || 0,
+            userAdFreq: this.userAdFreq || 'normal',
+            adFreeUntil: this.adFreeUntil || 0
         };
         localStorage.setItem('streamer_data', JSON.stringify(data));
     },
@@ -2399,13 +2472,18 @@ const app = {
             if (data) {
                 this.movies = data.movies || [];
                 this.continueWatching = data.continueWatching || [];
+                this.watchTime = data.watchTime || 0;
+                this.adInterval = data.adInterval || 8;
+                this.adSkipTime = data.adSkipTime || 5;
+                this.maxAdsPerSession = data.maxAdsPerSession || 5;
                 this.adsEnabled = data.adsEnabled || false;
                 this.adLinks = data.adLinks || [];
-                this.adInterval = data.adInterval || 3;
-                this.adSkipTime = data.adSkipTime || 5;
-                this.lastAdTime = data.lastAdTime || 0;
-                this.watchTime = data.watchTime || 0;
                 this.currentAdIndex = data.currentAdIndex || 0;
+                this.lastAdTime = data.lastAdTime || 0;
+                this.totalAdsShown = data.totalAdsShown || 0;
+                this.todayEarnings = data.todayEarnings || 0;
+                this.userAdFreq = data.userAdFreq || 'normal';
+                this.adFreeUntil = data.adFreeUntil || 0;
             }
         } catch (e) {
             console.error('Error loading data:', e);
@@ -2533,11 +2611,12 @@ const app = {
         const icons = {
             success: 'fa-check-circle',
             error: 'fa-exclamation-circle',
-            info: 'fa-info-circle'
+            info: 'fa-info-circle',
+            gold: 'fa-coins'
         };
         
         toast.innerHTML = `
-            <i class="fas ${icons[type]}"></i>
+            <i class="fas ${icons[type] || icons.info}"></i>
             <span>${message}</span>
         `;
         
@@ -2573,6 +2652,99 @@ const app = {
                 this.triggerTyped = '';
             }
         });
+    },
+    
+    // ===== IMAGE UPLOAD =====
+    handleImageUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        
+        if (file.size > 5 * 1024 * 1024) {
+            this.showToast('File too large! Max 5MB', 'error');
+            return;
+        }
+        
+        const progressBar = document.getElementById('upload-progress');
+        const preview = document.getElementById('upload-preview');
+        const uploadIcon = document.getElementById('upload-icon');
+        const uploadText = document.getElementById('upload-text');
+        
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += Math.random() * 15;
+            if (progress >= 100) {
+                progress = 100;
+                clearInterval(interval);
+            }
+            if (progressBar) progressBar.style.width = progress + '%';
+        }, 100);
+        
+        const reader = new FileReader();
+        
+        reader.onload = (e) => {
+            const imageData = e.target.result;
+            const img = new Image();
+            img.onload = () => {
+                if (preview) {
+                    preview.src = imageData;
+                    preview.classList.add('visible');
+                    preview.dataset.imageData = imageData;
+                }
+                if (uploadIcon) uploadIcon.style.display = 'none';
+                if (uploadText) uploadText.style.display = 'none';
+                if (progressBar) progressBar.style.width = '100%';
+                this.showToast('Image uploaded successfully!', 'success');
+                setTimeout(() => {
+                    if (progressBar) progressBar.style.width = '0%';
+                }, 1000);
+            };
+            img.onerror = () => {
+                this.showToast('Invalid image file!', 'error');
+                if (progressBar) progressBar.style.width = '0%';
+            };
+            img.src = imageData;
+        };
+        
+        reader.onerror = () => {
+            this.showToast('Failed to read image!', 'error');
+            if (progressBar) progressBar.style.width = '0%';
+        };
+        
+        reader.readAsDataURL(file);
+    },
+    
+    // ===== REWARD AD SYSTEM (Placeholders for Part 4) =====
+    showRewardModal() {
+        const modal = document.getElementById('reward-modal');
+        if (modal) modal.classList.add('active');
+    },
+    
+    closeRewardModal(e) {
+        if (!e || e.target === document.getElementById('reward-modal')) {
+            const modal = document.getElementById('reward-modal');
+            if (modal) modal.classList.remove('active');
+        }
+    },
+    
+    watchRewardAd() {
+        // Implemented in Part 4
+        if (typeof this.showSmartAd === 'function') {
+            this.showSmartAd(true); // true = reward mode
+        }
+    },
+    
+    showWelcomeAd() {
+        // Implemented in Part 4
+        if (typeof this.showSmartAd === 'function') {
+            this.showSmartAd(false, true); // false = not reward, true = welcome
+        }
+    },
+    
+    checkAndShowAd() {
+        // Implemented in Part 4
+        if (typeof this.checkSmartAd === 'function') {
+            this.checkSmartAd();
+        }
     }
 };
 
@@ -2580,6 +2752,1047 @@ const app = {
 document.addEventListener('DOMContentLoaded', () => {
     app.init();
 });
-</script>
+// ==========================================
+// STREAMER APP - PART 3: ADMIN & AD NETWORKS
+// Admin Panel, Firebase Sync, Multi Ad Links, Stats
+// ==========================================
+
+// Extend app object with Part 3 functionality
+Object.assign(app, {
+    
+    // ===== AD NETWORKS CONFIGURATION =====
+    defaultAdNetworks: [
+        { name: 'ShrinkMe', url: 'https://shrinkme.io/', cpm: 8, weight: 5, tier: 'premium' },
+        { name: 'Linkvertise', url: 'https://linkvertise.com/', cpm: 6, weight: 4, tier: 'premium' },
+        { name: 'AdShrink', url: 'https://adshrink.it/', cpm: 5, weight: 3, tier: 'premium' },
+        { name: 'AdFly', url: 'https://adf.ly/', cpm: 3, weight: 4, tier: 'standard' },
+        { name: 'OUO.io', url: 'https://ouo.io/', cpm: 3, weight: 3, tier: 'standard' },
+        { name: 'Shorte.st', url: 'https://shorte.st/', cpm: 2.5, weight: 3, tier: 'standard' },
+        { name: 'FC.LC', url: 'https://fc.lc/', cpm: 2, weight: 3, tier: 'standard' },
+        { name: 'BC.VC', url: 'https://bc.vc/', cpm: 1.5, weight: 2, tier: 'backup' },
+        { name: 'Cut-Win', url: 'https://cut-win.com/', cpm: 1.2, weight: 2, tier: 'backup' },
+        { name: 'EXE.io', url: 'https://exe.io/', cpm: 1, weight: 2, tier: 'backup' },
+        { name: 'CLK.sh', url: 'https://clk.sh/', cpm: 0.8, weight: 1, tier: 'backup' },
+        { name: 'UII.io', url: 'https://uii.io/', cpm: 0.7, weight: 1, tier: 'backup' },
+        { name: 'Oke.io', url: 'https://oke.io/', cpm: 0.6, weight: 1, tier: 'backup' },
+        { name: 'CPMlink', url: 'https://cpmlink.net/', cpm: 0.5, weight: 1, tier: 'backup' },
+        { name: 'Short.pe', url: 'https://short.pe/', cpm: 0.5, weight: 1, tier: 'backup' }
+    ],
+    
+    // ===== MULTI AD LINKS MANAGEMENT =====
+    toggleAds() {
+        this.adsEnabled = !this.adsEnabled;
+        const toggle = document.getElementById('ads-toggle');
+        if (toggle) toggle.classList.toggle('active', this.adsEnabled);
+        
+        // Save settings
+        const intervalInput = document.getElementById('admin-ad-interval');
+        if (intervalInput) this.adInterval = parseInt(intervalInput.value) || 8;
+        
+        const skipInput = document.getElementById('admin-ad-skip');
+        if (skipInput) this.adSkipTime = parseInt(skipInput.value) || 5;
+        
+        const maxAdsInput = document.getElementById('admin-max-ads');
+        if (maxAdsInput) this.maxAdsPerSession = parseInt(maxAdsInput.value) || 5;
+        
+        // Collect all ad links
+        this.collectAdLinks();
+        
+        this.saveToLocalStorage();
+        this.showToast(this.adsEnabled ? `Multi Ads enabled! ${this.adLinks.length} networks active` : 'Ads disabled!', this.adsEnabled ? 'success' : 'info');
+        
+        // Update stats
+        this.updateAdminStats();
+    },
+    
+    collectAdLinks() {
+        const inputs = document.querySelectorAll('.ad-link-input');
+        this.adLinks = [];
+        inputs.forEach(input => {
+            if (input.value.trim()) {
+                this.adLinks.push(input.value.trim());
+            }
+        });
+        
+        // If no links, use defaults
+        if (this.adLinks.length === 0) {
+            this.adLinks = this.defaultAdNetworks.map(n => n.url);
+        }
+    },
+    
+    addAdLinkField(value = '') {
+        const container = document.getElementById('ad-links-container');
+        if (!container) return;
+        
+        const div = document.createElement('div');
+        div.className = 'ad-link-item';
+        div.innerHTML = `
+            <input type="url" class="form-input ad-link-input" placeholder="https://shrinkme.io/XXXXXX" value="${value}">
+            <button onclick="this.parentElement.remove()" title="Remove"><i class="fas fa-times"></i></button>
+        `;
+        container.appendChild(div);
+    },
+    
+    renderAdLinks() {
+        const container = document.getElementById('ad-links-container');
+        if (!container) return;
+        
+        container.innerHTML = '';
+        
+        if (this.adLinks.length === 0) {
+            // Add default networks with sample links
+            this.defaultAdNetworks.forEach(network => {
+                this.addAdLinkField(network.url + 'sample123');
+            });
+        } else {
+            this.adLinks.forEach(link => {
+                this.addAdLinkField(link);
+            });
+        }
+    },
+    
+    // ===== WEIGHTED AD SELECTION =====
+    getWeightedAdLink() {
+        if (this.adLinks.length === 0) return 'https://shrinkme.io/';
+        
+        // Simple rotation for now (can be enhanced with geo-targeting)
+        const link = this.adLinks[this.currentAdIndex];
+        this.currentAdIndex = (this.currentAdIndex + 1) % this.adLinks.length;
+        return link;
+    },
+    
+    getBestAdByGeo() {
+        // Detect country and return best network
+        const country = this.detectCountry();
+        const geoMap = {
+            'US': ['shrinkme.io', 'linkvertise.com', 'adshrink.it'],
+            'UK': ['shrinkme.io', 'linkvertise.com', 'shorte.st'],
+            'CA': ['shrinkme.io', 'adshrink.it', 'ouo.io'],
+            'IN': ['ouo.io', 'fc.lc', 'shrinkme.io'],
+            'default': ['shrinkme.io', 'linkvertise.com', 'ouo.io']
+        };
+        
+        const preferred = geoMap[country] || geoMap['default'];
+        
+        // Find matching link
+        for (let pref of preferred) {
+            const match = this.adLinks.find(link => link.includes(pref));
+            if (match) return match;
+        }
+        
+        return this.adLinks[0] || 'https://shrinkme.io/';
+    },
+    
+    detectCountry() {
+        // Try to detect from timezone or language
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const lang = navigator.language || navigator.userLanguage;
+        
+        if (timezone.includes('America') || lang === 'en-US') return 'US';
+        if (timezone.includes('Europe/London') || lang === 'en-GB') return 'UK';
+        if (timezone.includes('Asia/Calcutta') || lang === 'hi-IN') return 'IN';
+        if (timezone.includes('Canada') || lang === 'en-CA') return 'CA';
+        
+        return 'default';
+    },
+    
+    // ===== FIREBASE ANALYTICS & STATS =====
+    async trackAdImpression(adLink, type = 'regular') {
+        if (!this.isFirebaseReady || !this.userId) return;
+        
+        try {
+            const statsRef = window.firebaseCollection(window.firebaseDB, 'ad_stats');
+            await window.firebaseAddDoc(statsRef, {
+                userId: this.userId,
+                adLink: adLink,
+                type: type, // 'regular', 'reward', 'welcome'
+                timestamp: window.firebaseServerTimestamp(),
+                country: this.detectCountry(),
+                device: navigator.userAgent.includes('Mobile') ? 'mobile' : 'desktop'
+            });
+            
+            // Update daily earnings
+            await this.updateDailyEarnings(type);
+        } catch (e) {
+            console.log('Track ad error:', e);
+        }
+    },
+    
+    async updateDailyEarnings(type) {
+        if (!this.isFirebaseReady) return;
+        
+        const today = new Date().toISOString().split('T')[0];
+        const earningsRef = window.firebaseDoc(window.firebaseDB, 'earnings', today);
+        
+        try {
+            const snap = await window.firebaseGetDoc(earningsRef);
+            const earnings = {
+                regular: 0.03,
+                reward: 0.08,
+                welcome: 0.02
+            };
+            
+            const amount = earnings[type] || 0.03;
+            
+            if (snap.exists()) {
+                await window.firebaseUpdateDoc(earningsRef, {
+                    total: (snap.data().total || 0) + amount,
+                    count: (snap.data().count || 0) + 1,
+                    [type]: (snap.data()[type] || 0) + amount
+                });
+            } else {
+                await window.firebaseSetDoc(earningsRef, {
+                    date: today,
+                    total: amount,
+                    count: 1,
+                    regular: type === 'regular' ? amount : 0,
+                    reward: type === 'reward' ? amount : 0,
+                    welcome: type === 'welcome' ? amount : 0
+                });
+            }
+            
+            // Update local stats
+            this.todayEarnings = (this.todayEarnings || 0) + amount;
+            this.totalAdsShown = (this.totalAdsShown || 0) + 1;
+            this.saveToLocalStorage();
+            
+        } catch (e) {
+            console.log('Update earnings error:', e);
+        }
+    },
+    
+    async loadAdminStats() {
+        if (!this.isFirebaseReady || !this.isAdmin) return;
+        
+        try {
+            // Load today's earnings
+            const today = new Date().toISOString().split('T')[0];
+            const earningsRef = window.firebaseDoc(window.firebaseDB, 'earnings', today);
+            const earningsSnap = await window.firebaseGetDoc(earningsRef);
+            
+            if (earningsSnap.exists()) {
+                const data = earningsSnap.data();
+                this.todayEarnings = data.total || 0;
+            }
+            
+            // Load total users
+            const usersQuery = window.firebaseQuery(
+                window.firebaseCollection(window.firebaseDB, 'users')
+            );
+            const usersSnap = await window.firebaseGetDocs(usersQuery);
+            this.totalUsers = usersSnap.size;
+            
+            // Calculate CTR
+            const adsQuery = window.firebaseQuery(
+                window.firebaseCollection(window.firebaseDB, 'ad_stats'),
+                window.firebaseOrderBy('timestamp', 'desc')
+            );
+            const adsSnap = await window.firebaseGetDocs(adsQuery);
+            
+            let clicks = 0;
+            let impressions = 0;
+            adsSnap.forEach(doc => {
+                impressions++;
+                if (doc.data().clicked) clicks++;
+            });
+            
+            this.ctr = impressions > 0 ? ((clicks / impressions) * 100).toFixed(1) : 0;
+            
+            this.updateAdminStats();
+            
+        } catch (e) {
+            console.log('Load admin stats error:', e);
+        }
+    },
+    
+    // ===== CONTENT MANAGEMENT WITH FIREBASE =====
+    async saveContent() {
+        const title = document.getElementById('admin-title').value.trim();
+        const category = document.getElementById('admin-category').value;
+        const year = parseInt(document.getElementById('admin-year').value) || 2024;
+        const duration = document.getElementById('admin-duration').value.trim() || '24 min';
+        const rating = parseFloat(document.getElementById('admin-rating').value) || 0;
+        const description = document.getElementById('admin-description').value.trim();
+        const videoUrl = document.getElementById('admin-video').value.trim();
+        const preview = document.getElementById('upload-preview');
+        
+        if (!title || !videoUrl) {
+            this.showToast('Title and Video URL are required!', 'error');
+            return;
+        }
+        
+        // Get image data
+        let poster = 'https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image';
+        if (preview && preview.dataset.imageData) {
+            poster = preview.dataset.imageData;
+        }
+        
+        // Upload image to Firebase Storage if available
+        let posterUrl = poster;
+        if (this.isFirebaseReady && preview && preview.dataset.imageData && preview.dataset.imageData.startsWith('data:')) {
+            try {
+                posterUrl = await this.uploadImageToStorage(preview.dataset.imageData, title);
+            } catch (e) {
+                console.log('Image upload failed, using base64:', e);
+            }
+        }
+        
+        const movie = {
+            id: 'movie_' + Date.now(),
+            title,
+            category,
+            year,
+            duration,
+            rating,
+            description,
+            poster: posterUrl,
+            videoUrl,
+            featured: false,
+            createdAt: new Date().toISOString()
+        };
+        
+        // Save to Firebase
+        await this.saveToFirebase(movie);
+        
+        this.movies.unshift(movie);
+        this.saveToLocalStorage();
+        this.renderMovies();
+        this.renderAdminTable();
+        this.resetAdminForm();
+        this.showToast('Content saved successfully!', 'success');
+    },
+    
+    async uploadImageToStorage(base64Data, title) {
+        if (!this.isFirebaseReady || !window.firebaseStorage) {
+            throw new Error('Storage not available');
+        }
+        
+        // Convert base64 to blob
+        const response = await fetch(base64Data);
+        const blob = await response.blob();
+        
+        // Create unique filename
+        const filename = `posters/${Date.now()}_${title.replace(/\s+/g, '_').toLowerCase()}.jpg`;
+        const storageRef = window.firebaseRef(window.firebaseStorage, filename);
+        
+        // Upload
+        await window.firebaseUploadBytes(storageRef, blob);
+        const downloadUrl = await window.firebaseGetDownloadURL(storageRef);
+        
+        return downloadUrl;
+    },
+    
+    async updateContent() {
+        const id = document.getElementById('edit-id').value;
+        const movie = this.movies.find(m => m.id === id);
+        if (!movie) return;
+        
+        movie.title = document.getElementById('edit-title').value.trim();
+        movie.category = document.getElementById('edit-category').value;
+        movie.year = parseInt(document.getElementById('edit-year').value) || 2024;
+        movie.duration = document.getElementById('edit-duration').value.trim();
+        movie.rating = parseFloat(document.getElementById('edit-rating').value) || 0;
+        movie.description = document.getElementById('edit-description').value.trim();
+        movie.videoUrl = document.getElementById('edit-video').value.trim();
+        movie.updatedAt = new Date().toISOString();
+        
+        if (this.isFirebaseReady) {
+            await this.updateFirebase(id, movie);
+        }
+        
+        this.saveToLocalStorage();
+        this.renderMovies();
+        this.renderAdminTable();
+        this.closeEditModal();
+        this.showToast('Content updated!', 'success');
+    },
+    
+    async deleteContent(id) {
+        if (!confirm('Are you sure you want to delete this content?')) return;
+        
+        if (this.isFirebaseReady) {
+            await this.deleteFromFirebase(id);
+        }
+        
+        this.movies = this.movies.filter(m => m.id !== id);
+        this.saveToLocalStorage();
+        this.renderMovies();
+        this.renderAdminTable();
+        this.showToast('Content deleted!', 'info');
+    },
+    
+    // ===== BULK OPERATIONS =====
+    async bulkDelete() {
+        if (!this.isAdmin) return;
+        if (!confirm('Delete ALL content? This cannot be undone!')) return;
+        
+        if (this.isFirebaseReady) {
+            const batch = [];
+            this.movies.forEach(movie => {
+                batch.push(this.deleteFromFirebase(movie.id));
+            });
+            await Promise.all(batch);
+        }
+        
+        this.movies = [];
+        this.saveToLocalStorage();
+        this.renderMovies();
+        this.renderAdminTable();
+        this.showToast('All content deleted!', 'info');
+    },
+    
+    async syncWithFirebase() {
+        if (!this.isFirebaseReady) {
+            this.showToast('Firebase not connected!', 'error');
+            return;
+        }
+        
+        this.showToast('Syncing with cloud...', 'info');
+        
+        try {
+            // Upload all local movies to Firebase
+            for (let movie of this.movies) {
+                if (!movie.synced) {
+                    await this.saveToFirebase(movie);
+                    movie.synced = true;
+                }
+            }
+            
+            this.saveToLocalStorage();
+            this.showToast('Sync complete!', 'success');
+            
+        } catch (e) {
+            console.log('Sync error:', e);
+            this.showToast('Sync failed!', 'error');
+        }
+    },
+    
+    // ===== EXPORT/IMPORT DATA =====
+    exportData() {
+        const data = {
+            movies: this.movies,
+            adLinks: this.adLinks,
+            settings: {
+                adInterval: this.adInterval,
+                adSkipTime: this.adSkipTime,
+                maxAdsPerSession: this.maxAdsPerSession,
+                adsEnabled: this.adsEnabled
+            },
+            exportDate: new Date().toISOString()
+        };
+        
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `streamer_backup_${new Date().toISOString().split('T')[0]}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        
+        this.showToast('Data exported!', 'success');
+    },
+    
+    importData(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const data = JSON.parse(e.target.result);
+                
+                if (data.movies) {
+                    this.movies = [...this.movies, ...data.movies];
+                    this.saveToLocalStorage();
+                    this.renderMovies();
+                    this.renderAdminTable();
+                }
+                
+                if (data.adLinks) {
+                    this.adLinks = data.adLinks;
+                }
+                
+                if (data.settings) {
+                    this.adInterval = data.settings.adInterval || 8;
+                    this.adSkipTime = data.settings.adSkipTime || 5;
+                    this.maxAdsPerSession = data.settings.maxAdsPerSession || 5;
+                    this.adsEnabled = data.settings.adsEnabled || false;
+                }
+                
+                this.showToast('Data imported successfully!', 'success');
+                
+            } catch (err) {
+                this.showToast('Invalid backup file!', 'error');
+            }
+        };
+        reader.readAsText(file);
+    },
+    
+    // ===== USER MANAGEMENT (Admin) =====
+    async loadUsersList() {
+        if (!this.isFirebaseReady || !this.isAdmin) return;
+        
+        try {
+            const usersQuery = window.firebaseQuery(
+                window.firebaseCollection(window.firebaseDB, 'users'),
+                window.firebaseOrderBy('lastVisit', 'desc')
+            );
+            const snap = await window.firebaseGetDocs(usersQuery);
+            
+            const users = [];
+            snap.forEach(doc => {
+                users.push({ id: doc.id, ...doc.data() });
+            });
+            
+            this.renderUsersTable(users);
+            
+        } catch (e) {
+            console.log('Load users error:', e);
+        }
+    },
+    
+    renderUsersTable(users) {
+        // This can be added to admin panel if needed
+        console.log('Users loaded:', users.length);
+    },
+    
+    // ===== SYSTEM HEALTH CHECK =====
+    async runHealthCheck() {
+        const checks = {
+            firebase: this.isFirebaseReady,
+            storage: !!window.firebaseStorage,
+            auth: !!window.firebaseAuth,
+            movies: this.movies.length,
+            adLinks: this.adLinks.length,
+            localStorage: !!window.localStorage
+        };
+        
+        console.log('=== HEALTH CHECK ===');
+        Object.entries(checks).forEach(([key, value]) => {
+            console.log(`${key}: ${value ? '✅' : '❌'} ${value}`);
+        });
+        
+        return checks;
+    }
+});
+
+// Health check on load
+setTimeout(() => {
+    if (app && typeof app.runHealthCheck === 'function') {
+        app.runHealthCheck();
+    }
+}, 3000);
+// ==========================================
+// STREAMER APP - PART 4: SMART AD SYSTEM & EARNING ENGINE
+// Ad Display, Reward System, Anti-Irritation, Real-time Stats
+// ==========================================
+
+Object.assign(app, {
+    
+    // ===== AD SYSTEM STATE =====
+    sessionAdCount: 0,
+    adsEnabled: false,
+    adInterval: 8, // minutes (default: 8 for user comfort)
+    adSkipTime: 5, // seconds
+    maxAdsPerSession: 5,
+    currentAdIndex: 0,
+    lastAdTime: 0,
+    totalAdsShown: 0,
+    todayEarnings: 0,
+    adFreeUntil: 0, // timestamp until user is ad-free
+    userAdFreq: 'normal', // 'low', 'normal', 'high'
+    isRewardMode: false,
+    adTimerInterval: null,
+    
+    // ===== EARNING DISPLAY =====
+    updateEarningBadge() {
+        const badge = document.getElementById('earning-badge');
+        const amount = document.getElementById('earning-amount');
+        
+        if (!badge || !amount) return;
+        
+        if (this.isAdmin && this.todayEarnings > 0) {
+            badge.style.display = 'block';
+            amount.textContent = this.todayEarnings.toFixed(2);
+        } else {
+            badge.style.display = 'none';
+        }
+    },
+    
+    // ===== SMART AD CHECKER =====
+    checkSmartAd() {
+        // Don't show if ads disabled
+        if (!this.adsEnabled) return false;
+        
+        // Don't show if no ad links
+        if (!this.adLinks || this.adLinks.length === 0) return false;
+        
+        // Don't show if user has ad-free period
+        if (Date.now() < this.adFreeUntil) {
+            console.log('User has ad-free time remaining');
+            return false;
+        }
+        
+        // Don't show if max ads reached for this session
+        if (this.sessionAdCount >= this.maxAdsPerSession) {
+            console.log('Max ads reached for this session');
+            return false;
+        }
+        
+        // Check time interval
+        const now = Date.now();
+        const timeSinceLastAd = now - this.lastAdTime;
+        const intervalMs = this.adInterval * 60 * 1000;
+        
+        if (timeSinceLastAd < intervalMs) {
+            console.log('Ad interval not reached yet');
+            return false;
+        }
+        
+        // All checks passed - show ad
+        this.showSmartAd(false);
+        return true;
+    },
+    
+    // ===== SHOW SMART AD =====
+    showSmartAd(isReward = false, isWelcome = false) {
+        const overlay = document.getElementById('smart-ad-overlay');
+        const timer = document.getElementById('ad-timer');
+        const circle = document.getElementById('ad-progress-circle');
+        const btn = document.getElementById('ad-continue-btn');
+        const counter = document.getElementById('ad-counter');
+        
+        if (!overlay) return;
+        
+        this.isRewardMode = isReward;
+        
+        // Get appropriate ad link
+        const adLink = isWelcome ? this.getWelcomeAdLink() : this.getWeightedAdLink();
+        
+        overlay.classList.add('active');
+        
+        // Show current ad number
+        const currentLinkNum = this.currentAdIndex + 1;
+        const totalLinks = this.adLinks.length;
+        if (counter) counter.textContent = `Ad ${currentLinkNum} of ${totalLinks}`;
+        
+        // Set skip time based on type
+        const skipTime = isReward ? 15 : (isWelcome ? 3 : this.adSkipTime);
+        let count = skipTime;
+        const totalDash = 276; // 2 * PI * 44
+        
+        if (timer) timer.textContent = count;
+        if (btn) {
+            btn.disabled = true;
+            btn.innerHTML = isReward ? 
+                '<i class="fas fa-gift mr-2"></i> Claim Reward' : 
+                '<i class="fas fa-play mr-2"></i> Continue Watching';
+        }
+        
+        // Reset circle
+        if (circle) circle.style.strokeDashoffset = totalDash;
+        
+        // Clear any existing interval
+        if (this.adTimerInterval) clearInterval(this.adTimerInterval);
+        
+        this.adTimerInterval = setInterval(() => {
+            count--;
+            if (timer) timer.textContent = count;
+            
+            // Update circle progress
+            if (circle) {
+                const progress = (skipTime - count) / skipTime;
+                circle.style.strokeDashoffset = totalDash - (totalDash * progress);
+            }
+            
+            if (count <= 0) {
+                clearInterval(this.adTimerInterval);
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = isReward ? 
+                        '<i class="fas fa-gift mr-2"></i> Get 2H Ad-Free!' : 
+                        '<i class="fas fa-play mr-2"></i> Continue Watching';
+                }
+                if (timer) timer.textContent = '✓';
+                if (circle) circle.style.strokeDashoffset = 0;
+            }
+        }, 1000);
+        
+        // Track impression
+        this.trackAdImpression(adLink, isReward ? 'reward' : (isWelcome ? 'welcome' : 'regular'));
+    },
+    
+    getWelcomeAdLink() {
+        // Shorter, higher value welcome ad
+        const welcomeLinks = this.adLinks.filter(link => 
+            link.includes('shrinkme') || link.includes('linkvertise')
+        );
+        return welcomeLinks[0] || this.adLinks[0] || 'https://shrinkme.io/';
+    },
+    
+    // ===== WATCH AD AND CONTINUE =====
+    watchAdAndContinue() {
+        const adLink = this.getWeightedAdLink();
+        
+        // Open ad in new tab
+        const adWindow = window.open(adLink, '_blank');
+        
+        // Close overlay
+        const overlay = document.getElementById('smart-ad-overlay');
+        if (overlay) overlay.classList.remove('active');
+        
+        // Update stats
+        this.sessionAdCount++;
+        this.totalAdsShown++;
+        this.lastAdTime = Date.now();
+        
+        // If reward mode, grant ad-free time
+        if (this.isRewardMode) {
+            this.adFreeUntil = Date.now() + (2 * 60 * 60 * 1000); // 2 hours
+            this.showToast('🎉 You got 2 hours ad-free!', 'gold');
+            this.closeRewardModal();
+        } else {
+            this.showToast('Thanks for supporting us!', 'success');
+        }
+        
+        // Update earnings
+        const earnings = this.isRewardMode ? 0.08 : 0.03;
+        this.todayEarnings += earnings;
+        
+        // Save state
+        this.saveToLocalStorage();
+        this.updateEarningBadge();
+        this.updateAdminStats();
+        
+        // Check if popup blocked
+        if (!adWindow || adWindow.closed || typeof adWindow.closed === 'undefined') {
+            this.showToast('Please allow popups for ad revenue', 'info');
+            
+            // Show fallback - redirect current page temporarily
+            setTimeout(() => {
+                if (confirm('Popup blocked! Click OK to open ad manually.')) {
+                    window.open(adLink, '_blank');
+                }
+            }, 500);
+        }
+    },
+    
+    // ===== SKIP AD =====
+    skipAd() {
+        if (this.isRewardMode) {
+            this.showToast('Reward cancelled. No ad-free time granted.', 'info');
+            this.closeRewardModal();
+        } else {
+            if (!confirm('Skip ad? You can support us by watching ads!')) return;
+        }
+        
+        if (this.adTimerInterval) clearInterval(this.adTimerInterval);
+        
+        const overlay = document.getElementById('smart-ad-overlay');
+        if (overlay) overlay.classList.remove('active');
+        
+        // Still reset timer but no revenue
+        this.lastAdTime = Date.now();
+        this.saveToLocalStorage();
+        
+        if (!this.isRewardMode) {
+            this.showToast('Ad skipped. Consider supporting us later!', 'info');
+        }
+    },
+    
+    // ===== REWARD AD SYSTEM =====
+    showRewardModal() {
+        const modal = document.getElementById('reward-modal');
+        if (modal) modal.classList.add('active');
+    },
+    
+    closeRewardModal(e) {
+        if (!e || e.target === document.getElementById('reward-modal')) {
+            const modal = document.getElementById('reward-modal');
+            if (modal) modal.classList.remove('active');
+        }
+    },
+    
+    watchRewardAd() {
+        this.showSmartAd(true); // true = reward mode
+    },
+    
+    showWelcomeAd() {
+        // Only show welcome ad on first visit
+        const hasVisited = localStorage.getItem('streamer_visited');
+        if (!hasVisited) {
+            localStorage.setItem('streamer_visited', 'true');
+            this.showSmartAd(false, true); // false = not reward, true = welcome
+        }
+    },
+    
+    // ===== WATCH TIMER FOR MID-ROLL ADS =====
+    startWatchTimer() {
+        // Check every minute for ad display
+        setInterval(() => {
+            if (this.currentScreen === 'player-screen') {
+                this.watchTime++;
+                
+                // Check for mid-roll ad every interval
+                if (this.watchTime % this.adInterval === 0) {
+                    this.checkSmartAd();
+                }
+                
+                // Update profile stats periodically
+                if (this.watchTime % 5 === 0) {
+                    this.updateProfileStats();
+                }
+            }
+        }, 60000); // Every minute
+    },
+    
+    // ===== ANTI-IRRITATION FEATURES =====
+    shouldShowAd() {
+        // Multiple checks to prevent ad fatigue
+        
+        // 1. Check if user just joined (give them time)
+        if (this.watchTime < 2) return false; // First 2 minutes ad-free
+        
+        // 2. Check ad-free period from reward
+        if (Date.now() < this.adFreeUntil) return false;
+        
+        // 3. Check session cap
+        if (this.sessionAdCount >= this.maxAdsPerSession) return false;
+        
+        // 4. Check if user skipped last ad (be nice)
+        const lastAdSkipped = localStorage.getItem('last_ad_skipped');
+        if (lastAdSkipped) {
+            const skipTime = parseInt(lastAdSkipped);
+            if (Date.now() - skipTime < 10 * 60 * 1000) { // 10 min grace
+                return false;
+            }
+        }
+        
+        // 5. Check user preference
+        const freqMap = { low: 12, normal: 8, high: 5 };
+        const userInterval = freqMap[this.userAdFreq] || 8;
+        
+        const timeSinceLastAd = Date.now() - this.lastAdTime;
+        if (timeSinceLastAd < userInterval * 60 * 1000) return false;
+        
+        return true;
+    },
+    
+    // ===== AD FREQUENCY CONTROL =====
+    updateAdPreference() {
+        const freqSelect = document.getElementById('user-ad-freq');
+        if (!freqSelect) return;
+        
+        this.userAdFreq = freqSelect.value;
+        const freqMap = { low: 12, normal: 8, high: 5 };
+        this.adInterval = freqMap[this.userAdFreq] || 8;
+        
+        this.saveToLocalStorage();
+        this.showToast(`Ad frequency: ${this.userAdFreq.toUpperCase()} (${this.adInterval} min)`, 'info');
+    },
+    
+    // ===== BACKGROUND AD ROTATION =====
+    startBackgroundRotation() {
+        // Rotate ad links every 30 minutes for freshness
+        setInterval(() => {
+            if (this.adLinks.length > 1) {
+                // Shuffle array slightly
+                const first = this.adLinks.shift();
+                this.adLinks.push(first);
+                this.saveToLocalStorage();
+                console.log('Ad links rotated');
+            }
+        }, 30 * 60 * 1000); // Every 30 minutes
+    },
+    
+    // ===== MULTI-REDIRECT STRATEGY =====
+    openMultipleRedirects() {
+        // For maximum earning - open multiple ad links in sequence
+        if (this.adLinks.length < 2) return;
+        
+        const primaryLink = this.adLinks[0];
+        const secondaryLink = this.adLinks[1];
+        
+        // Open primary immediately
+        window.open(primaryLink, '_blank');
+        
+        // Open secondary after 2 seconds (if user stays)
+        setTimeout(() => {
+            if (document.visibilityState === 'visible') {
+                window.open(secondaryLink, '_blank');
+                this.trackAdImpression(secondaryLink, 'secondary');
+            }
+        }, 2000);
+    },
+    
+    // ===== EMERGENCY FALLBACK AD =====
+    showFallbackAd() {
+        // When popups are blocked, show inline ad
+        const fallbackUrls = [
+            'https://shrinkme.io/',
+            'https://linkvertise.com/',
+            'https://ouo.io/'
+        ];
+        
+        const randomUrl = fallbackUrls[Math.floor(Math.random() * fallbackUrls.length)];
+        
+        // Create inline banner
+        const banner = document.createElement('div');
+        banner.style.cssText = `
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #ef4444, #a855f7);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 700;
+            z-index: 9999;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(239,68,68,0.4);
+        `;
+        banner.innerHTML = '<i class="fas fa-external-link-alt mr-2"></i> Click to Support Us';
+        banner.onclick = () => {
+            window.open(randomUrl, '_blank');
+            banner.remove();
+        };
+        
+        document.body.appendChild(banner);
+        
+        // Auto remove after 10 seconds
+        setTimeout(() => banner.remove(), 10000);
+    },
+    
+    // ===== SESSION MANAGEMENT =====
+    resetSession() {
+        this.sessionAdCount = 0;
+        this.watchTime = 0;
+        console.log('New session started');
+    },
+    
+    // ===== DAILY RESET =====
+    checkDailyReset() {
+        const lastDate = localStorage.getItem('streamer_last_date');
+        const today = new Date().toISOString().split('T')[0];
+        
+        if (lastDate !== today) {
+            // New day - reset daily stats
+            this.todayEarnings = 0;
+            this.sessionAdCount = 0;
+            localStorage.setItem('streamer_last_date', today);
+            this.saveToLocalStorage();
+            console.log('Daily stats reset');
+        }
+    },
+    
+    // ===== PERFORMANCE MONITORING =====
+    trackPerformance() {
+        const metrics = {
+            pageLoad: performance.now(),
+            adLoadTime: 0,
+            userEngagement: 0
+        };
+        
+        // Track ad load time
+        window.addEventListener('load', () => {
+            metrics.pageLoad = performance.now();
+        });
+        
+        return metrics;
+    },
+    
+    // ===== AUTO-SAVE =====
+    startAutoSave() {
+        // Auto-save every 2 minutes
+        setInterval(() => {
+            this.saveToLocalStorage();
+            console.log('Auto-saved state');
+        }, 2 * 60 * 1000);
+    },
+    
+    // ===== KEYBOARD SHORTCUTS =====
+    setupKeyboardShortcuts() {
+        document.addEventListener('keydown', (e) => {
+            // ESC to close modals
+            if (e.key === 'Escape') {
+                this.closeAdminLogin();
+                this.closeEditModal();
+                this.closeRewardModal();
+                
+                const overlay = document.getElementById('smart-ad-overlay');
+                if (overlay && overlay.classList.contains('active')) {
+                    this.skipAd();
+                }
+            }
+            
+            // Space to pause/play (if in player)
+            if (e.key === ' ' && this.currentScreen === 'player-screen') {
+                // Toggle play/pause logic here if needed
+            }
+        });
+    },
+    
+    // ===== VISIBILITY API (Pause ads when tab hidden) =====
+    setupVisibilityHandler() {
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                // Pause ad timer when tab is hidden
+                if (this.adTimerInterval) {
+                    clearInterval(this.adTimerInterval);
+                    this.adTimerInterval = null;
+                }
+            } else {
+                // Resume if needed
+                const overlay = document.getElementById('smart-ad-overlay');
+                if (overlay && overlay.classList.contains('active')) {
+                    // Restart timer or close ad
+                    this.skipAd();
+                }
+            }
+        });
+    },
+    
+    // ===== BEFORE UNLOAD (Exit ad) =====
+    setupExitAd() {
+        let exitAdShown = false;
+        
+        window.addEventListener('beforeunload', (e) => {
+            if (!exitAdShown && this.adsEnabled && this.adLinks.length > 0) {
+                exitAdShown = true;
+                // Try to show exit ad
+                const exitLink = this.adLinks[Math.floor(Math.random() * this.adLinks.length)];
+                window.open(exitLink, '_blank');
+            }
+        });
+    },
+    
+    // ===== ENHANCED INIT =====
+    initPart4() {
+        // Start all Part 4 systems
+        this.startWatchTimer();
+        this.startBackgroundRotation();
+        this.startAutoSave();
+        this.setupKeyboardShortcuts();
+        this.setupVisibilityHandler();
+        this.setupExitAd();
+        this.checkDailyReset();
+        this.trackPerformance();
+        
+        // Update earning badge if admin
+        this.updateEarningBadge();
+        
+        console.log('Part 4 initialized - Smart Ad System active');
+    }
+});
+
+// Initialize Part 4 when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        if (app && typeof app.initPart4 === 'function') {
+            app.initPart4();
+        }
+    }, 1000); // Wait 1 second for other parts to load
+});
 </body>
 </html>
