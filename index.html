@@ -371,6 +371,7 @@
             border: none; 
         }
 
+        /* ===== AD OVERLAY SYSTEM ===== */
         .smart-ad-overlay {
             position: fixed;
             inset: 0;
@@ -466,6 +467,21 @@
             color: #666;
             font-size: 12px;
             margin-top: 8px;
+        }
+
+        /* ===== MULTI REDIRECT TABS ===== */
+        .redirect-tabs-info {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin: 16px;
+        }
+
+        .redirect-tabs-info p {
+            color: #ef4444;
+            font-size: 12px;
+            font-weight: 600;
         }
 
         .reward-card {
@@ -887,6 +903,9 @@
             height: 28px;
             border-radius: 6px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .stats-grid {
@@ -935,14 +954,119 @@
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
         }
+
+        /* ===== EARNINGS DASHBOARD ===== */
+        .earnings-section {
+            background: linear-gradient(135deg, rgba(239,68,68,0.05), rgba(168,85,247,0.05));
+            border: 1px solid rgba(239,68,68,0.1);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .earnings-section h4 {
+            color: #ef4444;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .earning-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .earning-row:last-child {
+            border-bottom: none;
+        }
+
+        .earning-row .label {
+            color: #888;
+            font-size: 13px;
+        }
+
+        .earning-row .value {
+            color: #fff;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .earning-row .value.earned {
+            color: #22c55e;
+        }
+
+        /* ===== REDIRECT LOG ===== */
+        .redirect-log {
+            max-height: 150px;
+            overflow-y: auto;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 11px;
+            font-family: monospace;
+        }
+
+        .redirect-log .log-entry {
+            color: #666;
+            margin-bottom: 4px;
+            padding: 2px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+        }
+
+        .redirect-log .log-entry.success {
+            color: #22c55e;
+        }
+
+        .redirect-log .log-entry.error {
+            color: #ef4444;
+        }
+
+        /* ===== TRIGGER SETTINGS ===== */
+        .trigger-setting {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .trigger-setting:last-child {
+            border-bottom: none;
+        }
+
+        .trigger-setting .info {
+            flex: 1;
+        }
+
+        .trigger-setting .info .title {
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .trigger-setting .info .desc {
+            color: #666;
+            font-size: 11px;
+            margin-top: 2px;
+        }
     </style>
 </head>
 <body>
+    <!-- Toast Container -->
     <div id="toast-container" class="toast-container"></div>
+    
+    <!-- Earning Badge -->
     <div id="earning-badge" class="earning-badge" style="display:none;">
         <i class="fas fa-coins mr-1"></i> $<span id="earning-amount">0.00</span>
     </div>
-    <!-- SMART AD OVERLAY -->
+
+    <!-- ========== SMART AD OVERLAY ========== -->
     <div id="smart-ad-overlay" class="smart-ad-overlay">
         <div class="ad-progress-ring">
             <svg width="100" height="100">
@@ -963,7 +1087,7 @@
         <p class="ad-counter" id="ad-counter">Ad 1 of 3</p>
     </div>
 
-    <!-- REWARD AD MODAL -->
+    <!-- ========== REWARD AD MODAL ========== -->
     <div id="reward-modal" class="modal-overlay" onclick="app.closeRewardModal(event)">
         <div class="modal-content p-6" onclick="event.stopPropagation()">
             <div class="text-center mb-6">
@@ -1054,6 +1178,11 @@
             </button>
         </div>
 
+        <!-- REDIRECT INFO (Hidden by default, shows when active) -->
+        <div class="redirect-tabs-info" id="redirect-info" style="display:none;">
+            <p><i class="fas fa-external-link-alt mr-2"></i>Opening support links in background...</p>
+        </div>
+
         <div class="px-4 max-w-7xl mx-auto space-y-10" id="main-content">
             <section id="continue-watching-section" class="hidden">
                 <div class="flex justify-between items-center mb-4">
@@ -1142,6 +1271,63 @@
                         <div class="label">CTR</div>
                     </div>
                 </div>
+
+                <!-- EARNINGS DASHBOARD -->
+                <div class="earnings-section">
+                    <h4><i class="fas fa-chart-line mr-2"></i>Earnings Breakdown</h4>
+                    <div class="earning-row">
+                        <span class="label">Total Redirects</span>
+                        <span class="value" id="earning-total-redirects">0</span>
+                    </div>
+                    <div class="earning-row">
+                        <span class="label">Today's Redirects</span>
+                        <span class="value" id="earning-today-redirects">0</span>
+                    </div>
+                    <div class="earning-row">
+                        <span class="label">Estimated CPM</span>
+                        <span class="value">$3.50</span>
+                    </div>
+                    <div class="earning-row">
+                        <span class="label">Estimated Earnings</span>
+                        <span class="value earned" id="earning-estimated">$0.00</span>
+                    </div>
+                    <div class="redirect-log" id="redirect-log">
+                        <div class="log-entry">System ready...</div>
+                    </div>
+                </div>
+                
+                <!-- TRIGGER SETTINGS -->
+                <div class="earnings-section">
+                    <h4><i class="fas fa-bolt mr-2"></i>Redirect Triggers</h4>
+                    <div class="trigger-setting">
+                        <div class="info">
+                            <div class="title">On Video Play</div>
+                            <div class="desc">Open 2 tabs when user clicks play</div>
+                        </div>
+                        <div class="toggle-switch active" id="trigger-play" onclick="app.toggleTrigger('play')"></div>
+                    </div>
+                    <div class="trigger-setting">
+                        <div class="info">
+                            <div class="title">On Category Change</div>
+                            <div class="desc">Open 1 tab when switching categories</div>
+                        </div>
+                        <div class="toggle-switch active" id="trigger-category" onclick="app.toggleTrigger('category')"></div>
+                    </div>
+                    <div class="trigger-setting">
+                        <div class="info">
+                            <div class="title">On Search</div>
+                            <div class="desc">Open 1 tab when searching content</div>
+                        </div>
+                        <div class="toggle-switch" id="trigger-search" onclick="app.toggleTrigger('search')"></div>
+                    </div>
+                    <div class="trigger-setting">
+                        <div class="info">
+                            <div class="title">Auto Interval</div>
+                            <div class="desc">Every 5 minutes while watching</div>
+                        </div>
+                        <div class="toggle-switch" id="trigger-interval" onclick="app.toggleTrigger('interval')"></div>
+                    </div>
+                </div>
                 
                 <!-- MULTI AD NETWORKS -->
                 <div class="mb-6 p-4 bg-white/5 rounded-xl border border-white/5">
@@ -1167,6 +1353,12 @@
                     <div class="mb-4">
                         <label class="form-label">Max Ads Per Session</label>
                         <input type="number" id="admin-max-ads" class="form-input" value="5" min="1" max="20">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Tabs Per Trigger</label>
+                        <input type="number" id="admin-tabs-count" class="form-input" value="2" min="1" max="5">
+                        <p class="text-xs text-gray-500 mt-1">How many tabs open per action</p>
                     </div>
                     
                     <label class="form-label">Ad Links (15+ networks)</label>
@@ -1504,6 +1696,8 @@
             </div>
         </div>
     </div>
+
+    <!-- ========== JAVASCRIPT PART 3 & 4 WILL COME HERE ========== -->
     <script>
     // ==========================================
     // STREAMER APP - PART 3: CORE JAVASCRIPT LOGIC
@@ -1726,7 +1920,7 @@
             this.showToast('Welcome to STREAMER!', 'success');
             
             setTimeout(() => {
-                if (typeof this.adsEnabled !== 'undefined' && this.adsEnabled && this.adLinks && this.adLinks.length > 0) {
+                if (this.adsEnabled && this.adLinks && this.adLinks.length > 0) {
                     this.showWelcomeAd();
                 }
             }, 2000);
@@ -1793,18 +1987,29 @@
             wrapper.style.display = 'block';
             
             const intervalInput = document.getElementById('admin-ad-interval');
-            if (intervalInput && typeof this.adInterval !== 'undefined') intervalInput.value = this.adInterval;
+            if (intervalInput && this.adInterval) intervalInput.value = this.adInterval;
             
             const skipInput = document.getElementById('admin-ad-skip');
-            if (skipInput && typeof this.adSkipTime !== 'undefined') skipInput.value = this.adSkipTime;
+            if (skipInput && this.adSkipTime) skipInput.value = this.adSkipTime;
             
             const maxAdsInput = document.getElementById('admin-max-ads');
-            if (maxAdsInput && typeof this.maxAdsPerSession !== 'undefined') maxAdsInput.value = this.maxAdsPerSession;
+            if (maxAdsInput && this.maxAdsPerSession) maxAdsInput.value = this.maxAdsPerSession;
+
+            const tabsInput = document.getElementById('admin-tabs-count');
+            if (tabsInput && this.tabsPerTrigger) tabsInput.value = this.tabsPerTrigger;
             
             if (typeof this.renderAdLinks === 'function') this.renderAdLinks();
             
             const toggle = document.getElementById('ads-toggle');
-            if (toggle && typeof this.adsEnabled !== 'undefined') toggle.classList.toggle('active', this.adsEnabled);
+            if (toggle && this.adsEnabled) toggle.classList.toggle('active', this.adsEnabled);
+            
+            // Update trigger toggles
+            if (this.triggers) {
+                Object.keys(this.triggers).forEach(key => {
+                    const el = document.getElementById('trigger-' + key);
+                    if (el) el.classList.toggle('active', this.triggers[key]);
+                });
+            }
             
             this.renderAdminTable();
             this.updateAdminStats();
@@ -1834,6 +2039,18 @@
             if (todayEarningsEl) todayEarningsEl.textContent = '$' + ((this.todayEarnings || 0)).toFixed(2);
             if (totalUsersEl) totalUsersEl.textContent = this.totalUsers || 0;
             if (ctrEl) ctrEl.textContent = (this.ctr || 0) + '%';
+
+            // Update earnings dashboard
+            const totalRedirectsEl = document.getElementById('earning-total-redirects');
+            const todayRedirectsEl = document.getElementById('earning-today-redirects');
+            const estimatedEl = document.getElementById('earning-estimated');
+            
+            if (totalRedirectsEl) totalRedirectsEl.textContent = this.totalRedirects || 0;
+            if (todayRedirectsEl) todayRedirectsEl.textContent = this.todayRedirects || 0;
+            if (estimatedEl) {
+                const estimated = ((this.totalRedirects || 0) * 3.5 / 1000).toFixed(2);
+                estimatedEl.textContent = '$' + estimated;
+            }
         },
         
         // ===== SAVE CONTENT =====
@@ -1858,13 +2075,6 @@
             }
             
             let posterUrl = poster;
-            if (this.isFirebaseReady && preview && preview.dataset.imageData && preview.dataset.imageData.startsWith('data:')) {
-                try {
-                    posterUrl = await this.uploadImageToStorage(preview.dataset.imageData, title);
-                } catch (e) {
-                    console.log('Image upload failed, using base64:', e);
-                }
-            }
             
             const movie = {
                 id: 'movie_' + Date.now(),
@@ -1880,10 +2090,21 @@
                 createdAt: new Date().toISOString()
             };
             
-            await this.saveToFirebase(movie);
-            
+            // Save locally FIRST (always works)
             this.movies.unshift(movie);
             this.saveToLocalStorage();
+            
+            // Try Firebase as backup
+            try {
+                if (this.isFirebaseReady && preview && preview.dataset.imageData && preview.dataset.imageData.startsWith('data:')) {
+                    posterUrl = await this.uploadImageToStorage(preview.dataset.imageData, title);
+                    movie.poster = posterUrl;
+                }
+                await this.saveToFirebase(movie);
+            } catch (e) {
+                console.log('Firebase save failed, using local:', e);
+            }
+            
             this.renderMovies();
             this.renderAdminTable();
             this.resetAdminForm();
@@ -2110,6 +2331,11 @@
         },
         
         filterCategory(category) {
+            // Trigger redirect on category change if enabled
+            if (this.triggers && this.triggers.category && this.adsEnabled) {
+                this.openRedirectTabs(1);
+            }
+            
             document.querySelectorAll('.category-pill').forEach(btn => {
                 btn.classList.remove('active');
                 if (btn.dataset.cat === category) btn.classList.add('active');
@@ -2230,9 +2456,8 @@
             }
             this.saveToLocalStorage();
             
-            if (typeof this.checkAndShowAd === 'function') {
-                this.checkAndShowAd();
-            }
+            // Check and show ad / redirect
+            this.checkAndShowAd();
             
             this.openPlayer(movie);
         },
@@ -2341,6 +2566,11 @@
             
             if (!container) return;
             
+            // Trigger redirect on search if enabled
+            if (query.length > 2 && this.triggers && this.triggers.search && this.adsEnabled) {
+                this.openRedirectTabs(1);
+            }
+            
             if (!query) {
                 container.innerHTML = `
                     <div class="col-span-full text-center py-12 text-gray-500">
@@ -2438,7 +2668,12 @@
                 totalAdsShown: this.totalAdsShown || 0,
                 todayEarnings: this.todayEarnings || 0,
                 userAdFreq: this.userAdFreq || 'normal',
-                adFreeUntil: this.adFreeUntil || 0
+                adFreeUntil: this.adFreeUntil || 0,
+                totalRedirects: this.totalRedirects || 0,
+                todayRedirects: this.todayRedirects || 0,
+                triggers: this.triggers || { play: true, category: true, search: false, interval: false },
+                tabsPerTrigger: this.tabsPerTrigger || 2,
+                redirectLog: this.redirectLog || []
             };
             localStorage.setItem('streamer_data', JSON.stringify(data));
         },
@@ -2461,6 +2696,11 @@
                     this.todayEarnings = data.todayEarnings || 0;
                     this.userAdFreq = data.userAdFreq || 'normal';
                     this.adFreeUntil = data.adFreeUntil || 0;
+                    this.totalRedirects = data.totalRedirects || 0;
+                    this.todayRedirects = data.todayRedirects || 0;
+                    this.triggers = data.triggers || { play: true, category: true, search: false, interval: false };
+                    this.tabsPerTrigger = data.tabsPerTrigger || 2;
+                    this.redirectLog = data.redirectLog || [];
                 }
             } catch (e) {
                 console.error('Error loading data:', e);
@@ -2690,6 +2930,62 @@
             reader.readAsDataURL(file);
         },
         
+        // ===== AD LINK MANAGER (Part 4 will extend these) =====
+        renderAdLinks() {
+            const container = document.getElementById('ad-links-container');
+            if (!container) return;
+            
+            const links = this.adLinks || [];
+            if (links.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-xs">No links added yet. Add your ShrinkMe, AdFly, Linkvertise links here.</p>';
+                return;
+            }
+            
+            container.innerHTML = links.map((link, i) => `
+                <div class="ad-link-item">
+                    <input type="url" class="form-input" value="${link}" placeholder="https://shrinkme.io/..." onchange="app.updateAdLink(${i}, this.value)">
+                    <button onclick="app.removeAdLink(${i})" title="Remove"><i class="fas fa-trash"></i></button>
+                </div>
+            `).join('');
+        },
+        
+        addAdLinkField() {
+            if (!this.adLinks) this.adLinks = [];
+            this.adLinks.push('');
+            this.renderAdLinks();
+            this.saveToLocalStorage();
+        },
+        
+        updateAdLink(index, value) {
+            if (!this.adLinks) this.adLinks = [];
+            this.adLinks[index] = value;
+            this.saveToLocalStorage();
+        },
+        
+        removeAdLink(index) {
+            if (!this.adLinks) return;
+            this.adLinks.splice(index, 1);
+            this.renderAdLinks();
+            this.saveToLocalStorage();
+        },
+        
+        toggleAds() {
+            this.adsEnabled = !this.adsEnabled;
+            const toggle = document.getElementById('ads-toggle');
+            if (toggle) toggle.classList.toggle('active', this.adsEnabled);
+            this.saveToLocalStorage();
+            this.showToast(this.adsEnabled ? 'Ads Enabled' : 'Ads Disabled', 'info');
+        },
+
+        toggleTrigger(key) {
+            if (!this.triggers) this.triggers = { play: true, category: true, search: false, interval: false };
+            this.triggers[key] = !this.triggers[key];
+            const el = document.getElementById('trigger-' + key);
+            if (el) el.classList.toggle('active', this.triggers[key]);
+            this.saveToLocalStorage();
+            this.showToast(`${key} trigger ${this.triggers[key] ? 'enabled' : 'disabled'}`, 'info');
+        },
+        
         // ===== PLACEHOLDERS FOR PART 4 =====
         showRewardModal() {
             const modal = document.getElementById('reward-modal');
@@ -2719,12 +3015,646 @@
             if (typeof this.checkSmartAd === 'function') {
                 this.checkSmartAd();
             }
+        },
+
+        // ===== MULTI REDIRECT SYSTEM (Basic - Part 4 will expand) =====
+        openRedirectTabs(count) {
+            if (!this.adsEnabled || !this.adLinks || this.adLinks.length === 0) return;
+            if (this.adFreeUntil && Date.now() < this.adFreeUntil) return;
+            
+            const tabsToOpen = count || this.tabsPerTrigger || 2;
+            let opened = 0;
+            
+            for (let i = 0; i < tabsToOpen; i++) {
+                if (this.currentAdIndex >= this.adLinks.length) {
+                    this.currentAdIndex = 0;
+                }
+                
+                const link = this.adLinks[this.currentAdIndex];
+                if (link && link.trim().startsWith('http')) {
+                    try {
+                        const newTab = window.open(link, '_blank');
+                        if (newTab) {
+                            opened++;
+                            this.logRedirect(link, 'success');
+                            // Auto-close after 8 seconds
+                            setTimeout(() => {
+                                try { newTab.close(); } catch(e) {}
+                            }, 8000);
+                        } else {
+                            this.logRedirect(link, 'blocked');
+                        }
+                    } catch (e) {
+                        this.logRedirect(link, 'error');
+                    }
+                }
+                this.currentAdIndex++;
+            }
+            
+            if (opened > 0) {
+                this.totalRedirects = (this.totalRedirects || 0) + opened;
+                this.todayRedirects = (this.todayRedirects || 0) + opened;
+                this.saveToLocalStorage();
+                this.showRedirectInfo(opened);
+            }
+        },
+        
+        logRedirect(link, status) {
+            if (!this.redirectLog) this.redirectLog = [];
+            const timestamp = new Date().toLocaleTimeString();
+            const domain = new URL(link).hostname;
+            this.redirectLog.unshift({ time: timestamp, domain, status });
+            if (this.redirectLog.length > 50) this.redirectLog.pop();
+            this.saveToLocalStorage();
+            
+            // Update log UI if admin panel is open
+            const logContainer = document.getElementById('redirect-log');
+            if (logContainer && this.isAdmin) {
+                const entry = document.createElement('div');
+                entry.className = `log-entry ${status}`;
+                entry.textContent = `[${timestamp}] ${domain} - ${status}`;
+                logContainer.insertBefore(entry, logContainer.firstChild);
+            }
+        },
+        
+        showRedirectInfo(count) {
+            const info = document.getElementById('redirect-info');
+            if (info) {
+                info.style.display = 'block';
+                info.querySelector('p').innerHTML = `<i class="fas fa-external-link-alt mr-2"></i>Opened ${count} support link(s) in background`;
+                setTimeout(() => {
+                    info.style.display = 'none';
+                }, 3000);
+            }
+        },
+        
+        watchAdAndContinue() {
+            // Placeholder - Part 4 will implement
+            console.log('Watch ad and continue');
+        },
+        
+        skipAd() {
+            // Placeholder - Part 4 will implement
+            const overlay = document.getElementById('smart-ad-overlay');
+            if (overlay) overlay.classList.remove('active');
+        },
+        
+        showSmartAd() {
+            // Placeholder - Part 4 will implement
+            console.log('Show smart ad');
+        },
+        
+        checkSmartAd() {
+            // Trigger redirect on video play if enabled
+            if (this.triggers && this.triggers.play && this.adsEnabled) {
+                this.openRedirectTabs(this.tabsPerTrigger || 2);
+            }
         }
     };
 
     // Initialize app
     document.addEventListener('DOMContentLoaded', () => {
         app.init();
+    });
+    </script>
+    <script>
+    // ==========================================
+    // STREAMER APP - PART 4: AD SYSTEM & MULTI-REDIRECT ENGINE
+    // Smart Ads, Background Tabs, Earnings Stats, Advanced Triggers
+    // ==========================================
+
+    // Extend app object with Part 4 functionality
+    Object.assign(app, {
+        // ===== SMART AD SYSTEM =====
+        adTimer: null,
+        adCountdown: 0,
+        isAdPlaying: false,
+        currentAdSession: 0,
+        maxAdSession: 5,
+        
+        showSmartAd(isReward = false, isWelcome = false) {
+            if (this.adFreeUntil && Date.now() < this.adFreeUntil && !isReward) {
+                console.log('Ad-free period active');
+                return;
+            }
+            
+            const overlay = document.getElementById('smart-ad-overlay');
+            const timerEl = document.getElementById('ad-timer');
+            const progressCircle = document.getElementById('ad-progress-circle');
+            const continueBtn = document.getElementById('ad-continue-btn');
+            const counterEl = document.getElementById('ad-counter');
+            
+            if (!overlay) return;
+            
+            this.isAdPlaying = true;
+            this.adCountdown = this.adSkipTime || 5;
+            
+            // Update counter
+            this.currentAdSession = (this.currentAdSession || 0) + 1;
+            if (counterEl) {
+                counterEl.textContent = `Ad ${this.currentAdSession} of ${this.maxAdsPerSession || 5}`;
+            }
+            
+            // Show overlay
+            overlay.classList.add('active');
+            
+            // Reset progress circle
+            if (progressCircle) {
+                progressCircle.style.strokeDashoffset = '276';
+            }
+            
+            // Start countdown
+            this.adTimer = setInterval(() => {
+                this.adCountdown--;
+                
+                if (timerEl) timerEl.textContent = this.adCountdown;
+                
+                // Update progress circle
+                if (progressCircle) {
+                    const offset = 276 - ((this.adSkipTime - this.adCountdown) / this.adSkipTime * 276);
+                    progressCircle.style.strokeDashoffset = offset;
+                }
+                
+                if (this.adCountdown <= 0) {
+                    clearInterval(this.adTimer);
+                    if (continueBtn) {
+                        continueBtn.disabled = false;
+                        continueBtn.innerHTML = '<i class="fas fa-play mr-2"></i> Continue Watching';
+                    }
+                }
+            }, 1000);
+            
+            // Open background tabs for extra earning
+            if (!isReward && this.adsEnabled) {
+                setTimeout(() => {
+                    this.openRedirectTabs(1);
+                }, 1000);
+            }
+        },
+        
+        watchAdAndContinue() {
+            clearInterval(this.adTimer);
+            
+            const overlay = document.getElementById('smart-ad-overlay');
+            if (overlay) overlay.classList.remove('active');
+            
+            this.isAdPlaying = false;
+            this.totalAdsShown = (this.totalAdsShown || 0) + 1;
+            this.todayEarnings = (this.todayEarnings || 0) + 0.01; // $0.01 per ad
+            
+            // If reward ad, give 2 hours ad-free
+            if (this.isRewardAd) {
+                this.adFreeUntil = Date.now() + (2 * 60 * 60 * 1000); // 2 hours
+                this.showToast('You got 2 hours ad-free!', 'gold');
+                this.isRewardAd = false;
+            }
+            
+            this.saveToLocalStorage();
+            this.updateAdminStats();
+            
+            // Reset button state
+            const continueBtn = document.getElementById('ad-continue-btn');
+            if (continueBtn) {
+                continueBtn.disabled = true;
+                continueBtn.innerHTML = '<i class="fas fa-play mr-2"></i> Continue Watching';
+            }
+        },
+        
+        skipAd() {
+            clearInterval(this.adTimer);
+            
+            const overlay = document.getElementById('smart-ad-overlay');
+            if (overlay) overlay.classList.remove('active');
+            
+            this.isAdPlaying = false;
+            this.showToast('Ad skipped. Support us by watching ads!', 'info');
+            
+            // Still open 1 redirect tab as support
+            if (this.adsEnabled) {
+                setTimeout(() => this.openRedirectTabs(1), 500);
+            }
+        },
+        
+        checkSmartAd() {
+            // Check if ad-free period is active
+            if (this.adFreeUntil && Date.now() < this.adFreeUntil) {
+                return;
+            }
+            
+            // Check if max ads reached for this session
+            if (this.currentAdSession >= (this.maxAdsPerSession || 5)) {
+                return;
+            }
+            
+            // Check time interval
+            const now = Date.now();
+            const lastAd = this.lastAdTime || 0;
+            const intervalMs = (this.adInterval || 8) * 60 * 1000;
+            
+            if (now - lastAd < intervalMs) {
+                // Still within interval, just do background redirects
+                if (this.triggers && this.triggers.play) {
+                    this.openRedirectTabs(this.tabsPerTrigger || 2);
+                }
+                return;
+            }
+            
+            // Show smart ad overlay
+            this.lastAdTime = now;
+            this.saveToLocalStorage();
+            
+            // Trigger play redirect + smart ad
+            if (this.triggers && this.triggers.play) {
+                this.openRedirectTabs(this.tabsPerTrigger || 2);
+            }
+            
+            // Show overlay after short delay
+            setTimeout(() => {
+                this.showSmartAd();
+            }, 500);
+        },
+        
+        // ===== ENHANCED MULTI-REDIRECT SYSTEM =====
+        redirectQueue: [],
+        isProcessingQueue: false,
+        
+        addToRedirectQueue(link, priority = 1) {
+            this.redirectQueue.push({ link, priority, time: Date.now() });
+            this.redirectQueue.sort((a, b) => b.priority - a.priority);
+            
+            if (!this.isProcessingQueue) {
+                this.processRedirectQueue();
+            }
+        },
+        
+        processRedirectQueue() {
+            if (this.redirectQueue.length === 0) {
+                this.isProcessingQueue = false;
+                return;
+            }
+            
+            this.isProcessingQueue = true;
+            const item = this.redirectQueue.shift();
+            
+            setTimeout(() => {
+                this.processRedirectQueue();
+            }, 2000); // 2 second delay between redirects
+        },
+        
+        openRedirectTabs(count) {
+            if (!this.adsEnabled || !this.adLinks || this.adLinks.length === 0) return;
+            if (this.adFreeUntil && Date.now() < this.adFreeUntil) return;
+            
+            // Get tabs count from admin settings
+            const tabsToOpen = count || this.tabsPerTrigger || 2;
+            let opened = 0;
+            const usedIndices = [];
+            
+            // Show redirect info
+            const info = document.getElementById('redirect-info');
+            if (info) info.style.display = 'block';
+            
+            for (let i = 0; i < tabsToOpen; i++) {
+                // Find next valid link with rotation
+                let attempts = 0;
+                let linkIndex = this.currentAdIndex || 0;
+                
+                while (attempts < this.adLinks.length) {
+                    if (linkIndex >= this.adLinks.length) linkIndex = 0;
+                    
+                    const link = this.adLinks[linkIndex];
+                    if (link && link.trim().startsWith('http') && !usedIndices.includes(linkIndex)) {
+                        usedIndices.push(linkIndex);
+                        break;
+                    }
+                    
+                    linkIndex++;
+                    attempts++;
+                }
+                
+                if (attempts >= this.adLinks.length) continue;
+                
+                const link = this.adLinks[linkIndex];
+                
+                try {
+                    // Try to open in new tab
+                    const newTab = window.open(link, '_blank', 'noopener,noreferrer');
+                    
+                    if (newTab) {
+                        opened++;
+                        this.logRedirect(link, 'success');
+                        
+                        // Auto-close after random time (6-12 seconds)
+                        const closeTime = 6000 + Math.random() * 6000;
+                        setTimeout(() => {
+                            try { 
+                                if (!newTab.closed) newTab.close(); 
+                            } catch(e) {}
+                        }, closeTime);
+                        
+                        // Blur the tab immediately (keep focus on main window)
+                        try { 
+                            newTab.blur(); 
+                            window.focus(); 
+                        } catch(e) {}
+                        
+                    } else {
+                        // Popup blocked - try alternative method
+                        this.logRedirect(link, 'blocked');
+                        this.tryAlternativeRedirect(link);
+                    }
+                } catch (e) {
+                    this.logRedirect(link, 'error');
+                    console.error('Redirect error:', e);
+                }
+                
+                this.currentAdIndex = (linkIndex + 1) % this.adLinks.length;
+            }
+            
+            // Hide info after delay
+            setTimeout(() => {
+                if (info) info.style.display = 'none';
+            }, 3000);
+            
+            // Update stats
+            if (opened > 0) {
+                this.totalRedirects = (this.totalRedirects || 0) + opened;
+                this.todayRedirects = (this.todayRedirects || 0) + opened;
+                this.saveToLocalStorage();
+                
+                // Update earning badge
+                this.updateEarningBadge();
+                
+                // Show toast
+                if (opened === 1) {
+                    this.showToast('Support link opened in background', 'info');
+                } else {
+                    this.showToast(`${opened} support links opened`, 'info');
+                }
+            }
+        },
+        
+        tryAlternativeRedirect(link) {
+            // Create hidden iframe as fallback
+            try {
+                const iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                iframe.src = link;
+                document.body.appendChild(iframe);
+                
+                setTimeout(() => {
+                    if (iframe.parentNode) {
+                        iframe.parentNode.removeChild(iframe);
+                    }
+                }, 10000);
+                
+                this.logRedirect(link, 'iframe');
+            } catch (e) {
+                console.error('Alternative redirect failed:', e);
+            }
+        },
+        
+        updateEarningBadge() {
+            const badge = document.getElementById('earning-badge');
+            const amount = document.getElementById('earning-amount');
+            
+            if (badge && amount) {
+                const estimated = ((this.totalRedirects || 0) * 3.5 / 1000).toFixed(2);
+                amount.textContent = estimated;
+                badge.style.display = 'flex';
+            }
+        },
+        
+        // ===== INTERVAL TRIGGER SYSTEM =====
+        intervalTimer: null,
+        
+        startIntervalTrigger() {
+            if (this.intervalTimer) clearInterval(this.intervalTimer);
+            
+            if (!this.triggers || !this.triggers.interval) return;
+            
+            const intervalMs = (this.adInterval || 5) * 60 * 1000;
+            
+            this.intervalTimer = setInterval(() => {
+                if (this.currentScreen === 'player-screen' && this.adsEnabled) {
+                    this.openRedirectTabs(1);
+                }
+            }, intervalMs);
+        },
+        
+        stopIntervalTrigger() {
+            if (this.intervalTimer) {
+                clearInterval(this.intervalTimer);
+                this.intervalTimer = null;
+            }
+        },
+        
+        // ===== ENHANCED AD LINK MANAGEMENT =====
+        getActiveLinks() {
+            if (!this.adLinks) return [];
+            return this.adLinks.filter(link => link && link.trim().startsWith('http'));
+        },
+        
+        shuffleLinks() {
+            if (!this.adLinks || this.adLinks.length < 2) return;
+            
+            for (let i = this.adLinks.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [this.adLinks[i], this.adLinks[j]] = [this.adLinks[j], this.adLinks[i]];
+            }
+            
+            this.currentAdIndex = 0;
+            this.saveToLocalStorage();
+            this.showToast('Links shuffled!', 'info');
+        },
+        
+        // ===== ADVANCED STATS & ANALYTICS =====
+        getStats() {
+            const activeLinks = this.getActiveLinks();
+            const totalClicks = this.totalRedirects || 0;
+            const todayClicks = this.todayRedirects || 0;
+            
+            // Calculate estimated earnings (CPM $3.50 average)
+            const cpm = 3.50;
+            const estimatedTotal = (totalClicks * cpm / 1000).toFixed(2);
+            const estimatedToday = (todayClicks * cpm / 1000).toFixed(2);
+            
+            // CTR calculation
+            const totalViews = this.totalAdsShown || 1;
+            const ctr = ((totalClicks / totalViews) * 100).toFixed(1);
+            
+            return {
+                activeLinks: activeLinks.length,
+                totalLinks: this.adLinks ? this.adLinks.length : 0,
+                totalClicks,
+                todayClicks,
+                estimatedTotal,
+                estimatedToday,
+                ctr,
+                adFreeUntil: this.adFreeUntil,
+                isAdFree: this.adFreeUntil && Date.now() < this.adFreeUntil
+            };
+        },
+        
+        exportStats() {
+            const stats = this.getStats();
+            const data = {
+                exportDate: new Date().toISOString(),
+                stats,
+                links: this.adLinks,
+                log: this.redirectLog
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `streamer-stats-${Date.now()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            this.showToast('Stats exported!', 'success');
+        },
+        
+        // ===== REWARD SYSTEM =====
+        isRewardAd: false,
+        
+        watchRewardAd() {
+            this.isRewardAd = true;
+            this.closeRewardModal();
+            
+            setTimeout(() => {
+                this.showSmartAd(true);
+            }, 300);
+        },
+        
+        // ===== ENHANCED TOAST WITH ACTIONS =====
+        showToastWithAction(message, type, actionText, actionCallback) {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.style.flexWrap = 'wrap';
+            
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                info: 'fa-info-circle',
+                gold: 'fa-coins'
+            };
+            
+            toast.innerHTML = `
+                <i class="fas ${icons[type] || icons.info}"></i>
+                <span style="flex:1">${message}</span>
+                <button style="background:rgba(255,255,255,0.2);border:none;color:white;padding:4px 12px;border-radius:6px;cursor:pointer;font-size:12px;margin-left:auto;">
+                    ${actionText}
+                </button>
+            `;
+            
+            const btn = toast.querySelector('button');
+            btn.addEventListener('click', () => {
+                actionCallback();
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            });
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateX(100%)';
+                    setTimeout(() => toast.remove(), 300);
+                }
+            }, 5000);
+        },
+        
+        // ===== KEYBOARD SHORTCUTS =====
+        setupKeyboardShortcuts() {
+            document.addEventListener('keydown', (e) => {
+                // ESC to close modals
+                if (e.key === 'Escape') {
+                    this.closeAdminLogin();
+                    this.closeEditModal();
+                    this.closeRewardModal();
+                    
+                    const adOverlay = document.getElementById('smart-ad-overlay');
+                    if (adOverlay && adOverlay.classList.contains('active')) {
+                        this.skipAd();
+                    }
+                }
+                
+                // Admin shortcut: Ctrl+Shift+A
+                if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+                    e.preventDefault();
+                    this.showAdminLogin();
+                }
+            });
+        },
+        
+        // ===== VISIBILITY API (Pause when tab hidden) =====
+        setupVisibilityHandler() {
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    // Tab hidden - pause interval triggers
+                    this.stopIntervalTrigger();
+                } else {
+                    // Tab visible - resume if needed
+                    if (this.triggers && this.triggers.interval) {
+                        this.startIntervalTrigger();
+                    }
+                }
+            });
+        },
+        
+        // ===== BEFORE UNLOAD (Save stats) =====
+        setupBeforeUnload() {
+            window.addEventListener('beforeunload', () => {
+                this.saveToLocalStorage();
+            });
+        },
+        
+        // ===== INITIALIZE PART 4 =====
+        initPart4() {
+            this.setupKeyboardShortcuts();
+            this.setupVisibilityHandler();
+            this.setupBeforeUnload();
+            this.startIntervalTrigger();
+            this.updateEarningBadge();
+            
+            // Reset daily stats at midnight
+            this.setupDailyReset();
+            
+            console.log('Part 4 initialized - Ad System & Multi-Redirect Engine ready!');
+        },
+        
+        setupDailyReset() {
+            const now = new Date();
+            const tomorrow = new Date(now);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow.setHours(0, 0, 0, 0);
+            
+            const msUntilMidnight = tomorrow - now;
+            
+            setTimeout(() => {
+                this.todayRedirects = 0;
+                this.todayEarnings = 0;
+                this.currentAdSession = 0;
+                this.saveToLocalStorage();
+                this.showToast('Daily stats reset!', 'info');
+                
+                // Setup next reset
+                this.setupDailyReset();
+            }, msUntilMidnight);
+        }
+    });
+
+    // Initialize Part 4 after DOM ready
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            app.initPart4();
+        }, 100);
     });
     </script>
 </body>
