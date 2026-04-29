@@ -10,22 +10,23 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Firebase SDK v12.12.0 -->
+    <!-- Firebase SDK v12.12.0 - NEW API -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-analytics.js";
         import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, updateDoc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
         import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-storage.js";
 
+        // NEW FIREBASE CONFIG - streaming-website-fbb86
         const firebaseConfig = {
-            apiKey: "AIzaSyC203H8isoltOx66YZ_wddqpWB4nBIMQZU",
-            authDomain: "streamer-a5ea9.firebaseapp.com",
-            projectId: "streamer-a5ea9",
-            storageBucket: "streamer-a5ea9.firebasestorage.app",
-            messagingSenderId: "821781298641",
-            appId: "1:821781298641:web:1fcec50709460dcdd8f4f0",
-            measurementId: "G-21LF69JH1Q"
+            apiKey: "AIzaSyBgi4qEQiabaY53BJ5-HTfQP7UiwbRUd4I",
+            authDomain: "streaming-website-fbb86.firebaseapp.com",
+            projectId: "streaming-website-fbb86",
+            storageBucket: "streaming-website-fbb86.firebasestorage.app",
+            messagingSenderId: "269479523484",
+            appId: "1:269479523484:web:4fd0671496a7a0c243a959",
+            measurementId: "G-V24RQH3MB6"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -54,12 +55,9 @@
         window.firebaseGetDownloadURL = getDownloadURL;
         window.firebaseSignInAnonymously = signInAnonymously;
         window.firebaseOnAuthStateChanged = onAuthStateChanged;
-        window.firebaseCreateUser = createUserWithEmailAndPassword;
-        window.firebaseSignIn = signInWithEmailAndPassword;
-        window.firebaseSignOut = signOut;
         window.firebaseReady = true;
 
-        console.log('Firebase v12.12.0 initialized successfully!');
+        console.log('Firebase NEW API initialized: streaming-website-fbb86');
         window.dispatchEvent(new CustomEvent('firebase-ready'));
     </script>
 
@@ -204,6 +202,7 @@
             border: 1px solid rgba(255, 255, 255, 0.05); 
         }
 
+        /* ===== FIXED MOVIE CARD - CLICKABLE ===== */
         .movie-card { 
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
             cursor: pointer; 
@@ -211,6 +210,7 @@
             overflow: hidden; 
             -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
+            pointer-events: auto !important;
         }
 
         .movie-card:hover { 
@@ -218,16 +218,14 @@
             z-index: 10; 
         }
 
-        .movie-card * {
+        /* Only images and text non-clickable, card itself is clickable */
+        .movie-card img,
+        .movie-card h4,
+        .movie-card p {
             pointer-events: none;
         }
 
-        .movie-card .play-overlay,
-        .movie-card button {
-            pointer-events: auto;
-        }
-
-        .movie-card .play-overlay { 
+        .movie-card .play-overlay {
             position: absolute; 
             inset: 0; 
             background: rgba(0,0,0,0.5); 
@@ -235,7 +233,8 @@
             align-items: center; 
             justify-content: center; 
             opacity: 0; 
-            transition: opacity 0.3s; 
+            transition: opacity 0.3s;
+            pointer-events: none;
         }
 
         .movie-card:hover .play-overlay { 
@@ -371,7 +370,6 @@
             border: none; 
         }
 
-        /* ===== AD OVERLAY SYSTEM ===== */
         .smart-ad-overlay {
             position: fixed;
             inset: 0;
@@ -469,7 +467,6 @@
             margin-top: 8px;
         }
 
-        /* ===== MULTI REDIRECT TABS ===== */
         .redirect-tabs-info {
             background: rgba(239, 68, 68, 0.1);
             border: 1px solid rgba(239, 68, 68, 0.2);
@@ -935,27 +932,7 @@
             margin-top: 4px;
         }
 
-        .earning-badge {
-            position: fixed;
-            bottom: 80px;
-            right: 16px;
-            background: linear-gradient(135deg, #ef4444, #a855f7);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            z-index: 100;
-            box-shadow: 0 4px 20px rgba(239,68,68,0.3);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        /* ===== EARNINGS DASHBOARD ===== */
+        /* EARNINGS DASHBOARD */
         .earnings-section {
             background: linear-gradient(135deg, rgba(239,68,68,0.05), rgba(168,85,247,0.05));
             border: 1px solid rgba(239,68,68,0.1);
@@ -1000,7 +977,6 @@
             color: #22c55e;
         }
 
-        /* ===== REDIRECT LOG ===== */
         .redirect-log {
             max-height: 150px;
             overflow-y: auto;
@@ -1027,7 +1003,6 @@
             color: #ef4444;
         }
 
-        /* ===== TRIGGER SETTINGS ===== */
         .trigger-setting {
             display: flex;
             justify-content: space-between;
@@ -1060,11 +1035,6 @@
 <body>
     <!-- Toast Container -->
     <div id="toast-container" class="toast-container"></div>
-    
-    <!-- Earning Badge -->
-    <div id="earning-badge" class="earning-badge" style="display:none;">
-        <i class="fas fa-coins mr-1"></i> $<span id="earning-amount">0.00</span>
-    </div>
 
     <!-- ========== SMART AD OVERLAY ========== -->
     <div id="smart-ad-overlay" class="smart-ad-overlay">
@@ -1701,7 +1671,7 @@
     <script>
     // ==========================================
     // STREAMER APP - PART 3: CORE JAVASCRIPT LOGIC
-    // Firebase, Screens, Player, Search, Admin, Content
+    // Firebase Fixed, Video Click Fixed, Save Content Working
     // ==========================================
 
     const app = {
@@ -1720,6 +1690,7 @@
         watchTime: 0,
         isFirebaseReady: false,
         userId: null,
+        isSaving: false, // Prevent double save
         
         // Admin credentials (Base64 encoded)
         adminCredentials: {
@@ -1729,6 +1700,7 @@
         
         // ===== INITIALIZE =====
         init() {
+            console.log('🚀 STREAMER App Initializing...');
             this.loadFromLocalStorage();
             this.loadDemoData();
             this.initHeroSlider();
@@ -1741,23 +1713,24 @@
             const urlParams = new URLSearchParams(window.location.search);
             const sharedId = urlParams.get('watch');
             if (sharedId) {
-                setTimeout(() => this.playMovieById(sharedId), 500);
+                setTimeout(() => this.playMovieById(sharedId), 1000);
             }
         },
         
         // ===== FIREBASE =====
         initFirebase() {
+            console.log('Checking Firebase...');
             if (window.firebaseReady) {
                 this.isFirebaseReady = true;
                 this.authenticateUser();
                 this.loadFromFirebase();
-                console.log('Firebase connected!');
+                console.log('✅ Firebase connected immediately!');
             } else {
                 window.addEventListener('firebase-ready', () => {
                     this.isFirebaseReady = true;
                     this.authenticateUser();
                     this.loadFromFirebase();
-                    console.log('Firebase connected via event!');
+                    console.log('✅ Firebase connected via event!');
                 });
             }
         },
@@ -1771,7 +1744,7 @@
                 onAuthChange(auth, (user) => {
                     if (user) {
                         this.userId = user.uid;
-                        console.log('User authenticated:', user.uid);
+                        console.log('✅ User authenticated:', user.uid);
                         this.trackUserSession();
                     } else {
                         signInAnon(auth).catch(e => console.log('Auth error:', e));
@@ -1809,8 +1782,12 @@
         },
         
         async loadFromFirebase() {
-            if (!this.isFirebaseReady) return;
+            if (!this.isFirebaseReady) {
+                console.log('❌ Firebase not ready, skipping cloud load');
+                return;
+            }
             try {
+                console.log('📥 Loading from Firebase...');
                 const q = window.firebaseQuery(
                     window.firebaseCollection(window.firebaseDB, 'movies'),
                     window.firebaseOrderBy('createdAt', 'desc')
@@ -1820,26 +1797,62 @@
                 querySnapshot.forEach((doc) => {
                     firebaseMovies.push({ id: doc.id, ...doc.data() });
                 });
+                
+                console.log(`📊 Found ${firebaseMovies.length} movies in Firebase`);
+                
                 if (firebaseMovies.length > 0) {
+                    // Merge with local, prefer Firebase data
                     this.movies = firebaseMovies;
                     this.renderMovies();
                     this.saveToLocalStorage();
                     this.showToast('Content loaded from cloud!', 'success');
+                } else {
+                    console.log('ℹ️ No movies in Firebase, using local/demo data');
+                    // Save demo data to Firebase if empty
+                    if (this.movies.length > 0) {
+                        this.syncDemoToFirebase();
+                    }
                 }
             } catch (e) {
-                console.log('Firebase load failed:', e);
+                console.error('❌ Firebase load failed:', e);
+                this.showToast('Using offline mode', 'info');
+            }
+        },
+        
+        async syncDemoToFirebase() {
+            if (!this.isFirebaseReady) return;
+            console.log('🔄 Syncing demo data to Firebase...');
+            for (const movie of this.movies) {
+                if (movie.id.startsWith('demo')) {
+                    try {
+                        await this.saveToFirebase(movie);
+                    } catch (e) {
+                        console.log('Sync error for', movie.title);
+                    }
+                }
             }
         },
         
         async saveToFirebase(movie) {
-            if (!this.isFirebaseReady) return;
+            if (!this.isFirebaseReady) {
+                console.log('❌ Cannot save to Firebase - not ready');
+                throw new Error('Firebase not initialized');
+            }
             try {
-                await window.firebaseAddDoc(
+                console.log('💾 Saving to Firebase:', movie.title);
+                const docRef = await window.firebaseAddDoc(
                     window.firebaseCollection(window.firebaseDB, 'movies'),
-                    { ...movie, createdAt: window.firebaseServerTimestamp() }
+                    { 
+                        ...movie, 
+                        createdAt: window.firebaseServerTimestamp(),
+                        updatedAt: window.firebaseServerTimestamp()
+                    }
                 );
+                console.log('✅ Firebase save success, ID:', docRef.id);
+                return docRef.id;
             } catch (e) {
-                console.log('Firebase save failed:', e);
+                console.error('❌ Firebase save failed:', e);
+                throw e;
             }
         },
         
@@ -1847,17 +1860,22 @@
             if (!this.isFirebaseReady) return;
             try {
                 await window.firebaseDeleteDoc(window.firebaseDoc(window.firebaseDB, 'movies', id));
+                console.log('✅ Deleted from Firebase:', id);
             } catch (e) {
-                console.log('Firebase delete failed:', e);
+                console.log('❌ Firebase delete failed:', e);
             }
         },
         
         async updateFirebase(id, data) {
             if (!this.isFirebaseReady) return;
             try {
-                await window.firebaseUpdateDoc(window.firebaseDoc(window.firebaseDB, 'movies', id), data);
+                await window.firebaseUpdateDoc(window.firebaseDoc(window.firebaseDB, 'movies', id), {
+                    ...data,
+                    updatedAt: window.firebaseServerTimestamp()
+                });
+                console.log('✅ Updated in Firebase:', id);
             } catch (e) {
-                console.log('Firebase update failed:', e);
+                console.log('❌ Firebase update failed:', e);
             }
         },
         
@@ -2053,62 +2071,102 @@
             }
         },
         
-        // ===== SAVE CONTENT =====
+        // ===== SAVE CONTENT - FIXED =====
         async saveContent() {
-            const title = document.getElementById('admin-title').value.trim();
-            const category = document.getElementById('admin-category').value;
-            const year = parseInt(document.getElementById('admin-year').value) || 2024;
-            const duration = document.getElementById('admin-duration').value.trim() || '24 min';
-            const rating = parseFloat(document.getElementById('admin-rating').value) || 0;
-            const description = document.getElementById('admin-description').value.trim();
-            const videoUrl = document.getElementById('admin-video').value.trim();
-            const preview = document.getElementById('upload-preview');
-            
-            if (!title || !videoUrl) {
-                this.showToast('Title and Video URL are required!', 'error');
+            // Prevent double save
+            if (this.isSaving) {
+                this.showToast('Already saving, please wait...', 'info');
                 return;
             }
             
-            let poster = 'https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image';
-            if (preview && preview.dataset.imageData) {
-                poster = preview.dataset.imageData;
-            }
+            this.isSaving = true;
             
-            let posterUrl = poster;
-            
-            const movie = {
-                id: 'movie_' + Date.now(),
-                title,
-                category,
-                year,
-                duration,
-                rating,
-                description,
-                poster: posterUrl,
-                videoUrl,
-                featured: false,
-                createdAt: new Date().toISOString()
-            };
-            
-            // Save locally FIRST (always works)
-            this.movies.unshift(movie);
-            this.saveToLocalStorage();
-            
-            // Try Firebase as backup
             try {
-                if (this.isFirebaseReady && preview && preview.dataset.imageData && preview.dataset.imageData.startsWith('data:')) {
-                    posterUrl = await this.uploadImageToStorage(preview.dataset.imageData, title);
-                    movie.poster = posterUrl;
+                const title = document.getElementById('admin-title').value.trim();
+                const category = document.getElementById('admin-category').value;
+                const year = parseInt(document.getElementById('admin-year').value) || 2024;
+                const duration = document.getElementById('admin-duration').value.trim() || '24 min';
+                const rating = parseFloat(document.getElementById('admin-rating').value) || 0;
+                const description = document.getElementById('admin-description').value.trim();
+                const videoUrl = document.getElementById('admin-video').value.trim();
+                const preview = document.getElementById('upload-preview');
+                
+                if (!title || !videoUrl) {
+                    this.showToast('Title and Video URL are required!', 'error');
+                    this.isSaving = false;
+                    return;
                 }
-                await this.saveToFirebase(movie);
-            } catch (e) {
-                console.log('Firebase save failed, using local:', e);
+                
+                let poster = 'https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image';
+                if (preview && preview.dataset.imageData) {
+                    poster = preview.dataset.imageData;
+                }
+                
+                // Create movie object
+                const movie = {
+                    id: 'movie_' + Date.now(),
+                    title,
+                    category,
+                    year,
+                    duration,
+                    rating,
+                    description,
+                    poster: poster,
+                    videoUrl,
+                    featured: false,
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString()
+                };
+                
+                console.log('📝 Preparing to save:', movie.title);
+                
+                // STEP 1: Always save to local first
+                this.movies.unshift(movie);
+                this.saveToLocalStorage();
+                console.log('✅ Saved to localStorage');
+                
+                // STEP 2: Try Firebase
+                let firebaseSuccess = false;
+                try {
+                    if (this.isFirebaseReady) {
+                        // Upload image if it's base64
+                        if (preview && preview.dataset.imageData && preview.dataset.imageData.startsWith('data:')) {
+                            try {
+                                const imageUrl = await this.uploadImageToStorage(preview.dataset.imageData, title);
+                                movie.poster = imageUrl;
+                                console.log('✅ Image uploaded to Firebase Storage');
+                            } catch (imgErr) {
+                                console.log('⚠️ Image upload failed, using base64:', imgErr);
+                            }
+                        }
+                        
+                        const firebaseId = await this.saveToFirebase(movie);
+                        movie.firebaseId = firebaseId;
+                        firebaseSuccess = true;
+                    } else {
+                        console.log('⚠️ Firebase not ready, saved locally only');
+                    }
+                } catch (firebaseErr) {
+                    console.error('❌ Firebase save error:', firebaseErr);
+                }
+                
+                // STEP 3: Update UI
+                this.renderMovies();
+                this.renderAdminTable();
+                this.resetAdminForm();
+                
+                if (firebaseSuccess) {
+                    this.showToast('Content saved to cloud!', 'success');
+                } else {
+                    this.showToast('Content saved locally!', 'success');
+                }
+                
+            } catch (error) {
+                console.error('❌ Save error:', error);
+                this.showToast('Save failed: ' + error.message, 'error');
+            } finally {
+                this.isSaving = false;
             }
-            
-            this.renderMovies();
-            this.renderAdminTable();
-            this.resetAdminForm();
-            this.showToast('Content saved successfully!', 'success');
         },
         
         async uploadImageToStorage(base64Data, title) {
@@ -2211,11 +2269,14 @@
             movie.videoUrl = document.getElementById('edit-video').value.trim();
             movie.updatedAt = new Date().toISOString();
             
-            if (this.isFirebaseReady) {
-                await this.updateFirebase(id, movie);
+            // Update local
+            this.saveToLocalStorage();
+            
+            // Update Firebase
+            if (this.isFirebaseReady && movie.firebaseId) {
+                await this.updateFirebase(movie.firebaseId, movie);
             }
             
-            this.saveToLocalStorage();
             this.renderMovies();
             this.renderAdminTable();
             this.closeEditModal();
@@ -2225,10 +2286,14 @@
         async deleteContent(id) {
             if (!confirm('Are you sure you want to delete this content?')) return;
             
-            if (this.isFirebaseReady) {
-                await this.deleteFromFirebase(id);
+            const movie = this.movies.find(m => m.id === id);
+            
+            // Delete from Firebase
+            if (this.isFirebaseReady && movie && movie.firebaseId) {
+                await this.deleteFromFirebase(movie.firebaseId);
             }
             
+            // Delete from local
             this.movies = this.movies.filter(m => m.id !== id);
             this.saveToLocalStorage();
             this.renderMovies();
@@ -2364,6 +2429,7 @@
             this.currentCategory = category;
         },
         
+        // ===== FIXED MOVIE CARD RENDERER =====
         renderMovieRow(containerId, movies) {
             const container = document.getElementById(containerId);
             if (!container) return;
@@ -2374,7 +2440,7 @@
             }
             
             container.innerHTML = movies.map(movie => `
-                <div class="movie-card flex-shrink-0 w-36 md:w-44" onclick="app.playMovieById('${movie.id}')">
+                <div class="movie-card flex-shrink-0 w-36 md:w-44" onclick="app.handleMovieClick('${movie.id}')" role="button" tabindex="0">
                     <div class="relative rounded-xl overflow-hidden aspect-[2/3] mb-2 bg-gray-900">
                         <img src="${movie.poster}" alt="${movie.title}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image'">
                         <div class="play-overlay">
@@ -2392,6 +2458,12 @@
             `).join('');
         },
         
+        // ===== FIXED MOVIE CLICK HANDLER =====
+        handleMovieClick(id) {
+            console.log('🎬 Movie clicked:', id);
+            this.playMovieById(id);
+        },
+        
         renderContinueWatching() {
             const container = document.getElementById('continue-container');
             const section = document.getElementById('continue-watching-section');
@@ -2405,7 +2477,7 @@
             
             section.classList.remove('hidden');
             container.innerHTML = this.continueWatching.map(movie => `
-                <div class="movie-card flex-shrink-0 w-36 md:w-44" onclick="app.playMovieById('${movie.id}')">
+                <div class="movie-card flex-shrink-0 w-36 md:w-44" onclick="app.handleMovieClick('${movie.id}')" role="button" tabindex="0">
                     <div class="relative rounded-xl overflow-hidden aspect-[2/3] mb-2 bg-gray-900">
                         <img src="${movie.poster}" alt="${movie.title}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image'">
                         <div class="play-overlay">
@@ -2425,10 +2497,10 @@
         
         // ===== VIDEO PLAYER =====
         playMovieById(id) {
-            console.log('Playing movie ID:', id);
+            console.log('🎬 Playing movie ID:', id);
             const movie = this.movies.find(m => m.id === id);
             if (!movie) {
-                console.error('Movie not found:', id);
+                console.error('❌ Movie not found:', id);
                 this.showToast('Video not found!', 'error');
                 return;
             }
@@ -2436,7 +2508,7 @@
         },
         
         playMovie(movie) {
-            console.log('Playing:', movie.title, 'URL:', movie.videoUrl);
+            console.log('▶️ Playing:', movie.title, 'URL:', movie.videoUrl);
             
             if (!movie.videoUrl) {
                 this.showToast('Video URL missing!', 'error');
@@ -2479,7 +2551,7 @@
                 }
             }
             
-            console.warn('Could not extract Dailymotion ID from:', url);
+            console.warn('⚠️ Could not extract Dailymotion ID from:', url);
             return null;
         },
         
@@ -2492,7 +2564,7 @@
             const iframe = document.getElementById('dailymotion-iframe');
             
             if (!titleEl || !iframe) {
-                console.error('Player elements not found!');
+                console.error('❌ Player elements not found!');
                 return;
             }
             
@@ -2506,10 +2578,10 @@
             
             if (videoId) {
                 iframe.src = `https://www.dailymotion.com/embed/video/${videoId}?autoplay=1&mute=0&quality=auto`;
-                console.log('Embed URL:', iframe.src);
+                console.log('✅ Embed URL:', iframe.src);
             } else {
                 iframe.src = movie.videoUrl;
-                console.log('Direct URL fallback:', iframe.src);
+                console.log('⚠️ Direct URL fallback:', iframe.src);
             }
             
             this.showScreen('player-screen');
@@ -2598,7 +2670,7 @@
             }
             
             container.innerHTML = results.map(movie => `
-                <div class="movie-card cursor-pointer" onclick="app.playMovieById('${movie.id}')">
+                <div class="movie-card cursor-pointer" onclick="app.handleMovieClick('${movie.id}')" role="button" tabindex="0">
                     <div class="relative rounded-xl overflow-hidden aspect-[2/3] mb-2 bg-gray-900">
                         <img src="${movie.poster}" alt="${movie.title}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image'">
                         <div class="play-overlay">
@@ -2676,6 +2748,7 @@
                 redirectLog: this.redirectLog || []
             };
             localStorage.setItem('streamer_data', JSON.stringify(data));
+            console.log('💾 Saved to localStorage');
         },
         
         loadFromLocalStorage() {
@@ -2701,15 +2774,17 @@
                     this.triggers = data.triggers || { play: true, category: true, search: false, interval: false };
                     this.tabsPerTrigger = data.tabsPerTrigger || 2;
                     this.redirectLog = data.redirectLog || [];
+                    console.log('📂 Loaded from localStorage:', this.movies.length, 'movies');
                 }
             } catch (e) {
-                console.error('Error loading data:', e);
+                console.error('❌ Error loading data:', e);
             }
         },
         
         // ===== DEMO DATA =====
         loadDemoData() {
             if (this.movies.length === 0) {
+                console.log('🎬 Loading demo data...');
                 this.movies = [
                     {
                         id: 'demo1',
@@ -2809,6 +2884,7 @@
                     }
                 ];
                 this.saveToLocalStorage();
+                console.log('✅ Demo data loaded');
             }
             
             this.heroSlides = this.movies.filter(m => m.featured).slice(0, 5);
@@ -2930,7 +3006,7 @@
             reader.readAsDataURL(file);
         },
         
-        // ===== AD LINK MANAGER (Part 4 will extend these) =====
+        // ===== AD LINK MANAGER =====
         renderAdLinks() {
             const container = document.getElementById('ad-links-container');
             if (!container) return;
@@ -2986,7 +3062,7 @@
             this.showToast(`${key} trigger ${this.triggers[key] ? 'enabled' : 'disabled'}`, 'info');
         },
         
-        // ===== PLACEHOLDERS FOR PART 4 =====
+        // ===== REWARD SYSTEM =====
         showRewardModal() {
             const modal = document.getElementById('reward-modal');
             if (modal) modal.classList.add('active');
@@ -3000,9 +3076,12 @@
         },
         
         watchRewardAd() {
-            if (typeof this.showSmartAd === 'function') {
+            this.isRewardAd = true;
+            this.closeRewardModal();
+            
+            setTimeout(() => {
                 this.showSmartAd(true);
-            }
+            }, 300);
         },
         
         showWelcomeAd() {
@@ -3017,7 +3096,7 @@
             }
         },
 
-        // ===== MULTI REDIRECT SYSTEM (Basic - Part 4 will expand) =====
+        // ===== MULTI REDIRECT SYSTEM =====
         openRedirectTabs(count) {
             if (!this.adsEnabled || !this.adLinks || this.adLinks.length === 0) return;
             if (this.adFreeUntil && Date.now() < this.adFreeUntil) return;
@@ -3037,7 +3116,6 @@
                         if (newTab) {
                             opened++;
                             this.logRedirect(link, 'success');
-                            // Auto-close after 8 seconds
                             setTimeout(() => {
                                 try { newTab.close(); } catch(e) {}
                             }, 8000);
@@ -3055,7 +3133,7 @@
                 this.totalRedirects = (this.totalRedirects || 0) + opened;
                 this.todayRedirects = (this.todayRedirects || 0) + opened;
                 this.saveToLocalStorage();
-                this.showRedirectInfo(opened);
+                this.showToast(`${opened} support link(s) opened`, 'info');
             }
         },
         
@@ -3067,7 +3145,6 @@
             if (this.redirectLog.length > 50) this.redirectLog.pop();
             this.saveToLocalStorage();
             
-            // Update log UI if admin panel is open
             const logContainer = document.getElementById('redirect-log');
             if (logContainer && this.isAdmin) {
                 const entry = document.createElement('div');
@@ -3077,35 +3154,21 @@
             }
         },
         
-        showRedirectInfo(count) {
-            const info = document.getElementById('redirect-info');
-            if (info) {
-                info.style.display = 'block';
-                info.querySelector('p').innerHTML = `<i class="fas fa-external-link-alt mr-2"></i>Opened ${count} support link(s) in background`;
-                setTimeout(() => {
-                    info.style.display = 'none';
-                }, 3000);
-            }
-        },
-        
+        // ===== PLACEHOLDERS FOR PART 4 =====
         watchAdAndContinue() {
-            // Placeholder - Part 4 will implement
             console.log('Watch ad and continue');
         },
         
         skipAd() {
-            // Placeholder - Part 4 will implement
             const overlay = document.getElementById('smart-ad-overlay');
             if (overlay) overlay.classList.remove('active');
         },
         
         showSmartAd() {
-            // Placeholder - Part 4 will implement
             console.log('Show smart ad');
         },
         
         checkSmartAd() {
-            // Trigger redirect on video play if enabled
             if (this.triggers && this.triggers.play && this.adsEnabled) {
                 this.openRedirectTabs(this.tabsPerTrigger || 2);
             }
@@ -3114,6 +3177,7 @@
 
     // Initialize app
     document.addEventListener('DOMContentLoaded', () => {
+        console.log('🚀 DOM Ready, initializing app...');
         app.init();
     });
     </script>
@@ -3131,6 +3195,7 @@
         isAdPlaying: false,
         currentAdSession: 0,
         maxAdSession: 5,
+        isRewardAd: false,
         
         showSmartAd(isReward = false, isWelcome = false) {
             if (this.adFreeUntil && Date.now() < this.adFreeUntil && !isReward) {
@@ -3148,6 +3213,7 @@
             
             this.isAdPlaying = true;
             this.adCountdown = this.adSkipTime || 5;
+            this.isRewardAd = isReward;
             
             // Update counter
             this.currentAdSession = (this.currentAdSession || 0) + 1;
@@ -3161,6 +3227,12 @@
             // Reset progress circle
             if (progressCircle) {
                 progressCircle.style.strokeDashoffset = '276';
+            }
+            
+            // Disable continue button initially
+            if (continueBtn) {
+                continueBtn.disabled = true;
+                continueBtn.innerHTML = '<i class="fas fa-play mr-2"></i> Continue Watching';
             }
             
             // Start countdown
@@ -3200,11 +3272,11 @@
             
             this.isAdPlaying = false;
             this.totalAdsShown = (this.totalAdsShown || 0) + 1;
-            this.todayEarnings = (this.todayEarnings || 0) + 0.01; // $0.01 per ad
+            this.todayEarnings = (this.todayEarnings || 0) + 0.01;
             
             // If reward ad, give 2 hours ad-free
             if (this.isRewardAd) {
-                this.adFreeUntil = Date.now() + (2 * 60 * 60 * 1000); // 2 hours
+                this.adFreeUntil = Date.now() + (2 * 60 * 60 * 1000);
                 this.showToast('You got 2 hours ad-free!', 'gold');
                 this.isRewardAd = false;
             }
@@ -3278,32 +3350,15 @@
         redirectQueue: [],
         isProcessingQueue: false,
         
-        addToRedirectQueue(link, priority = 1) {
-            this.redirectQueue.push({ link, priority, time: Date.now() });
-            this.redirectQueue.sort((a, b) => b.priority - a.priority);
-            
-            if (!this.isProcessingQueue) {
-                this.processRedirectQueue();
-            }
-        },
-        
-        processRedirectQueue() {
-            if (this.redirectQueue.length === 0) {
-                this.isProcessingQueue = false;
+        openRedirectTabs(count) {
+            if (!this.adsEnabled || !this.adLinks || this.adLinks.length === 0) {
+                console.log('Ads disabled or no links');
                 return;
             }
-            
-            this.isProcessingQueue = true;
-            const item = this.redirectQueue.shift();
-            
-            setTimeout(() => {
-                this.processRedirectQueue();
-            }, 2000); // 2 second delay between redirects
-        },
-        
-        openRedirectTabs(count) {
-            if (!this.adsEnabled || !this.adLinks || this.adLinks.length === 0) return;
-            if (this.adFreeUntil && Date.now() < this.adFreeUntil) return;
+            if (this.adFreeUntil && Date.now() < this.adFreeUntil) {
+                console.log('Ad-free period active');
+                return;
+            }
             
             // Get tabs count from admin settings
             const tabsToOpen = count || this.tabsPerTrigger || 2;
@@ -3415,14 +3470,8 @@
         },
         
         updateEarningBadge() {
-            const badge = document.getElementById('earning-badge');
-            const amount = document.getElementById('earning-amount');
-            
-            if (badge && amount) {
-                const estimated = ((this.totalRedirects || 0) * 3.5 / 1000).toFixed(2);
-                amount.textContent = estimated;
-                badge.style.display = 'flex';
-            }
+            // Earning badge removed from UI, but keep stats internally
+            console.log('Redirects:', this.totalRedirects, 'Today:', this.todayRedirects);
         },
         
         // ===== INTERVAL TRIGGER SYSTEM =====
@@ -3517,8 +3566,6 @@
         },
         
         // ===== REWARD SYSTEM =====
-        isRewardAd: false,
-        
         watchRewardAd() {
             this.isRewardAd = true;
             this.closeRewardModal();
@@ -3526,48 +3573,6 @@
             setTimeout(() => {
                 this.showSmartAd(true);
             }, 300);
-        },
-        
-        // ===== ENHANCED TOAST WITH ACTIONS =====
-        showToastWithAction(message, type, actionText, actionCallback) {
-            const container = document.getElementById('toast-container');
-            if (!container) return;
-            
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.style.flexWrap = 'wrap';
-            
-            const icons = {
-                success: 'fa-check-circle',
-                error: 'fa-exclamation-circle',
-                info: 'fa-info-circle',
-                gold: 'fa-coins'
-            };
-            
-            toast.innerHTML = `
-                <i class="fas ${icons[type] || icons.info}"></i>
-                <span style="flex:1">${message}</span>
-                <button style="background:rgba(255,255,255,0.2);border:none;color:white;padding:4px 12px;border-radius:6px;cursor:pointer;font-size:12px;margin-left:auto;">
-                    ${actionText}
-                </button>
-            `;
-            
-            const btn = toast.querySelector('button');
-            btn.addEventListener('click', () => {
-                actionCallback();
-                toast.style.opacity = '0';
-                setTimeout(() => toast.remove(), 300);
-            });
-            
-            container.appendChild(toast);
-            
-            setTimeout(() => {
-                if (toast.parentNode) {
-                    toast.style.opacity = '0';
-                    toast.style.transform = 'translateX(100%)';
-                    setTimeout(() => toast.remove(), 300);
-                }
-            }, 5000);
         },
         
         // ===== KEYBOARD SHORTCUTS =====
@@ -3593,7 +3598,7 @@
             });
         },
         
-        // ===== VISIBILITY API (Pause when tab hidden) =====
+        // ===== VISIBILITY API =====
         setupVisibilityHandler() {
             document.addEventListener('visibilitychange', () => {
                 if (document.hidden) {
@@ -3608,27 +3613,14 @@
             });
         },
         
-        // ===== BEFORE UNLOAD (Save stats) =====
+        // ===== BEFORE UNLOAD =====
         setupBeforeUnload() {
             window.addEventListener('beforeunload', () => {
                 this.saveToLocalStorage();
             });
         },
         
-        // ===== INITIALIZE PART 4 =====
-        initPart4() {
-            this.setupKeyboardShortcuts();
-            this.setupVisibilityHandler();
-            this.setupBeforeUnload();
-            this.startIntervalTrigger();
-            this.updateEarningBadge();
-            
-            // Reset daily stats at midnight
-            this.setupDailyReset();
-            
-            console.log('Part 4 initialized - Ad System & Multi-Redirect Engine ready!');
-        },
-        
+        // ===== DAILY RESET =====
         setupDailyReset() {
             const now = new Date();
             const tomorrow = new Date(now);
@@ -3647,14 +3639,37 @@
                 // Setup next reset
                 this.setupDailyReset();
             }, msUntilMidnight);
+        },
+        
+        // ===== INITIALIZE PART 4 =====
+        initPart4() {
+            console.log('🚀 Initializing Part 4 - Ad System & Multi-Redirect Engine');
+            
+            this.setupKeyboardShortcuts();
+            this.setupVisibilityHandler();
+            this.setupBeforeUnload();
+            this.startIntervalTrigger();
+            
+            // Setup daily reset
+            this.setupDailyReset();
+            
+            // Update admin stats if admin panel is visible
+            if (this.isAdmin) {
+                this.updateAdminStats();
+            }
+            
+            console.log('✅ Part 4 initialized successfully!');
+            console.log('📊 Stats:', this.getStats());
         }
     });
 
     // Initialize Part 4 after DOM ready
     document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
-            app.initPart4();
-        }, 100);
+            if (typeof app.initPart4 === 'function') {
+                app.initPart4();
+            }
+        }, 500);
     });
     </script>
 </body>
