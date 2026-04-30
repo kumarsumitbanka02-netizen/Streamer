@@ -1471,7 +1471,7 @@
     <script>
     // ==========================================
     // STREAMER APP - PART 2: SUPABASE CORE LOGIC
-    // Supabase Auth, Database, Storage
+    // Supabase Auth, Database, Storage, Admin
     // ==========================================
 
     const app = {
@@ -1535,14 +1535,25 @@
         },
         
         async setupSupabase() {
-            this.isSupabaseReady = true;
-            console.log('Supabase connected!');
-            
-            // Authenticate user anonymously
-            await this.authenticateUser();
-            
-            // Load data from Supabase
-            await this.loadFromSupabase();
+            // Test connection by making a simple query
+            try {
+                const { error } = await supabaseClient.from('movies').select('id').limit(1);
+                if (error && error.code !== 'PGRST116') {
+                    console.warn('Supabase connection test:', error.message);
+                }
+                this.isSupabaseReady = true;
+                console.log('Supabase connected!');
+                
+                // Authenticate user anonymously
+                await this.authenticateUser();
+                
+                // Load data from Supabase
+                await this.loadFromSupabase();
+            } catch (e) {
+                console.error('Supabase setup error:', e);
+                this.isSupabaseReady = false;
+                this.showToast('Cloud unavailable - local mode', 'info');
+            }
         },
         
         // ===== SUPABASE AUTH =====
@@ -1671,34 +1682,39 @@
                 }
             } catch (e) {
                 console.log('Supabase load failed:', e);
+                this.showToast('Cloud load failed, using local data', 'error');
             }
         },
         
         async saveToSupabase(movie) {
-            if (!this.isSupabaseReady) return;
-            
-            try {
-                const { error } = await supabaseClient
-                    .from('movies')
-                    .insert([{
-                        id: movie.id,
-                        title: movie.title,
-                        category: movie.category,
-                        year: movie.year,
-                        duration: movie.duration,
-                        rating: movie.rating,
-                        description: movie.description,
-                        poster: movie.poster,
-                        video_url: movie.videoUrl,
-                        featured: movie.featured || false,
-                        created_at: new Date().toISOString()
-                    }]);
-                
-                if (error) throw error;
-                console.log('Movie saved to Supabase');
-            } catch (e) {
-                console.log('Supabase save failed:', e);
+            if (!this.isSupabaseReady) {
+                throw new Error('Supabase not connected');
             }
+            
+            const { data, error } = await supabaseClient
+                .from('movies')
+                .insert([{
+                    id: movie.id,
+                    title: movie.title,
+                    category: movie.category,
+                    year: movie.year,
+                    duration: movie.duration,
+                    rating: movie.rating,
+                    description: movie.description,
+                    poster: movie.poster,
+                    video_url: movie.videoUrl,
+                    featured: movie.featured || false,
+                    created_at: new Date().toISOString()
+                }])
+                .select();
+            
+            if (error) {
+                console.error('Supabase insert error:', error);
+                throw error;
+            }
+            
+            console.log('Movie saved to Supabase:', data);
+            return data;
         },
         
         async deleteFromSupabase(id) {
@@ -1951,7 +1967,7 @@
             if (ctrEl) ctrEl.textContent = (this.ctr || 0) + '%';
         },
         
-        // ===== SAVE CONTENT =====
+        // ===== SAVE CONTENT (FIXED WITH PROPER CLOUD SYNC) =====
         async saveContent() {
             const title = document.getElementById('admin-title').value.trim();
             const category = document.getElementById('admin-category').value;
@@ -1967,17 +1983,24 @@
                 return;
             }
             
+            // Show loading
+            this.showToast('Saving to cloud...', 'info');
+            
             let poster = 'https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image';
             if (preview && preview.dataset.imageData) {
                 poster = preview.dataset.imageData;
             }
             
+            // Upload image to Supabase Storage if it's base64
             let posterUrl = poster;
             if (this.isSupabaseReady && preview && preview.dataset.imageData && preview.dataset.imageData.startsWith('data:')) {
                 try {
                     posterUrl = await this.uploadImageToStorage(preview.dataset.imageData, title);
+                    this.showToast('Image uploaded to cloud!', 'success');
                 } catch (e) {
                     console.log('Image upload failed, using base64:', e);
+                    this.showToast('Image upload failed, saving locally', 'error');
+                    // Continue with base64 - at least save locally
                 }
             }
             
@@ -1995,14 +2018,34 @@
                 createdAt: new Date().toISOString()
             };
             
-            await this.saveToSupabase(movie);
+            // Try to save to Supabase first
+            let cloudSaved = false;
+            if (this.isSupabaseReady) {
+                try {
+                    await this.saveToSupabase(movie);
+                    cloudSaved = true;
+                    this.showToast('Saved to cloud!', 'success');
+                } catch (e) {
+                    console.error('Cloud save failed:', e);
+                    this.showToast('Cloud save failed: ' + (e.message || 'Unknown error'), 'error');
+                    // Continue to save locally even if cloud fails
+                }
+            } else {
+                this.showToast('Offline mode - saving locally', 'info');
+            }
             
+            // Always save to local array and localStorage
             this.movies.unshift(movie);
             this.saveToLocalStorage();
             this.renderMovies();
             this.renderAdminTable();
             this.resetAdminForm();
-            this.showToast('Content saved successfully!', 'success');
+            
+            if (cloudSaved) {
+                this.showToast('Content saved successfully!', 'success');
+            } else {
+                this.showToast('Content saved locally only!', 'warning');
+            }
         },
         
         resetAdminForm() {
@@ -2575,7 +2618,7 @@
                         videoUrl: 'https://www.dailymotion.com/video/x8z5x2v',
                         featured: true
                     },
- {
+                    {
                         id: 'demo2',
                         title: 'Demon Slayer',
                         category: 'Anime',
