@@ -2108,3 +2108,779 @@
             this.renderAdminTable();
             this.showToast('Content deleted!', 'info');
         },
+        // ===== HERO SLIDER =====
+        initHeroSlider() {
+            const container = document.getElementById('hero-slides');
+            const dotsContainer = document.getElementById('hero-dots');
+            
+            if (!container || !dotsContainer || this.heroSlides.length === 0) return;
+            
+            this.updateHeroSlider(this.heroSlides);
+        },
+        
+        updateHeroSlider(movies) {
+            this.heroSlides = movies;
+            this.currentHeroIndex = 0;
+            
+            const container = document.getElementById('hero-slides');
+            const dotsContainer = document.getElementById('hero-dots');
+            
+            if (!container || !dotsContainer) return;
+            
+            if (movies.length === 0) {
+                container.innerHTML = '<div class="flex items-center justify-center h-full text-gray-500">No featured content</div>';
+                dotsContainer.innerHTML = '';
+                return;
+            }
+            
+            container.innerHTML = movies.map((movie, i) => `
+                <div class="hero-slide ${i === 0 ? 'active' : ''}" data-index="${i}">
+                    <img src="${movie.poster}" alt="${movie.title}" loading="eager" onerror="this.src='https://via.placeholder.com/800x450/1a1a1a/666?text=No+Image'">
+                    <div class="hero-gradient-overlay"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 md:p-10">
+                        <span class="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block">FEATURED</span>
+                        <h2 class="text-2xl md:text-4xl font-black mb-2 text-white">${movie.title}</h2>
+                        <p class="text-gray-300 text-sm mb-4 max-w-lg line-clamp-2">${movie.description}</p>
+                        <button onclick="app.playMovieById('${movie.id}')" class="bg-white text-black px-6 py-3 rounded-full font-bold flex items-center gap-2 hover:bg-gray-200 transition">
+                            <i class="fas fa-play"></i> Watch Now
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            
+            dotsContainer.innerHTML = movies.map((_, i) => `
+                <div class="hero-dot ${i === 0 ? 'active' : ''}" onclick="app.goToHeroSlide(${i})"></div>
+            `).join('');
+            
+            clearInterval(this.heroInterval);
+            this.heroInterval = setInterval(() => this.nextHeroSlide(), 4000);
+        },
+        
+        nextHeroSlide() {
+            const slides = document.querySelectorAll('.hero-slide');
+            const dots = document.querySelectorAll('.hero-dot');
+            if (slides.length === 0) return;
+            
+            slides[this.currentHeroIndex].classList.remove('active');
+            dots[this.currentHeroIndex].classList.remove('active');
+            
+            this.currentHeroIndex = (this.currentHeroIndex + 1) % slides.length;
+            
+            slides[this.currentHeroIndex].classList.add('active');
+            dots[this.currentHeroIndex].classList.add('active');
+        },
+        
+        goToHeroSlide(index) {
+            const slides = document.querySelectorAll('.hero-slide');
+            const dots = document.querySelectorAll('.hero-dot');
+            if (slides.length === 0) return;
+            
+            slides[this.currentHeroIndex].classList.remove('active');
+            dots[this.currentHeroIndex].classList.remove('active');
+            
+            this.currentHeroIndex = index;
+            
+            slides[this.currentHeroIndex].classList.add('active');
+            dots[this.currentHeroIndex].classList.add('active');
+            
+            clearInterval(this.heroInterval);
+            this.heroInterval = setInterval(() => this.nextHeroSlide(), 4000);
+        },
+        
+        // ===== CATEGORY FILTER =====
+        renderMovies(category = 'All') {
+            const filtered = category === 'All' ? this.movies : this.movies.filter(m => m.category === category);
+            
+            this.renderMovieRow('trending-container', filtered.slice(0, 10));
+            
+            const shuffled = [...filtered].sort(() => Math.random() - 0.5);
+            this.renderMovieRow('foryou-container', shuffled.slice(0, 10));
+            
+            const newest = [...filtered].sort((a, b) => b.year - a.year);
+            this.renderMovieRow('new-container', newest.slice(0, 10));
+            
+            this.renderContinueWatching();
+        },
+        
+        filterCategory(category) {
+            document.querySelectorAll('.category-pill').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.cat === category) btn.classList.add('active');
+            });
+            
+            let filtered = this.movies;
+            if (category !== 'All') {
+                filtered = this.movies.filter(m => m.category === category);
+            }
+            
+            this.renderMovieRow('trending-container', filtered.slice(0, 10));
+            
+            const shuffled = [...filtered].sort(() => Math.random() - 0.5);
+            this.renderMovieRow('foryou-container', shuffled.slice(0, 10));
+            
+            const newest = [...filtered].sort((a, b) => b.year - a.year);
+            this.renderMovieRow('new-container', newest.slice(0, 10));
+            
+            if (category !== 'All' && filtered.length > 0) {
+                this.updateHeroSlider(filtered.slice(0, 5));
+            } else if (category === 'All') {
+                this.heroSlides = this.movies.filter(m => m.featured).slice(0, 5);
+                this.updateHeroSlider(this.heroSlides);
+            }
+            
+            this.currentCategory = category;
+        },
+        
+        renderMovieRow(containerId, movies) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            if (movies.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-sm">No content available</p>';
+                return;
+            }
+            
+            container.innerHTML = movies.map(movie => `
+                <div class="movie-card flex-shrink-0 w-36 md:w-44" onclick="app.playMovieById('${movie.id}')">
+                    <div class="relative rounded-xl overflow-hidden aspect-[2/3] mb-2 bg-gray-900">
+                        <img src="${movie.poster}" alt="${movie.title}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image'">
+                        <div class="play-overlay">
+                            <div class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
+                                <i class="fas fa-play text-white ml-1"></i>
+                            </div>
+                        </div>
+                        <div class="absolute top-2 right-2 bg-black/60 backdrop-blur-md rounded-lg px-2 py-1">
+                            <span class="text-yellow-400 text-xs font-bold"><i class="fas fa-star mr-1"></i>${movie.rating}</span>
+                        </div>
+                    </div>
+                    <h4 class="font-semibold text-sm truncate">${movie.title}</h4>
+                    <p class="text-gray-500 text-xs">${movie.year} &middot; ${movie.duration}</p>
+                </div>
+            `).join('');
+        },
+        
+        renderContinueWatching() {
+            const container = document.getElementById('continue-container');
+            const section = document.getElementById('continue-watching-section');
+            
+            if (!container || !section) return;
+            
+            if (this.continueWatching.length === 0) {
+                section.classList.add('hidden');
+                return;
+            }
+            
+            section.classList.remove('hidden');
+            container.innerHTML = this.continueWatching.map(movie => `
+                <div class="movie-card flex-shrink-0 w-36 md:w-44" onclick="app.playMovieById('${movie.id}')">
+                    <div class="relative rounded-xl overflow-hidden aspect-[2/3] mb-2 bg-gray-900">
+                        <img src="${movie.poster}" alt="${movie.title}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image'">
+                        <div class="play-overlay">
+                            <div class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
+                                <i class="fas fa-play text-white ml-1"></i>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 h-1 bg-gray-800">
+                            <div class="h-full bg-red-600" style="width: ${movie.progress || 30}%"></div>
+                        </div>
+                    </div>
+                    <h4 class="font-semibold text-sm truncate">${movie.title}</h4>
+                    <p class="text-gray-500 text-xs">${movie.progress || 30}% watched</p>
+                </div>
+            `).join('');
+        },
+        
+        // ===== VIDEO PLAYER =====
+        playMovieById(id) {
+            console.log('Playing movie ID:', id);
+            const movie = this.movies.find(m => m.id === id);
+            if (!movie) {
+                console.error('Movie not found:', id);
+                this.showToast('Video not found!', 'error');
+                return;
+            }
+            this.playMovie(movie);
+        },
+        
+        playMovie(movie) {
+            console.log('Playing:', movie.title, 'URL:', movie.videoUrl);
+            
+            if (!movie.videoUrl) {
+                this.showToast('Video URL missing!', 'error');
+                return;
+            }
+            
+            this.currentMovie = movie;
+            
+            const existingIndex = this.continueWatching.findIndex(m => m.id === movie.id);
+            if (existingIndex !== -1) {
+                const existing = this.continueWatching[existingIndex];
+                this.continueWatching.splice(existingIndex, 1);
+                this.continueWatching.unshift({...existing, progress: existing.progress || 0});
+            } else {
+                this.continueWatching.unshift({...movie, progress: 0});
+                if (this.continueWatching.length > 10) this.continueWatching.pop();
+            }
+            this.saveToLocalStorage();
+            
+            if (typeof this.checkAndShowAd === 'function') {
+                this.checkAndShowAd();
+            }
+            
+            this.openPlayer(movie);
+        },
+        
+        extractDailymotionId(url) {
+            if (!url) return null;
+            
+            const patterns = [
+                /video\/([a-zA-Z0-9]+)/,
+                /dailymotion\.com\/embed\/video\/([a-zA-Z0-9]+)/,
+                /dai\.ly\/([a-zA-Z0-9]+)/,
+                /([a-zA-Z0-9]{5,})/
+            ];
+            
+            for (let pattern of patterns) {
+                const match = url.match(pattern);
+                if (match && match[1] && match[1].length >= 5) {
+                    return match[1];
+                }
+            }
+            
+            console.warn('Could not extract Dailymotion ID from:', url);
+            return null;
+        },
+        
+        openPlayer(movie) {
+            const titleEl = document.getElementById('player-title');
+            const metaEl = document.getElementById('player-meta');
+            const ratingEl = document.getElementById('player-rating');
+            const yearEl = document.getElementById('player-year');
+            const durationEl = document.getElementById('player-duration');
+            const iframe = document.getElementById('dailymotion-iframe');
+            
+            if (!titleEl || !iframe) {
+                console.error('Player elements not found!');
+                return;
+            }
+            
+            titleEl.textContent = movie.title || 'Untitled';
+            metaEl.textContent = `${movie.category || 'Unknown'} · ${movie.year || 'N/A'}`;
+            ratingEl.innerHTML = `<i class="fas fa-star mr-1"></i>${movie.rating || '-'}`;
+            yearEl.textContent = movie.year || '';
+            durationEl.textContent = movie.duration || '';
+            
+            const videoId = this.extractDailymotionId(movie.videoUrl);
+            
+            if (videoId) {
+                iframe.src = `https://www.dailymotion.com/embed/video/${videoId}?autoplay=1&mute=0&quality=auto`;
+                console.log('Embed URL:', iframe.src);
+            } else {
+                iframe.src = movie.videoUrl;
+                console.log('Direct URL fallback:', iframe.src);
+            }
+            
+            this.showScreen('player-screen');
+        },
+        
+        closePlayer() {
+            const iframe = document.getElementById('dailymotion-iframe');
+            if (iframe) {
+                iframe.src = 'about:blank';
+            }
+            this.currentMovie = null;
+            this.showScreen('main-screen');
+        },
+        
+        // ===== SHARE =====
+        shareContent() {
+            if (!this.currentMovie) return;
+            
+            const shareData = {
+                title: this.currentMovie.title,
+                text: `Watch ${this.currentMovie.title} on STREAMER!`,
+                url: `${window.location.origin}${window.location.pathname}?watch=${this.currentMovie.id}`
+            };
+            
+            if (navigator.share) {
+                navigator.share(shareData);
+            } else {
+                navigator.clipboard.writeText(shareData.url).then(() => {
+                    this.showToast('Link copied to clipboard!', 'success');
+                });
+            }
+        },
+        
+        shareApp() {
+            const shareData = {
+                title: 'STREAMER',
+                text: 'Check out STREAMER - Premium OTT Platform!',
+                url: window.location.href
+            };
+            
+            if (navigator.share) {
+                navigator.share(shareData);
+            } else {
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    this.showToast('App link copied!', 'success');
+                });
+            }
+        },
+        
+        // ===== SEARCH =====
+        searchMovies() {
+            const query = document.getElementById('search-input').value.toLowerCase().trim();
+            const container = document.getElementById('search-container');
+            
+            if (!container) return;
+            
+            if (!query) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12 text-gray-500">
+                        <i class="fas fa-search text-4xl mb-4 opacity-50"></i>
+                        <p>Type to search content...</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const results = this.movies.filter(m => 
+                m.title.toLowerCase().includes(query) || 
+                m.category.toLowerCase().includes(query) ||
+                m.description.toLowerCase().includes(query)
+            );
+            
+            if (results.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12 text-gray-500">
+                        <i class="fas fa-film text-4xl mb-4 opacity-50"></i>
+                        <p>No results found for "${query}"</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = results.map(movie => `
+                <div class="movie-card cursor-pointer" onclick="app.playMovieById('${movie.id}')">
+                    <div class="relative rounded-xl overflow-hidden aspect-[2/3] mb-2 bg-gray-900">
+                        <img src="${movie.poster}" alt="${movie.title}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image'">
+                        <div class="play-overlay">
+                            <div class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
+                                <i class="fas fa-play text-white ml-1"></i>
+                            </div>
+                        </div>
+                        <div class="absolute top-2 right-2 bg-black/60 backdrop-blur-md rounded-lg px-2 py-1">
+                            <span class="text-yellow-400 text-xs font-bold"><i class="fas fa-star mr-1"></i>${movie.rating}</span>
+                        </div>
+                    </div>
+                    <h4 class="font-semibold text-sm truncate">${movie.title}</h4>
+                    <p class="text-gray-500 text-xs">${movie.year} &middot; ${movie.duration}</p>
+                </div>
+            `).join('');
+        },
+        
+        // ===== PROFILE STATS =====
+        updateProfileStats() {
+            const continueCount = document.getElementById('continue-count');
+            const totalCount = document.getElementById('total-count');
+            const watchTime = document.getElementById('watch-time');
+            
+            if (continueCount) continueCount.textContent = this.continueWatching.length;
+            if (totalCount) totalCount.textContent = this.movies.length;
+            if (watchTime) watchTime.textContent = Math.floor(this.watchTime / 60) + 'h';
+        },
+        
+        clearContinueWatching() {
+            this.continueWatching = [];
+            this.saveToLocalStorage();
+            this.renderContinueWatching();
+            this.updateProfileStats();
+            this.showToast('History cleared!', 'info');
+        },
+        
+        clearAllData() {
+            if (!confirm('Clear all watch history?')) return;
+            this.continueWatching = [];
+            this.watchTime = 0;
+            this.saveToLocalStorage();
+            this.updateProfileStats();
+            this.showToast('All data cleared!', 'info');
+        },
+        
+        updateAdPreference() {
+            const freq = document.getElementById('user-ad-freq').value;
+            const intervals = { low: 12, normal: 8, high: 5 };
+            this.adInterval = intervals[freq] || 8;
+            this.saveToLocalStorage();
+            this.showToast(`Ad frequency set to ${freq}`, 'info');
+        },
+        // ===== LOCAL STORAGE =====
+        saveToLocalStorage() {
+            const data = {
+                movies: this.movies,
+                continueWatching: this.continueWatching,
+                watchTime: this.watchTime,
+                adInterval: this.adInterval || 8,
+                adSkipTime: this.adSkipTime || 5,
+                maxAdsPerSession: this.maxAdsPerSession || 5,
+                adsEnabled: this.adsEnabled || false,
+                adLinks: this.adLinks || [],
+                currentAdIndex: this.currentAdIndex || 0,
+                lastAdTime: this.lastAdTime || 0,
+                totalAdsShown: this.totalAdsShown || 0,
+                todayEarnings: this.todayEarnings || 0,
+                userAdFreq: this.userAdFreq || 'normal',
+                adFreeUntil: this.adFreeUntil || 0
+            };
+            localStorage.setItem('streamer_data', JSON.stringify(data));
+        },
+        
+        loadFromLocalStorage() {
+            try {
+                const data = JSON.parse(localStorage.getItem('streamer_data'));
+                if (data) {
+                    this.movies = data.movies || [];
+                    this.continueWatching = data.continueWatching || [];
+                    this.watchTime = data.watchTime || 0;
+                    this.adInterval = data.adInterval || 8;
+                    this.adSkipTime = data.adSkipTime || 5;
+                    this.maxAdsPerSession = data.maxAdsPerSession || 5;
+                    this.adsEnabled = data.adsEnabled || false;
+                    this.adLinks = data.adLinks || [];
+                    this.currentAdIndex = data.currentAdIndex || 0;
+                    this.lastAdTime = data.lastAdTime || 0;
+                    this.totalAdsShown = data.totalAdsShown || 0;
+                    this.todayEarnings = data.todayEarnings || 0;
+                    this.userAdFreq = data.userAdFreq || 'normal';
+                    this.adFreeUntil = data.adFreeUntil || 0;
+                }
+            } catch (e) {
+                console.error('Error loading data:', e);
+            }
+        },
+        
+        // ===== DEMO DATA =====
+        loadDemoData() {
+            if (this.movies.length === 0) {
+                this.movies = [
+                    {
+                        id: 'demo1',
+                        title: 'Attack on Titan',
+                        category: 'Anime',
+                        year: 2023,
+                        duration: '24 min',
+                        rating: 9.1,
+                        description: 'Humanity fights for survival against giant humanoid Titans.',
+                        poster: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=300&h=450&fit=crop',
+                        videoUrl: 'https://www.dailymotion.com/video/x8z5x2v',
+                        featured: true
+                    },
+ {
+                        id: 'demo2',
+                        title: 'Demon Slayer',
+                        category: 'Anime',
+                        year: 2023,
+                        duration: '24 min',
+                        rating: 8.7,
+                        description: 'A young boy becomes a demon slayer to cure his sister.',
+                        poster: 'https://images.unsplash.com/photo-1541562232579-512a21360020?w=300&h=450&fit=crop',
+                        videoUrl: 'https://www.dailymotion.com/video/x8z5x2w',
+                        featured: true
+                    },
+                    {
+                        id: 'demo3',
+                        title: 'Solo Leveling',
+                        category: 'Anime',
+                        year: 2024,
+                        duration: '24 min',
+                        rating: 8.9,
+                        description: 'The weakest hunter becomes the strongest.',
+                        poster: 'https://images.unsplash.com/photo-1618336753974-aae8e04506aa?w=300&h=450&fit=crop',
+                        videoUrl: 'https://www.dailymotion.com/video/x8z5x2x',
+                        featured: true
+                    },
+                    {
+                        id: 'demo4',
+                        title: 'My Demon',
+                        category: 'Korean Drama',
+                        year: 2024,
+                        duration: '70 min',
+                        rating: 8.3,
+                        description: 'A demon loses his powers and falls in love.',
+                        poster: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=300&h=450&fit=crop',
+                        videoUrl: 'https://www.dailymotion.com/video/x8z5x2y',
+                        featured: false
+                    },
+                    {
+                        id: 'demo5',
+                        title: 'The Glory',
+                        category: 'Korean Drama',
+                        year: 2023,
+                        duration: '60 min',
+                        rating: 8.8,
+                        description: 'A woman seeks revenge on her bullies.',
+                        poster: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=300&h=450&fit=crop',
+                        videoUrl: 'https://www.dailymotion.com/video/x8z5x2z',
+                        featured: false
+                    },
+                    {
+                        id: 'demo6',
+                        title: 'Soul Land',
+                        category: 'Chinese Anime',
+                        year: 2024,
+                        duration: '20 min',
+                        rating: 8.5,
+                        description: 'A martial artist reincarnates in a fantasy world.',
+                        poster: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=300&h=450&fit=crop',
+                        videoUrl: 'https://www.dailymotion.com/video/x8z5x3a',
+                        featured: false
+                    },
+                    {
+                        id: 'demo7',
+                        title: 'Battle Through Heavens',
+                        category: 'Chinese Anime',
+                        year: 2023,
+                        duration: '22 min',
+                        rating: 8.2,
+                        description: 'A genius cultivator rises from nothing.',
+                        poster: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300&h=450&fit=crop',
+                        videoUrl: 'https://www.dailymotion.com/video/x8z5x3b',
+                        featured: false
+                    },
+                    {
+                        id: 'demo8',
+                        title: 'Oppenheimer',
+                        category: 'Movies',
+                        year: 2023,
+                        duration: '180 min',
+                        rating: 8.6,
+                        description: 'The story of American scientist J. Robert Oppenheimer.',
+                        poster: 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=300&h=450&fit=crop',
+                        videoUrl: 'https://www.dailymotion.com/video/x8z5x3c',
+                        featured: true
+                    }
+                ];
+                this.saveToLocalStorage();
+            }
+            
+            this.heroSlides = this.movies.filter(m => m.featured).slice(0, 5);
+            if (this.heroSlides.length === 0) {
+                this.heroSlides = this.movies.slice(0, 4);
+            }
+        },
+        
+        // ===== TOAST =====
+        showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                info: 'fa-info-circle',
+                gold: 'fa-coins'
+            };
+            
+            toast.innerHTML = `
+                <i class="fas ${icons[type] || icons.info}"></i>
+                <span>${message}</span>
+            `;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        },
+        
+        // ===== SECRET SEARCH TRIGGER =====
+        setupSearchTrigger() {
+            const searchInput = document.getElementById('search-input');
+            if (!searchInput) return;
+            
+            searchInput.addEventListener('input', (e) => {
+                const value = e.target.value;
+                
+                if (this.searchTrigger.includes(value) && value.length > 0) {
+                    this.triggerTyped = value;
+                }
+                
+                if (value === this.searchTrigger) {
+                    searchInput.value = '';
+                    this.triggerTyped = '';
+                    this.showAdminLogin();
+                    return;
+                }
+                
+                if (!this.searchTrigger.startsWith(value)) {
+                    this.triggerTyped = '';
+                }
+            });
+        },
+        
+        // ===== IMAGE UPLOAD =====
+        handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            if (file.size > 5 * 1024 * 1024) {
+                this.showToast('File too large! Max 5MB', 'error');
+                return;
+            }
+            
+            const progressBar = document.getElementById('upload-progress');
+            const preview = document.getElementById('upload-preview');
+            const uploadIcon = document.getElementById('upload-icon');
+            const uploadText = document.getElementById('upload-text');
+            
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                }
+                if (progressBar) progressBar.style.width = progress + '%';
+            }, 100);
+            
+            const reader = new FileReader();
+            
+            reader.onload = (e) => {
+                const imageData = e.target.result;
+                const img = new Image();
+                img.onload = () => {
+                    if (preview) {
+                        preview.src = imageData;
+                        preview.classList.add('visible');
+                        preview.dataset.imageData = imageData;
+                    }
+                    if (uploadIcon) uploadIcon.style.display = 'none';
+                    if (uploadText) uploadText.style.display = 'none';
+                    if (progressBar) progressBar.style.width = '100%';
+                    this.showToast('Image uploaded successfully!', 'success');
+                    setTimeout(() => {
+                        if (progressBar) progressBar.style.width = '0%';
+                    }, 1000);
+                };
+                img.onerror = () => {
+                    this.showToast('Invalid image file!', 'error');
+                    if (progressBar) progressBar.style.width = '0%';
+                };
+                img.src = imageData;
+            };
+            
+            reader.onerror = () => {
+                this.showToast('Failed to read image!', 'error');
+                if (progressBar) progressBar.style.width = '0%';
+            };
+            
+            reader.readAsDataURL(file);
+        },
+        
+        // ===== AD SYSTEM PLACEHOLDERS =====
+        showRewardModal() {
+            const modal = document.getElementById('reward-modal');
+            if (modal) modal.classList.add('active');
+        },
+        
+        closeRewardModal(e) {
+            if (!e || e.target === document.getElementById('reward-modal')) {
+                const modal = document.getElementById('reward-modal');
+                if (modal) modal.classList.remove('active');
+            }
+        },
+        
+        watchRewardAd() {
+            if (typeof this.showSmartAd === 'function') {
+                this.showSmartAd(true);
+            }
+        },
+        
+        showWelcomeAd() {
+            if (typeof this.showSmartAd === 'function') {
+                this.showSmartAd(false, true);
+            }
+        },
+        
+        checkAndShowAd() {
+            if (typeof this.checkSmartAd === 'function') {
+                this.checkSmartAd();
+            }
+        },
+        
+        // Ad system methods (placeholders for future implementation)
+        toggleAds() {
+            this.adsEnabled = !this.adsEnabled;
+            const toggle = document.getElementById('ads-toggle');
+            if (toggle) toggle.classList.toggle('active', this.adsEnabled);
+            this.saveToLocalStorage();
+            this.showToast(this.adsEnabled ? 'Ads enabled' : 'Ads disabled', 'info');
+        },
+        
+        addAdLinkField() {
+            const container = document.getElementById('ad-links-container');
+            if (!container) return;
+            
+            const index = container.children.length;
+            const div = document.createElement('div');
+            div.className = 'ad-link-item';
+            div.innerHTML = `
+                <input type="url" class="form-input" placeholder="Ad link URL" id="ad-link-${index}">
+                <button onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>
+            `;
+            container.appendChild(div);
+        },
+        
+        renderAdLinks() {
+            const container = document.getElementById('ad-links-container');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            if (this.adLinks && this.adLinks.length > 0) {
+                this.adLinks.forEach((link, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'ad-link-item';
+                    div.innerHTML = `
+                        <input type="url" class="form-input" value="${link}" id="ad-link-${index}">
+                        <button onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>
+                    `;
+                    container.appendChild(div);
+                });
+            }
+        },
+        
+        watchAdAndContinue() {
+            const overlay = document.getElementById('smart-ad-overlay');
+            if (overlay) overlay.classList.remove('active');
+            this.showToast('Enjoy your stream!', 'success');
+        },
+        
+        skipAd() {
+            const overlay = document.getElementById('smart-ad-overlay');
+            if (overlay) overlay.classList.remove('active');
+            this.showToast('Ad skipped', 'info');
+        },
+        
+        showSmartAd(isReward = false, isWelcome = false) {
+            // Placeholder for smart ad implementation
+            console.log('Smart ad shown:', { isReward, isWelcome });
+        },
+        
+        checkSmartAd() {
+            // Placeholder for ad checking logic
+            console.log('Checking for ads...');
+        }
+    };
+
+    // Initialize app
+    document.addEventListener('DOMContentLoaded', () => {
+        app.init();
+    });
+    </script>
+</body>
+</html>
