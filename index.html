@@ -1536,9 +1536,16 @@
         async setupSupabase() {
             try {
                 // Test connection
-                const { error } = await supabaseClient.from('movies').select('id').limit(1);
+                const { data: testData, error: testError } = await supabaseClient.from('movies').select('id').limit(1);
+                
+                if (testError) {
+                    console.error('Supabase connection test FAILED:', testError);
+                    this.isSupabaseReady = false;
+                    return;
+                }
+                
                 this.isSupabaseReady = true;
-                console.log('Supabase connected!');
+                console.log('Supabase connected! Test data:', testData);
                 
                 await this.authenticateUser();
                 await this.loadFromSupabase();
@@ -1587,7 +1594,6 @@
                     total_watch_time: 0
                 }]);
             } catch (e) {
-                // Ignore duplicate errors
                 if (e.code !== '23505') console.log('Create user error:', e);
             }
         },
@@ -1613,14 +1619,24 @@
         
         // ===== SUPABASE DATABASE OPERATIONS =====
         async loadFromSupabase() {
-            if (!this.isSupabaseReady) return;
+            if (!this.isSupabaseReady) {
+                console.log('Supabase not ready, skipping load');
+                return;
+            }
+            
             try {
+                console.log('Loading from Supabase...');
                 const { data, error } = await supabaseClient
                     .from('movies')
                     .select('*')
                     .order('created_at', { ascending: false });
                 
-                if (error) throw error;
+                if (error) {
+                    console.error('Supabase LOAD error:', error);
+                    throw error;
+                }
+                
+                console.log('Supabase data loaded:', data?.length || 0, 'movies');
                 
                 if (data && data.length > 0) {
                     this.movies = data.map(item => ({
@@ -1642,31 +1658,45 @@
                     this.showToast('Cloud data loaded!', 'success');
                 }
             } catch (e) {
-                console.log('Load error:', e);
+                console.error('Load from Supabase FAILED:', e);
             }
         },
         
         async saveToSupabase(movie) {
-            if (!this.isSupabaseReady) throw new Error('Not connected');
+            if (!this.isSupabaseReady) {
+                throw new Error('Supabase not connected');
+            }
+            
+            const payload = {
+                id: movie.id,
+                title: movie.title,
+                category: movie.category,
+                year: movie.year,
+                duration: movie.duration,
+                rating: movie.rating,
+                description: movie.description,
+                poster: movie.poster,
+                video_url: movie.videoUrl,
+                featured: movie.featured || false,
+                created_at: new Date().toISOString()
+            };
+            
+            console.log('Saving to Supabase:', JSON.stringify(payload, null, 2));
             
             const { data, error } = await supabaseClient
                 .from('movies')
-                .insert([{
-                    id: movie.id,
-                    title: movie.title,
-                    category: movie.category,
-                    year: movie.year,
-                    duration: movie.duration,
-                    rating: movie.rating,
-                    description: movie.description,
-                    poster: movie.poster,
-                    video_url: movie.videoUrl,
-                    featured: movie.featured || false,
-                    created_at: new Date().toISOString()
-                }])
+                .insert([payload])
                 .select();
             
-            if (error) throw error;
+            if (error) {
+                console.error('SUPABASE INSERT ERROR:', error);
+                console.error('Error code:', error.code);
+                console.error('Error message:', error.message);
+                console.error('Error details:', error.details);
+                throw error;
+            }
+            
+            console.log('Supabase insert SUCCESS:', data);
             return data;
         },
         
@@ -1704,7 +1734,9 @@
         
         // ===== SUPABASE STORAGE =====
         async uploadImageToStorage(base64Data, title) {
-            if (!this.isSupabaseReady) throw new Error('Not connected');
+            if (!this.isSupabaseReady) {
+                throw new Error('Supabase not available');
+            }
             
             try {
                 const response = await fetch(base64Data);
@@ -1712,21 +1744,29 @@
                 const filename = `${Date.now()}_${title.replace(/\s+/g, '_').toLowerCase()}.jpg`;
                 const filePath = `posters/${filename}`;
                 
-                const { error } = await supabaseClient
+                console.log('Uploading image:', filePath);
+                
+                const { data, error } = await supabaseClient
                     .storage
                     .from('posters')
                     .upload(filePath, blob, { contentType: 'image/jpeg' });
                 
-                if (error) throw error;
+                if (error) {
+                    console.error('Storage upload error:', error);
+                    throw error;
+                }
+                
+                console.log('Storage upload success:', data);
                 
                 const { data: { publicUrl } } = supabaseClient
                     .storage
                     .from('posters')
                     .getPublicUrl(filePath);
                 
+                console.log('Public URL:', publicUrl);
                 return publicUrl;
             } catch (e) {
-                console.log('Upload error:', e);
+                console.error('Upload failed:', e);
                 throw e;
             }
         },
@@ -1897,7 +1937,7 @@
             if (ctrEl) ctrEl.textContent = (this.ctr || 0) + '%';
         },
         
-        // ===== SAVE CONTENT (100% WORKING) =====
+        // ===== SAVE CONTENT (WITH DEBUG) =====
         async saveContent() {
             const title = document.getElementById('admin-title').value.trim();
             const category = document.getElementById('admin-category').value;
@@ -1913,7 +1953,10 @@
                 return;
             }
             
-            this.showToast('Uploading...', 'info');
+            console.log('=== SAVE CONTENT STARTED ===');
+            console.log('Supabase ready:', this.isSupabaseReady);
+            
+            this.showToast('Saving...', 'info');
             
             let poster = 'https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image';
             if (preview && preview.dataset.imageData) {
@@ -1927,8 +1970,8 @@
                     posterUrl = await this.uploadImageToStorage(preview.dataset.imageData, title);
                     this.showToast('Image uploaded!', 'success');
                 } catch (e) {
-                    console.log('Storage upload failed, using base64:', e);
-                    posterUrl = poster; // Fallback to base64
+                    console.error('Image upload failed:', e);
+                    posterUrl = poster;
                 }
             }
             
@@ -1946,17 +1989,23 @@
                 createdAt: new Date().toISOString()
             };
             
+            console.log('Movie object:', movie);
+            
             // Save to Supabase
             let cloudSaved = false;
             if (this.isSupabaseReady) {
                 try {
+                    console.log('Attempting Supabase save...');
                     await this.saveToSupabase(movie);
                     cloudSaved = true;
                     this.showToast('Saved to cloud!', 'success');
                 } catch (e) {
-                    console.error('Cloud save failed:', e);
+                    console.error('Cloud save FAILED:', e);
                     this.showToast('Cloud save failed!', 'error');
                 }
+            } else {
+                console.log('Supabase not ready, skipping cloud save');
+                this.showToast('Offline mode - saving locally', 'info');
             }
             
             // Always save locally
@@ -1966,9 +2015,8 @@
             this.renderAdminTable();
             this.resetAdminForm();
             
-            if (!cloudSaved && !this.isSupabaseReady) {
-                this.showToast('Saved locally!', 'info');
-            }
+            console.log('=== SAVE CONTENT ENDED ===');
+            console.log('Cloud saved:', cloudSaved);
         },
         
         resetAdminForm() {
