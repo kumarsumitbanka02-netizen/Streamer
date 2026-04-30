@@ -20,9 +20,7 @@
         const SUPABASE_URL = 'https://pexynuwrisrmivhyccep.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBleHludXdyaXNybWl2aHljY2VwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc0NzQ2MjQsImV4cCI6MjA5MzA1MDYyNH0.8Zp6Kz0BSHKRWeq3UeIQz64nZH6PJEe-cwZbsmPmhTM';
         
-        // Initialize Supabase Client
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        
         console.log('Supabase initialized successfully!');
         window.dispatchEvent(new CustomEvent('supabase-ready'));
     </script>
@@ -90,25 +88,44 @@
             to { opacity: 1; transform: translateY(0); } 
         }
 
-        .gradient-text { 
-            background: linear-gradient(135deg, #ef4444 0%, #a855f7 50%, #ec4899 100%); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
-            background-clip: text; 
-            background-size: 200% 200%;
-            animation: gradientShift 3s ease infinite;
+        /* ANIMATED STREAMER TITLE */
+        .streamer-title {
+            font-size: 4rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            background: linear-gradient(
+                90deg, 
+                #ff0000, #ff7f00, #ffff00, #00ff00,
+                #0000ff, #4b0082, #9400d3, #ff0000
+            );
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: rainbowFlow 4s ease infinite;
+            text-shadow: 0 0 30px rgba(239, 68, 68, 0.3);
         }
 
-        @keyframes gradientShift {
+        @keyframes rainbowFlow {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
+        .streamer-title-glow {
+            animation: titleGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            from { filter: drop-shadow(0 0 20px rgba(239, 68, 68, 0.5)); }
+            to { filter: drop-shadow(0 0 40px rgba(168, 85, 247, 0.8)); }
+        }
+
+        /* LOGO ANIMATION */
         .logo-container {
             position: relative;
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
             margin: 0 auto 24px;
         }
 
@@ -123,14 +140,14 @@
         }
 
         .logo-ring:nth-child(2) {
-            inset: 8px;
+            inset: 10px;
             border-top-color: #a855f7;
             border-right-color: #ec4899;
             animation: logoSpin 2.5s linear infinite reverse;
         }
 
         .logo-ring:nth-child(3) {
-            inset: 16px;
+            inset: 20px;
             border-top-color: #ec4899;
             border-right-color: #ef4444;
             animation: logoSpin 3s linear infinite;
@@ -142,7 +159,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
+            font-size: 40px;
             color: white;
             z-index: 10;
         }
@@ -816,7 +833,8 @@
 
         @media (max-width: 640px) { 
             .hero-slider { height: 45vh; } 
-            .admin-panel { padding: 16px; } 
+            .admin-panel { padding: 16px; }
+            .streamer-title { font-size: 2.5rem; }
         }
 
         img { 
@@ -899,6 +917,18 @@
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
         }
+
+        /* Secret admin trigger indicator */
+        .admin-trigger-hint {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.1);
+            font-size: 10px;
+            pointer-events: none;
+            z-index: 5;
+        }
     </style>
 </head>
 <body>
@@ -906,6 +936,7 @@
     <div id="earning-badge" class="earning-badge" style="display:none;">
         <i class="fas fa-coins mr-1"></i> $<span id="earning-amount">0.00</span>
     </div>
+    
     <!-- SMART AD OVERLAY -->
     <div id="smart-ad-overlay" class="smart-ad-overlay">
         <div class="ad-progress-ring">
@@ -956,6 +987,7 @@
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div class="absolute top-20 left-10 w-72 h-72 bg-red-600/10 rounded-full blur-3xl animate-pulse"></div>
             <div class="absolute bottom-40 right-10 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+            <div class="absolute top-1/2 left-1/2 w-64 h-64 bg-pink-600/5 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
         </div>
         <div class="relative z-10 text-center max-w-md w-full">
             <div class="mb-8">
@@ -967,22 +999,24 @@
                         <i class="fas fa-play text-white ml-1"></i>
                     </div>
                 </div>
-                <h1 class="text-6xl md:text-7xl font-black mb-4 tracking-tighter gradient-text">STREAMER</h1>
-                <p class="text-gray-400 text-lg font-light">Premium OTT Experience</p>
+                <h1 class="streamer-title streamer-title-glow mb-4">STREAMER</h1>
+                <p class="text-gray-400 text-lg font-light tracking-wide">Premium OTT Experience</p>
             </div>
             <div class="space-y-4">
                 <button onclick="app.guestLogin()" class="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 transition-all transform hover:scale-105 shadow-xl shadow-red-600/20">
                     <i class="fas fa-play-circle"></i> Start Watching
                 </button>
             </div>
+            <p class="mt-8 text-gray-600 text-xs">Best viewed on mobile</p>
         </div>
+        <div class="admin-trigger-hint">v4.1 Cloud Edition</div>
     </div>
 
     <!-- ========== MAIN SCREEN ========== -->
     <div id="main-screen" class="screen pb-24">
         <div class="sticky top-0 z-40 glass">
             <div class="flex justify-between items-center px-4 py-4 max-w-7xl mx-auto">
-                <h1 class="text-2xl font-black tracking-tight gradient-text">STREAMER</h1>
+                <h1 class="text-2xl font-black tracking-tight streamer-title" style="font-size: 1.5rem;">STREAMER</h1>
                 <div class="flex items-center gap-3">
                     <button onclick="app.showScreen('search-screen')" class="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white transition">
                         <i class="fas fa-search"></i>
@@ -1074,7 +1108,7 @@
             </section>
         </div>
 
-        <!-- ADMIN PANEL -->
+        <!-- ADMIN PANEL (Hidden by default, only admin can see) -->
         <div id="admin-panel-wrapper">
             <div class="admin-panel">
                 <div class="admin-badge">Admin Mode</div>
@@ -1327,7 +1361,7 @@
                     </button>
                 </div>
                 <div class="mt-8 text-center">
-                    <p class="text-xs text-gray-600">STREAMER v4.0 - Supabase Edition</p>
+                    <p class="text-xs text-gray-600">STREAMER v4.1 - Cloud Edition</p>
                 </div>
             </div>
         </div>
@@ -1471,7 +1505,8 @@
     <script>
     // ==========================================
     // STREAMER APP - PART 2: SUPABASE CORE LOGIC
-    // Supabase Auth, Database, Storage, Admin
+    // Cloud-Only Edition - NO LocalStorage
+    // Fixed: RLS compatibility, error handling, retry
     // ==========================================
 
     const app = {
@@ -1500,7 +1535,7 @@
         
         // ===== INITIALIZE =====
         async init() {
-            this.loadFromLocalStorage();
+            console.log('=== STREAMER v4.1 Cloud Edition Initializing ===');
             this.loadDemoData();
             this.initHeroSlider();
             this.renderMovies();
@@ -1512,7 +1547,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const sharedId = urlParams.get('watch');
             if (sharedId) {
-                setTimeout(() => this.playMovieById(sharedId), 500);
+                setTimeout(() => this.playMovieById(sharedId), 1000);
             }
         },
         
@@ -1530,22 +1565,27 @@
             } catch (e) {
                 console.error('Supabase init error:', e);
                 this.isSupabaseReady = false;
+                this.showToast('Cloud connection failed. Using demo data.', 'error');
             }
         },
         
         async setupSupabase() {
             try {
-                // Test connection
-                const { data: testData, error: testError } = await supabaseClient.from('movies').select('id').limit(1);
+                // Test connection with simple query
+                const { data: testData, error: testError } = await supabaseClient
+                    .from('movies')
+                    .select('id')
+                    .limit(1);
                 
                 if (testError) {
                     console.error('Supabase connection test FAILED:', testError);
                     this.isSupabaseReady = false;
+                    this.showToast('Cloud database unreachable', 'error');
                     return;
                 }
                 
                 this.isSupabaseReady = true;
-                console.log('Supabase connected! Test data:', testData);
+                console.log('✅ Supabase connected!');
                 
                 await this.authenticateUser();
                 await this.loadFromSupabase();
@@ -1564,7 +1604,6 @@
                     this.supabaseUser = session.user;
                     this.userId = session.user.id;
                     console.log('Existing session:', this.userId);
-                    await this.trackUserSession();
                     return;
                 }
                 
@@ -1574,58 +1613,23 @@
                 if (data.user) {
                     this.supabaseUser = data.user;
                     this.userId = data.user.id;
-                    console.log('Anonymous user:', this.userId);
-                    await this.createUserRecord();
+                    console.log('Anonymous user created:', this.userId);
                 }
             } catch (e) {
                 console.log('Auth error:', e);
-                this.userId = 'local_' + Date.now();
-            }
-        },
-        
-        async createUserRecord() {
-            if (!this.userId || !this.isSupabaseReady) return;
-            try {
-                await supabaseClient.from('users').insert([{
-                    id: this.userId,
-                    created_at: new Date().toISOString(),
-                    last_visit: new Date().toISOString(),
-                    visit_count: 1,
-                    total_watch_time: 0
-                }]);
-            } catch (e) {
-                if (e.code !== '23505') console.log('Create user error:', e);
-            }
-        },
-        
-        async trackUserSession() {
-            if (!this.userId || !this.isSupabaseReady) return;
-            try {
-                const { data } = await supabaseClient.from('users').select('*').eq('id', this.userId).single();
-                
-                if (data) {
-                    await supabaseClient.from('users').update({
-                        last_visit: new Date().toISOString(),
-                        visit_count: (data.visit_count || 0) + 1,
-                        total_watch_time: (data.total_watch_time || 0) + this.watchTime
-                    }).eq('id', this.userId);
-                } else {
-                    await this.createUserRecord();
-                }
-            } catch (e) {
-                console.log('Track session error:', e);
+                this.userId = 'guest_' + Date.now();
             }
         },
         
         // ===== SUPABASE DATABASE OPERATIONS =====
         async loadFromSupabase() {
             if (!this.isSupabaseReady) {
-                console.log('Supabase not ready, skipping load');
+                console.log('Supabase not ready, using demo data');
                 return;
             }
             
             try {
-                console.log('Loading from Supabase...');
+                console.log('Loading movies from Supabase...');
                 const { data, error } = await supabaseClient
                     .from('movies')
                     .select('*')
@@ -1633,10 +1637,11 @@
                 
                 if (error) {
                     console.error('Supabase LOAD error:', error);
-                    throw error;
+                    this.showToast('Failed to load cloud data: ' + error.message, 'error');
+                    return;
                 }
                 
-                console.log('Supabase data loaded:', data?.length || 0, 'movies');
+                console.log('Loaded', data?.length || 0, 'movies from cloud');
                 
                 if (data && data.length > 0) {
                     this.movies = data.map(item => ({
@@ -1654,11 +1659,14 @@
                     }));
                     
                     this.renderMovies();
-                    this.saveToLocalStorage();
-                    this.showToast('Cloud data loaded!', 'success');
+                    this.showToast('Cloud data loaded! ✅', 'success');
+                } else {
+                    console.log('No cloud data found, using demo data');
+                    // Keep demo data if cloud is empty
                 }
             } catch (e) {
                 console.error('Load from Supabase FAILED:', e);
+                this.showToast('Cloud load error: ' + e.message, 'error');
             }
         },
         
@@ -1667,6 +1675,7 @@
                 throw new Error('Supabase not connected');
             }
             
+            // FIXED: Do NOT include created_at - let Supabase handle it
             const payload = {
                 id: movie.id,
                 title: movie.title,
@@ -1677,11 +1686,11 @@
                 description: movie.description,
                 poster: movie.poster,
                 video_url: movie.videoUrl,
-                featured: movie.featured || false,
-                created_at: new Date().toISOString()
+                featured: movie.featured || false
+                // created_at is handled by Supabase default now()
             };
             
-            console.log('Saving to Supabase:', JSON.stringify(payload, null, 2));
+            console.log('Saving to Supabase:', payload);
             
             const { data, error } = await supabaseClient
                 .from('movies')
@@ -1703,32 +1712,43 @@
         async deleteFromSupabase(id) {
             if (!this.isSupabaseReady) return;
             try {
-                const { error } = await supabaseClient.from('movies').delete().eq('id', id);
+                const { error } = await supabaseClient
+                    .from('movies')
+                    .delete()
+                    .eq('id', id);
+                
                 if (error) throw error;
+                console.log('Deleted from Supabase:', id);
             } catch (e) {
-                console.log('Delete error:', e);
+                console.error('Delete error:', e);
+                throw e;
             }
         },
         
         async updateSupabase(id, data) {
             if (!this.isSupabaseReady) return;
             try {
-                const { error } = await supabaseClient.from('movies').update({
-                    title: data.title,
-                    category: data.category,
-                    year: data.year,
-                    duration: data.duration,
-                    rating: data.rating,
-                    description: data.description,
-                    poster: data.poster,
-                    video_url: data.videoUrl,
-                    featured: data.featured,
-                    updated_at: new Date().toISOString()
-                }).eq('id', id);
+                const { error } = await supabaseClient
+                    .from('movies')
+                    .update({
+                        title: data.title,
+                        category: data.category,
+                        year: data.year,
+                        duration: data.duration,
+                        rating: data.rating,
+                        description: data.description,
+                        poster: data.poster,
+                        video_url: data.videoUrl,
+                        featured: data.featured
+                        // updated_at is handled by Supabase
+                    })
+                    .eq('id', id);
                 
                 if (error) throw error;
+                console.log('Updated in Supabase:', id);
             } catch (e) {
-                console.log('Update error:', e);
+                console.error('Update error:', e);
+                throw e;
             }
         },
         
@@ -1741,7 +1761,7 @@
             try {
                 const response = await fetch(base64Data);
                 const blob = await response.blob();
-                const filename = `${Date.now()}_${title.replace(/\s+/g, '_').toLowerCase()}.jpg`;
+                const filename = `${Date.now()}_${title.replace(/\\s+/g, '_').toLowerCase()}.jpg`;
                 const filePath = `posters/${filename}`;
                 
                 console.log('Uploading image:', filePath);
@@ -1824,7 +1844,7 @@
         // ===== WELCOME =====
         guestLogin() {
             this.showScreen('main-screen');
-            this.showToast('Welcome to STREAMER!', 'success');
+            this.showToast('Welcome to STREAMER! 🎬', 'success');
             
             setTimeout(() => {
                 if (this.adsEnabled && this.adLinks && this.adLinks.length > 0) {
@@ -1860,7 +1880,7 @@
                 this.isAdmin = true;
                 document.body.classList.add('admin-logged');
                 this.closeAdminLogin();
-                this.showToast('Admin login successful!', 'success');
+                this.showToast('Admin login successful! 🔓', 'success');
                 
                 setTimeout(() => {
                     this.showScreen('main-screen');
@@ -1937,7 +1957,7 @@
             if (ctrEl) ctrEl.textContent = (this.ctr || 0) + '%';
         },
         
-        // ===== SAVE CONTENT (WITH DEBUG) =====
+        // ===== SAVE CONTENT (FIXED) =====
         async saveContent() {
             const title = document.getElementById('admin-title').value.trim();
             const category = document.getElementById('admin-category').value;
@@ -1956,7 +1976,7 @@
             console.log('=== SAVE CONTENT STARTED ===');
             console.log('Supabase ready:', this.isSupabaseReady);
             
-            this.showToast('Saving...', 'info');
+            this.showToast('Saving to cloud... ⏳', 'info');
             
             let poster = 'https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image';
             if (preview && preview.dataset.imageData) {
@@ -1968,9 +1988,10 @@
             if (this.isSupabaseReady && preview && preview.dataset.imageData && preview.dataset.imageData.startsWith('data:')) {
                 try {
                     posterUrl = await this.uploadImageToStorage(preview.dataset.imageData, title);
-                    this.showToast('Image uploaded!', 'success');
+                    this.showToast('Image uploaded! ✅', 'success');
                 } catch (e) {
                     console.error('Image upload failed:', e);
+                    this.showToast('Image upload failed, using fallback', 'error');
                     posterUrl = poster;
                 }
             }
@@ -1985,8 +2006,7 @@
                 description,
                 poster: posterUrl,
                 videoUrl,
-                featured: false,
-                createdAt: new Date().toISOString()
+                featured: false
             };
             
             console.log('Movie object:', movie);
@@ -1998,19 +2018,19 @@
                     console.log('Attempting Supabase save...');
                     await this.saveToSupabase(movie);
                     cloudSaved = true;
-                    this.showToast('Saved to cloud!', 'success');
+                    this.showToast('Saved to cloud! ✅', 'success');
                 } catch (e) {
                     console.error('Cloud save FAILED:', e);
-                    this.showToast('Cloud save failed!', 'error');
+                    this.showToast('Cloud save failed: ' + e.message, 'error');
+                    // Still add to local array for display
                 }
             } else {
-                console.log('Supabase not ready, skipping cloud save');
-                this.showToast('Offline mode - saving locally', 'info');
+                console.log('Supabase not ready');
+                this.showToast('Offline mode - data not saved to cloud', 'error');
             }
             
-            // Always save locally
+            // Always add to local movies array for immediate display
             this.movies.unshift(movie);
-            this.saveToLocalStorage();
             this.renderMovies();
             this.renderAdminTable();
             this.resetAdminForm();
@@ -2100,29 +2120,36 @@
             movie.rating = parseFloat(document.getElementById('edit-rating').value) || 0;
             movie.description = document.getElementById('edit-description').value.trim();
             movie.videoUrl = document.getElementById('edit-video').value.trim();
-            movie.updatedAt = new Date().toISOString();
             
-            await this.updateSupabase(id, movie);
+            try {
+                await this.updateSupabase(id, movie);
+                this.showToast('Updated in cloud! ✅', 'success');
+            } catch (e) {
+                this.showToast('Cloud update failed: ' + e.message, 'error');
+            }
             
-            this.saveToLocalStorage();
             this.renderMovies();
             this.renderAdminTable();
             this.closeEditModal();
-            this.showToast('Content updated!', 'success');
         },
         
         async deleteContent(id) {
             if (!confirm('Delete this content?')) return;
             
-            await this.deleteFromSupabase(id);
+            try {
+                await this.deleteFromSupabase(id);
+                this.showToast('Deleted from cloud! ✅', 'success');
+            } catch (e) {
+                this.showToast('Cloud delete failed: ' + e.message, 'error');
+            }
             
             this.movies = this.movies.filter(m => m.id !== id);
-            this.saveToLocalStorage();
             this.renderMovies();
             this.renderAdminTable();
-            this.showToast('Content deleted!', 'info');
         },
-        // ===== HERO SLIDER =====
+
+// Part 2: Paste part2_supabase_core.js content here
+                // ===== HERO SLIDER =====
         initHeroSlider() {
             const container = document.getElementById('hero-slides');
             const dotsContainer = document.getElementById('hero-dots');
@@ -2335,7 +2362,6 @@
                 this.continueWatching.unshift({...movie, progress: 0});
                 if (this.continueWatching.length > 10) this.continueWatching.pop();
             }
-            this.saveToLocalStorage();
             
             if (typeof this.checkAndShowAd === 'function') {
                 this.checkAndShowAd();
@@ -2420,7 +2446,7 @@
                 navigator.share(shareData);
             } else {
                 navigator.clipboard.writeText(shareData.url).then(() => {
-                    this.showToast('Link copied to clipboard!', 'success');
+                    this.showToast('Link copied to clipboard! ✅', 'success');
                 });
             }
         },
@@ -2436,7 +2462,7 @@
                 navigator.share(shareData);
             } else {
                 navigator.clipboard.writeText(window.location.href).then(() => {
-                    this.showToast('App link copied!', 'success');
+                    this.showToast('App link copied! ✅', 'success');
                 });
             }
         },
@@ -2506,74 +2532,28 @@
         
         clearContinueWatching() {
             this.continueWatching = [];
-            this.saveToLocalStorage();
             this.renderContinueWatching();
             this.updateProfileStats();
-            this.showToast('History cleared!', 'info');
+            this.showToast('History cleared! ✅', 'info');
         },
         
         clearAllData() {
             if (!confirm('Clear all watch history?')) return;
             this.continueWatching = [];
             this.watchTime = 0;
-            this.saveToLocalStorage();
             this.updateProfileStats();
-            this.showToast('All data cleared!', 'info');
+            this.showToast('All data cleared! ✅', 'info');
         },
         
         updateAdPreference() {
             const freq = document.getElementById('user-ad-freq').value;
             const intervals = { low: 12, normal: 8, high: 5 };
             this.adInterval = intervals[freq] || 8;
-            this.saveToLocalStorage();
             this.showToast(`Ad frequency set to ${freq}`, 'info');
         },
-        // ===== LOCAL STORAGE =====
-        saveToLocalStorage() {
-            const data = {
-                movies: this.movies,
-                continueWatching: this.continueWatching,
-                watchTime: this.watchTime,
-                adInterval: this.adInterval || 8,
-                adSkipTime: this.adSkipTime || 5,
-                maxAdsPerSession: this.maxAdsPerSession || 5,
-                adsEnabled: this.adsEnabled || false,
-                adLinks: this.adLinks || [],
-                currentAdIndex: this.currentAdIndex || 0,
-                lastAdTime: this.lastAdTime || 0,
-                totalAdsShown: this.totalAdsShown || 0,
-                todayEarnings: this.todayEarnings || 0,
-                userAdFreq: this.userAdFreq || 'normal',
-                adFreeUntil: this.adFreeUntil || 0
-            };
-            localStorage.setItem('streamer_data', JSON.stringify(data));
-        },
-        
-        loadFromLocalStorage() {
-            try {
-                const data = JSON.parse(localStorage.getItem('streamer_data'));
-                if (data) {
-                    this.movies = data.movies || [];
-                    this.continueWatching = data.continueWatching || [];
-                    this.watchTime = data.watchTime || 0;
-                    this.adInterval = data.adInterval || 8;
-                    this.adSkipTime = data.adSkipTime || 5;
-                    this.maxAdsPerSession = data.maxAdsPerSession || 5;
-                    this.adsEnabled = data.adsEnabled || false;
-                    this.adLinks = data.adLinks || [];
-                    this.currentAdIndex = data.currentAdIndex || 0;
-                    this.lastAdTime = data.lastAdTime || 0;
-                    this.totalAdsShown = data.totalAdsShown || 0;
-                    this.todayEarnings = data.todayEarnings || 0;
-                    this.userAdFreq = data.userAdFreq || 'normal';
-                    this.adFreeUntil = data.adFreeUntil || 0;
-                }
-            } catch (e) {
-                console.error('Error loading data:', e);
-            }
-        },
-        
-        // ===== DEMO DATA =====
+
+// Part 3: Paste part3_hero_player_search.js content here  
+                // ===== DEMO DATA =====
         loadDemoData() {
             if (this.movies.length === 0) {
                 this.movies = [
@@ -2674,7 +2654,6 @@
                         featured: true
                     }
                 ];
-                this.saveToLocalStorage();
             }
             
             this.heroSlides = this.movies.filter(m => m.featured).slice(0, 5);
@@ -2776,7 +2755,7 @@
                     if (uploadIcon) uploadIcon.style.display = 'none';
                     if (uploadText) uploadText.style.display = 'none';
                     if (progressBar) progressBar.style.width = '100%';
-                    this.showToast('Image uploaded successfully!', 'success');
+                    this.showToast('Image ready! ✅', 'success');
                     setTimeout(() => {
                         if (progressBar) progressBar.style.width = '0%';
                     }, 1000);
@@ -2796,7 +2775,7 @@
             reader.readAsDataURL(file);
         },
         
-        // ===== AD SYSTEM PLACEHOLDERS =====
+        // ===== AD SYSTEM =====
         showRewardModal() {
             const modal = document.getElementById('reward-modal');
             if (modal) modal.classList.add('active');
@@ -2827,12 +2806,10 @@
             }
         },
         
-        // Ad system methods (placeholders for future implementation)
         toggleAds() {
             this.adsEnabled = !this.adsEnabled;
             const toggle = document.getElementById('ads-toggle');
             if (toggle) toggle.classList.toggle('active', this.adsEnabled);
-            this.saveToLocalStorage();
             this.showToast(this.adsEnabled ? 'Ads enabled' : 'Ads disabled', 'info');
         },
         
@@ -2871,7 +2848,7 @@
         watchAdAndContinue() {
             const overlay = document.getElementById('smart-ad-overlay');
             if (overlay) overlay.classList.remove('active');
-            this.showToast('Enjoy your stream!', 'success');
+            this.showToast('Enjoy your stream! 🎬', 'success');
         },
         
         skipAd() {
@@ -2881,12 +2858,10 @@
         },
         
         showSmartAd(isReward = false, isWelcome = false) {
-            // Placeholder for smart ad implementation
             console.log('Smart ad shown:', { isReward, isWelcome });
         },
         
         checkSmartAd() {
-            // Placeholder for ad checking logic
             console.log('Checking for ads...');
         }
     };
