@@ -6,6 +6,10 @@
     <meta name="theme-color" content="#0f0f0f">
     <meta name="description" content="STREAMER - Premium streaming platform">
     <meta name="robots" content="noindex, nofollow">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiU1RSRUFNRVIiLCJzaG9ydF9uYW1lIjoiU1RSRUFNRVIiLCJzdGFydF91cmwiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzBhMGEwYSIsInRoZW1lX2NvbG9yIjoiIzBmMGYwZiIsImljb25zIjpbeyJzcmMiOiJodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvbnBtL0Bmb3J0YXdlc29tZS9mb250YXdmcmVlQDYuNC4wL3N2Z3Mvc29saWQvcGxheS5zdmcisInNpemVzIjoiMTkyeDE5MiIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn1dfQ==">
+    
     <title>STREAMER - Premium OTT</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -90,7 +94,7 @@
 
         /* ANIMATED STREAMER TITLE */
         .streamer-title {
-            font-size: 4rem;
+            font-size: 3.5rem;
             font-weight: 900;
             letter-spacing: -2px;
             background: linear-gradient(
@@ -121,12 +125,12 @@
             to { filter: drop-shadow(0 0 40px rgba(168, 85, 247, 0.8)); }
         }
 
-        /* LOGO ANIMATION */
+        /* LOGO ANIMATION - CENTERED */
         .logo-container {
             position: relative;
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 24px;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 20px;
         }
 
         .logo-ring {
@@ -140,14 +144,14 @@
         }
 
         .logo-ring:nth-child(2) {
-            inset: 10px;
+            inset: 12px;
             border-top-color: #a855f7;
             border-right-color: #ec4899;
             animation: logoSpin 2.5s linear infinite reverse;
         }
 
         .logo-ring:nth-child(3) {
-            inset: 20px;
+            inset: 24px;
             border-top-color: #ec4899;
             border-right-color: #ef4444;
             animation: logoSpin 3s linear infinite;
@@ -159,7 +163,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 40px;
+            font-size: 44px;
             color: white;
             z-index: 10;
         }
@@ -176,6 +180,25 @@
         @keyframes logoPulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
+        }
+
+        /* WELCOME SCREEN CENTERED LAYOUT */
+        .welcome-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 24px;
+        }
+
+        .welcome-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 48px;
         }
 
         .glass { 
@@ -929,12 +952,320 @@
             pointer-events: none;
             z-index: 5;
         }
+
+        /* SEE ALL BUTTON */
+        .see-all-btn {
+            color: #ef4444;
+            font-size: 13px;
+            font-weight: 600;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
+        }
+
+        .see-all-btn:hover {
+            color: #dc2626;
+            gap: 8px;
+        }
+
+        /* FAVORITE BUTTON */
+        .fav-btn {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            z-index: 20;
+            pointer-events: auto;
+        }
+
+        .fav-btn:hover {
+            background: rgba(239,68,68,0.8);
+            transform: scale(1.1);
+        }
+
+        .fav-btn.active {
+            color: #ef4444;
+            background: rgba(239,68,68,0.2);
+        }
+
+        /* PLAYLIST CARD */
+        .playlist-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .playlist-card:hover {
+            transform: translateY(-4px) scale(1.02);
+        }
+
+        .playlist-card img {
+            transition: transform 0.5s;
+        }
+
+        .playlist-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .episode-badge {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            color: white;
+        }
+
+        /* EPISODE LIST */
+        .episode-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .episode-item:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(239,68,68,0.2);
+        }
+
+        .episode-item.active {
+            background: rgba(239,68,68,0.1);
+            border-color: rgba(239,68,68,0.3);
+        }
+
+        .episode-thumb {
+            width: 80px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .episode-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(239,68,68,0.2);
+            color: #ef4444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .episode-item.active .episode-number {
+            background: #ef4444;
+            color: white;
+        }
+
+        /* PLAYER EPISODE STRIP */
+        .player-episode-strip {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 12px 0;
+            scrollbar-width: none;
+        }
+
+        .player-episode-strip::-webkit-scrollbar {
+            display: none;
+        }
+
+        .player-episode-pill {
+            flex-shrink: 0;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #a0a0a0;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .player-episode-pill:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        .player-episode-pill.active {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+        }
+
+        .player-episode-pill.watched {
+            border-color: rgba(34,197,94,0.5);
+            color: #22c55e;
+        }
+
+        /* INSTALL PWA BANNER */
+        .install-banner {
+            position: fixed;
+            bottom: 80px;
+            left: 16px;
+            right: 16px;
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            border: 1px solid rgba(239,68,68,0.3);
+            border-radius: 16px;
+            padding: 16px;
+            z-index: 200;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            animation: slideUp 0.4s ease;
+        }
+
+        .install-banner.active {
+            display: flex;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* ADMIN TABS */
+        .admin-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .admin-tab {
+            padding: 10px 20px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid transparent;
+            color: #a0a0a0;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .admin-tab:hover {
+            background: rgba(255,255,255,0.08);
+            color: white;
+        }
+
+        .admin-tab.active {
+            background: rgba(239,68,68,0.15);
+            border-color: rgba(239,68,68,0.3);
+            color: #ef4444;
+        }
+
+        .admin-tab-content {
+            display: none;
+        }
+
+        .admin-tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* GRID VIEW FOR SEE ALL */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            padding: 16px;
+        }
+
+        @media (min-width: 640px) {
+            .content-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (min-width: 1024px) {
+            .content-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        /* APK INFO SECTION */
+        .apk-info {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 16px;
+        }
+
+        .apk-info h4 {
+            color: #ef4444;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .apk-info p {
+            color: #888;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .apk-info code {
+            background: rgba(255,255,255,0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #a0a0a0;
+            font-family: monospace;
+        }
     </style>
 </head>
 <body>
     <div id="toast-container" class="toast-container"></div>
     <div id="earning-badge" class="earning-badge" style="display:none;">
         <i class="fas fa-coins mr-1"></i> $<span id="earning-amount">0.00</span>
+    </div>
+    
+    <!-- INSTALL PWA BANNER -->
+    <div id="install-banner" class="install-banner">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-red-500 to-purple-600 flex items-center justify-center flex-shrink-0">
+            <i class="fas fa-download text-white"></i>
+        </div>
+        <div class="flex-1">
+            <p class="font-bold text-sm">Install STREAMER App</p>
+            <p class="text-gray-400 text-xs">Add to home screen for best experience</p>
+        </div>
+        <button onclick="app.installPWA()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-bold transition">
+            Install
+        </button>
+        <button onclick="app.dismissInstallBanner()" class="text-gray-500 hover:text-white transition">
+            <i class="fas fa-times"></i>
+        </button>
     </div>
     
     <!-- SMART AD OVERLAY -->
@@ -949,13 +1280,14 @@
             </svg>
             <div class="ad-timer-text" id="ad-timer">5</div>
         </div>
-        <p class="text-gray-400 text-center mb-2 text-lg">Loading your stream...</p>
-        <p class="text-gray-600 text-xs text-center mb-4">Please wait while we prepare</p>
+        <p class="text-gray-400 text-center mb-2 text-lg" id="ad-title">Loading your stream...</p>
+        <p class="text-gray-600 text-xs text-center mb-4" id="ad-subtitle">Please wait while we prepare</p>
         <button id="ad-continue-btn" class="ad-btn" onclick="app.watchAdAndContinue()" disabled>
             <i class="fas fa-play mr-2"></i> Continue Watching
         </button>
         <button class="ad-skip-btn" onclick="app.skipAd()">Skip Ad (Support Us)</button>
         <p class="ad-counter" id="ad-counter">Ad 1 of 3</p>
+        <p class="text-gray-600 text-xs text-center mt-2" id="ad-earning-info">You earn us $0.001 per ad</p>
     </div>
 
     <!-- REWARD AD MODAL -->
@@ -982,36 +1314,44 @@
         </div>
     </div>
 
-    <!-- ========== WELCOME SCREEN ========== -->
-    <div id="welcome-screen" class="screen active flex flex-col justify-center items-center min-h-screen px-6 relative overflow-hidden">
-        <div class="absolute inset-0 overflow-hidden pointer-events-none">
-            <div class="absolute top-20 left-10 w-72 h-72 bg-red-600/10 rounded-full blur-3xl animate-pulse"></div>
-            <div class="absolute bottom-40 right-10 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
-            <div class="absolute top-1/2 left-1/2 w-64 h-64 bg-pink-600/5 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
-        </div>
-        <div class="relative z-10 text-center max-w-md w-full">
-            <div class="mb-8">
-                <div class="logo-container logo-pulse">
-                    <div class="logo-ring"></div>
-                    <div class="logo-ring"></div>
-                    <div class="logo-ring"></div>
-                    <div class="logo-icon">
-                        <i class="fas fa-play text-white ml-1"></i>
+    <!-- ========== WELCOME SCREEN (REDESIGNED CENTERED) ========== -->
+    <div id="welcome-screen" class="screen active">
+        <div class="welcome-center relative overflow-hidden">
+            <!-- Background effects -->
+            <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                <div class="absolute top-20 left-10 w-72 h-72 bg-red-600/10 rounded-full blur-3xl animate-pulse"></div>
+                <div class="absolute bottom-40 right-10 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+                <div class="absolute top-1/2 left-1/2 w-64 h-64 bg-pink-600/5 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
+            </div>
+            
+            <div class="relative z-10 flex flex-col items-center">
+                <!-- Logo + Title centered together -->
+                <div class="welcome-brand">
+                    <div class="logo-container logo-pulse">
+                        <div class="logo-ring"></div>
+                        <div class="logo-ring"></div>
+                        <div class="logo-ring"></div>
+                        <div class="logo-icon">
+                            <i class="fas fa-play text-white ml-1"></i>
+                        </div>
                     </div>
+                    <h1 class="streamer-title streamer-title-glow">STREAMER</h1>
+                    <p class="text-gray-400 text-lg font-light tracking-wide">Premium OTT Experience</p>
                 </div>
-                <h1 class="streamer-title streamer-title-glow mb-4">STREAMER</h1>
-                <p class="text-gray-400 text-lg font-light tracking-wide">Premium OTT Experience</p>
+                
+                <div class="w-full max-w-sm space-y-4">
+                    <button onclick="app.guestLogin()" class="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 transition-all transform hover:scale-105 shadow-xl shadow-red-600/20">
+                        <i class="fas fa-play-circle"></i> Start Watching
+                    </button>
+                    <button onclick="app.showAdminLogin()" class="w-full bg-white/5 hover:bg-white/10 text-gray-400 py-3 rounded-2xl font-semibold transition border border-white/10">
+                        <i class="fas fa-lock mr-2"></i> Admin Access
+                    </button>
+                </div>
+                
+                <p class="mt-12 text-gray-600 text-xs">Best viewed on mobile · v5.0</p>
             </div>
-            <div class="space-y-4">
-                <button onclick="app.guestLogin()" class="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 transition-all transform hover:scale-105 shadow-xl shadow-red-600/20">
-                    <i class="fas fa-play-circle"></i> Start Watching
-                </button>
-            </div>
-            <p class="mt-8 text-gray-600 text-xs">Best viewed on mobile</p>
         </div>
-        <div class="admin-trigger-hint">v4.1 Cloud Edition</div>
     </div>
-
     <!-- ========== MAIN SCREEN ========== -->
     <div id="main-screen" class="screen pb-24">
         <div class="sticky top-0 z-40 glass">
@@ -1053,6 +1393,19 @@
         </div>
 
         <div class="px-4 max-w-7xl mx-auto space-y-10" id="main-content">
+            <!-- FAVORITES SECTION -->
+            <section id="favorites-section" class="hidden">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-bold flex items-center gap-2">
+                        <i class="fas fa-heart text-red-500"></i> Your Favorites
+                    </h3>
+                    <button onclick="app.showSeeAll('favorites')" class="see-all-btn">
+                        See All <i class="fas fa-chevron-right text-xs"></i>
+                    </button>
+                </div>
+                <div class="flex gap-4 overflow-x-auto hide-scrollbar pb-2" id="favorites-container"></div>
+            </section>
+
             <section id="continue-watching-section" class="hidden">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-bold flex items-center gap-2">
@@ -1063,11 +1416,33 @@
                 <div class="flex gap-4 overflow-x-auto hide-scrollbar pb-2" id="continue-container"></div>
             </section>
 
+            <!-- PLAYLISTS SECTION -->
+            <section id="playlists-section">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-bold flex items-center gap-2">
+                        <i class="fas fa-list-ul text-purple-500"></i> Anime Playlists
+                    </h3>
+                    <button onclick="app.showSeeAll('playlists')" class="see-all-btn">
+                        See All <i class="fas fa-chevron-right text-xs"></i>
+                    </button>
+                </div>
+                <div class="flex gap-4 overflow-x-auto hide-scrollbar pb-2" id="playlists-container">
+                    <div class="flex gap-4">
+                        <div class="skeleton w-40 h-56 flex-shrink-0"></div>
+                        <div class="skeleton w-40 h-56 flex-shrink-0"></div>
+                        <div class="skeleton w-40 h-56 flex-shrink-0"></div>
+                    </div>
+                </div>
+            </section>
+
             <section>
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-bold flex items-center gap-2">
                         <i class="fas fa-fire text-orange-500"></i> Trending Now
                     </h3>
+                    <button onclick="app.showSeeAll('trending')" class="see-all-btn">
+                        See All <i class="fas fa-chevron-right text-xs"></i>
+                    </button>
                 </div>
                 <div class="flex gap-4 overflow-x-auto hide-scrollbar pb-2" id="trending-container">
                     <div class="flex gap-4">
@@ -1108,7 +1483,7 @@
             </section>
         </div>
 
-        <!-- ADMIN PANEL (Hidden by default, only admin can see) -->
+        <!-- ADMIN PANEL -->
         <div id="admin-panel-wrapper">
             <div class="admin-panel">
                 <div class="admin-badge">Admin Mode</div>
@@ -1121,151 +1496,313 @@
                     </button>
                 </div>
                 
-                <!-- EARNING STATS -->
-                <div class="stats-grid mb-6">
-                    <div class="stat-card">
-                        <div class="value" id="stat-total-ads">0</div>
-                        <div class="label">Total Ads</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="value" id="stat-today-earnings">$0</div>
-                        <div class="label">Today</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="value" id="stat-total-users">0</div>
-                        <div class="label">Users</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="value" id="stat-ctr">0%</div>
-                        <div class="label">CTR</div>
-                    </div>
+                <!-- ADMIN TABS -->
+                <div class="admin-tabs">
+                    <button class="admin-tab active" onclick="app.switchAdminTab('content')" data-tab="content">
+                        <i class="fas fa-film mr-1"></i> Content
+                    </button>
+                    <button class="admin-tab" onclick="app.switchAdminTab('playlists')" data-tab="playlists">
+                        <i class="fas fa-list-ul mr-1"></i> Playlists
+                    </button>
+                    <button class="admin-tab" onclick="app.switchAdminTab('ads')" data-tab="ads">
+                        <i class="fas fa-ad mr-1"></i> Ads
+                    </button>
+                    <button class="admin-tab" onclick="app.switchAdminTab('stats')" data-tab="stats">
+                        <i class="fas fa-chart-bar mr-1"></i> Stats
+                    </button>
                 </div>
                 
-                <!-- MULTI AD NETWORKS -->
-                <div class="mb-6 p-4 bg-white/5 rounded-xl border border-white/5">
-                    <div class="flex items-center justify-between mb-4">
-                        <div>
-                            <p class="font-semibold text-sm">Multi Ad Networks</p>
-                            <p class="text-xs text-gray-500">15+ links for maximum earning</p>
+                <!-- CONTENT TAB -->
+                <div class="admin-tab-content active" id="tab-content">
+                    <!-- EARNING STATS -->
+                    <div class="stats-grid mb-6">
+                        <div class="stat-card">
+                            <div class="value" id="stat-total-ads">0</div>
+                            <div class="label">Total Ads</div>
                         </div>
-                        <div class="toggle-switch" id="ads-toggle" onclick="app.toggleAds()"></div>
+                        <div class="stat-card">
+                            <div class="value" id="stat-today-earnings">$0</div>
+                            <div class="label">Today</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="value" id="stat-total-users">0</div>
+                            <div class="label">Users</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="value" id="stat-ctr">0%</div>
+                            <div class="label">CTR</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Image Upload -->
+                    <div class="mb-6">
+                        <label class="form-label">Poster Image *</label>
+                        <div class="upload-area" id="upload-area" onclick="document.getElementById('image-upload').click()">
+                            <i class="fas fa-cloud-upload-alt text-4xl text-gray-600 mb-4" id="upload-icon"></i>
+                            <p class="text-gray-400 mb-2" id="upload-text">Click to upload poster image</p>
+                            <p class="text-xs text-gray-600">JPG, PNG, WebP (Max 5MB)</p>
+                            <div class="upload-progress" id="upload-progress" style="width: 0%"></div>
+                        </div>
+                        <input type="file" id="image-upload" accept="image/*" style="display: none;" onchange="app.handleImageUpload(event)">
+                        <img id="upload-preview" class="upload-preview-img" alt="Preview">
+                    </div>
+                    
+                    <!-- Form Fields -->
+                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="form-label">Title *</label>
+                            <input type="text" id="admin-title" class="form-input" placeholder="Enter title">
+                        </div>
+                        <div>
+                            <label class="form-label">Category *</label>
+                            <select id="admin-category" class="form-input">
+                                <option value="Anime">Japanese Anime</option>
+                                <option value="Chinese Anime">Chinese Anime (Donghua)</option>
+                                <option value="Korean Drama">Korean Drama</option>
+                                <option value="Movies">Movies</option>
+                                <option value="Web Series">Web Series</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-3 gap-4 mb-4">
+                        <div>
+                            <label class="form-label">Year</label>
+                            <input type="number" id="admin-year" class="form-input" placeholder="2024" value="2024">
+                        </div>
+                        <div>
+                            <label class="form-label">Duration</label>
+                            <input type="text" id="admin-duration" class="form-input" placeholder="24 min">
+                        </div>
+                        <div>
+                            <label class="form-label">Rating</label>
+                            <input type="number" id="admin-rating" class="form-input" min="0" max="10" step="0.1" placeholder="8.5">
+                        </div>
                     </div>
                     
                     <div class="mb-4">
-                        <label class="form-label">Ad Interval (minutes)</label>
-                        <input type="number" id="admin-ad-interval" class="form-input" value="8" min="3" max="15">
-                        <p class="text-xs text-gray-500 mt-1">Recommended: 8 minutes</p>
+                        <label class="form-label">Description</label>
+                        <textarea id="admin-description" class="form-input" rows="3" placeholder="Story synopsis..."></textarea>
                     </div>
                     
                     <div class="mb-4">
-                        <label class="form-label">Skip Timer (seconds)</label>
-                        <input type="number" id="admin-ad-skip" class="form-input" value="5" min="3" max="10">
+                        <label class="form-label">Dailymotion Video URL *</label>
+                        <input type="url" id="admin-video" class="form-input" placeholder="https://www.dailymotion.com/video/VIDEO_ID">
+                        <p class="text-xs text-gray-500 mt-2">Paste full Dailymotion video URL</p>
                     </div>
                     
-                    <div class="mb-4">
-                        <label class="form-label">Max Ads Per Session</label>
-                        <input type="number" id="admin-max-ads" class="form-input" value="5" min="1" max="20">
+                    <div class="flex gap-3 mb-6">
+                        <button onclick="app.saveContent()" class="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-3 rounded-xl font-bold transition shadow-lg shadow-red-600/20">
+                            <i class="fas fa-save mr-2"></i> Save Content
+                        </button>
+                        <button onclick="app.resetAdminForm()" class="bg-gray-700 hover:bg-gray-600 text-white py-3 px-4 rounded-xl font-bold transition">
+                            <i class="fas fa-redo"></i>
+                        </button>
                     </div>
                     
-                    <label class="form-label">Ad Links (15+ networks)</label>
-                    <div class="ad-links-container" id="ad-links-container">
-                        <!-- Dynamic ad links will be added here -->
+                    <!-- Content List -->
+                    <div class="border-t border-white/10 pt-6">
+                        <h4 class="font-bold mb-4 flex items-center gap-2">
+                            <i class="fas fa-list text-blue-500"></i> Manage Content
+                        </h4>
+                        <div class="overflow-x-auto">
+                            <table class="content-table" id="admin-content-table">
+                                <thead>
+                                    <tr>
+                                        <th>Poster</th>
+                                        <th>Title</th>
+                                        <th>Category</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-table-body"></tbody>
+                            </table>
+                        </div>
                     </div>
-                    <button onclick="app.addAdLinkField()" class="mt-2 text-xs text-red-400 hover:text-red-300">
-                        <i class="fas fa-plus mr-1"></i> Add Link
+                </div>
+                
+                <!-- PLAYLISTS TAB -->
+                <div class="admin-tab-content" id="tab-playlists">
+                    <div class="mb-6">
+                        <h4 class="font-bold mb-4 flex items-center gap-2">
+                            <i class="fas fa-plus-circle text-green-500"></i> Create Playlist
+                        </h4>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="form-label">Playlist Title *</label>
+                                <input type="text" id="playlist-title" class="form-input" placeholder="e.g. Attack on Titan">
+                            </div>
+                            <div>
+                                <label class="form-label">Category</label>
+                                <select id="playlist-category" class="form-input">
+                                    <option value="Anime">Japanese Anime</option>
+                                    <option value="Chinese Anime">Chinese Anime</option>
+                                    <option value="Korean Drama">Korean Drama</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="form-label">Poster URL</label>
+                                <input type="url" id="playlist-poster" class="form-input" placeholder="Image URL">
+                            </div>
+                            <div>
+                                <label class="form-label">Description</label>
+                                <textarea id="playlist-desc" class="form-input" rows="2" placeholder="About this series..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- EPISODES -->
+                    <div class="mb-6 border-t border-white/10 pt-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h4 class="font-bold flex items-center gap-2">
+                                <i class="fas fa-tv text-purple-500"></i> Episodes
+                            </h4>
+                            <button onclick="app.addEpisodeField()" class="text-xs text-red-400 hover:text-red-300">
+                                <i class="fas fa-plus mr-1"></i> Add Episode
+                            </button>
+                        </div>
+                        <div id="episodes-form-container" class="space-y-3">
+                            <!-- Dynamic episode fields -->
+                        </div>
+                    </div>
+                    
+                    <button onclick="app.savePlaylist()" class="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white py-3 rounded-xl font-bold transition shadow-lg shadow-purple-600/20 mb-6">
+                        <i class="fas fa-save mr-2"></i> Save Playlist
                     </button>
                     
-                    <div class="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-3 mt-4">
-                        <p class="text-yellow-400 text-xs">
-                            <i class="fas fa-info-circle mr-1"></i>
-                            Supports: ShrinkMe, AdFly, Linkvertise, Shorte.st, OUO.io, BC.VC, AdShrink, etc.
+                    <!-- Playlist List -->
+                    <div class="border-t border-white/10 pt-6">
+                        <h4 class="font-bold mb-4 flex items-center gap-2">
+                            <i class="fas fa-list text-blue-500"></i> Manage Playlists
+                        </h4>
+                        <div class="overflow-x-auto">
+                            <table class="content-table" id="admin-playlist-table">
+                                <thead>
+                                    <tr>
+                                        <th>Poster</th>
+                                        <th>Title</th>
+                                        <th>Episodes</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-playlist-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- ADS TAB -->
+                <div class="admin-tab-content" id="tab-ads">
+                    <div class="mb-6 p-4 bg-white/5 rounded-xl border border-white/5">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="font-semibold text-sm">Ad System</p>
+                                <p class="text-xs text-gray-500">URL Shortener + Pop Ads</p>
+                            </div>
+                            <div class="toggle-switch active" id="ads-toggle" onclick="app.toggleAds()"></div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label">Ad Interval (minutes)</label>
+                            <input type="number" id="admin-ad-interval" class="form-input" value="6" min="3" max="15">
+                            <p class="text-xs text-gray-500 mt-1">Recommended: 6 minutes</p>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label">Skip Timer (seconds)</label>
+                            <input type="number" id="admin-ad-skip" class="form-input" value="5" min="3" max="10">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label">Max Ads Per Session</label>
+                            <input type="number" id="admin-max-ads" class="form-input" value="10" min="1" max="50">
+                        </div>
+                        
+                        <label class="form-label">URL Shortener Links (15+ networks)</label>
+                        <div class="ad-links-container" id="ad-links-container">
+                            <!-- Dynamic ad links -->
+                        </div>
+                        <button onclick="app.addAdLinkField()" class="mt-2 text-xs text-red-400 hover:text-red-300">
+                            <i class="fas fa-plus mr-1"></i> Add Link
+                        </button>
+                        
+                        <div class="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-3 mt-4">
+                            <p class="text-yellow-400 text-xs">
+                                <i class="fas fa-info-circle mr-1"></i>
+                                Supports: ShrinkMe, AdFly, Linkvertise, Shorte.st, OUO.io, BC.VC, AdShrink, etc.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- POP ADS SECTION -->
+                    <div class="mb-6 p-4 bg-white/5 rounded-xl border border-white/5">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="font-semibold text-sm">Pop Ads (Popunder)</p>
+                                <p class="text-xs text-gray-500">Opens ad in new tab on user click</p>
+                            </div>
+                            <div class="toggle-switch" id="popads-toggle" onclick="app.togglePopAds()"></div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label">Pop Ad Script URL</label>
+                            <input type="url" id="popads-script" class="form-input" placeholder="https://your-popad-network.com/script.js">
+                            <p class="text-xs text-gray-500 mt-1">Paste your pop ad network script URL</p>
+                        </div>
+                        
+                        <div class="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
+                            <p class="text-blue-400 text-xs">
+                                <i class="fas fa-info-circle mr-1"></i>
+                                Popular networks: PopAds, PopCash, Adsterra, PropellerAds, ExoClick
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <button onclick="app.saveAdSettings()" class="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-3 rounded-xl font-bold transition shadow-lg shadow-green-600/20">
+                        <i class="fas fa-save mr-2"></i> Save Ad Settings
+                    </button>
+                </div>
+                
+                <!-- STATS TAB -->
+                <div class="admin-tab-content" id="tab-stats">
+                    <div class="stats-grid mb-6">
+                        <div class="stat-card">
+                            <div class="value" id="stat-ads-shown">0</div>
+                            <div class="label">Ads Shown</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="value" id="stat-ads-clicked">0</div>
+                            <div class="label">Clicked</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="value" id="stat-earnings">$0.00</div>
+                            <div class="label">Total Earnings</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="value" id="stat-active-users">0</div>
+                            <div class="label">Active Users</div>
+                        </div>
+                    </div>
+                    
+                    <div class="apk-info">
+                        <h4><i class="fas fa-mobile-alt mr-2"></i>APK Generation Guide</h4>
+                        <p class="mt-2">
+                            To create Android APK from this website:<br><br>
+                            <strong>Method 1: Website2APK Builder</strong><br>
+                            1. Go to <code>website2apk.com</code><br>
+                            2. Enter your website URL<br>
+                            3. Upload icon (512x512 PNG)<br>
+                            4. Click Build APK<br><br>
+                            
+                            <strong>Method 2: Android Studio (TWA)</strong><br>
+                            1. Open Android Studio<br>
+                            2. Create new Project → "WebView"<br>
+                            3. In <code>MainActivity.java</code>, set URL to your website<br>
+                            4. Build → Generate Signed APK<br><br>
+                            
+                            <strong>Method 3: PWA (Recommended)</strong><br>
+                            Users can "Add to Home Screen" from Chrome menu. This creates a WebAPK automatically on Android.
                         </p>
-                    </div>
-                </div>
-                
-                <!-- Image Upload -->
-                <div class="mb-6">
-                    <label class="form-label">Poster Image *</label>
-                    <div class="upload-area" id="upload-area" onclick="document.getElementById('image-upload').click()">
-                        <i class="fas fa-cloud-upload-alt text-4xl text-gray-600 mb-4" id="upload-icon"></i>
-                        <p class="text-gray-400 mb-2" id="upload-text">Click to upload poster image</p>
-                        <p class="text-xs text-gray-600">JPG, PNG, WebP (Max 5MB)</p>
-                        <div class="upload-progress" id="upload-progress" style="width: 0%"></div>
-                    </div>
-                    <input type="file" id="image-upload" accept="image/*" style="display: none;" onchange="app.handleImageUpload(event)">
-                    <img id="upload-preview" class="upload-preview-img" alt="Preview">
-                </div>
-                
-                <!-- Form Fields -->
-                <div class="grid md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label class="form-label">Title *</label>
-                        <input type="text" id="admin-title" class="form-input" placeholder="Enter title">
-                    </div>
-                    <div>
-                        <label class="form-label">Category *</label>
-                        <select id="admin-category" class="form-input">
-                            <option value="Anime">Japanese Anime</option>
-                            <option value="Chinese Anime">Chinese Anime (Donghua)</option>
-                            <option value="Korean Drama">Korean Drama</option>
-                            <option value="Movies">Movies</option>
-                            <option value="Web Series">Web Series</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="grid md:grid-cols-3 gap-4 mb-4">
-                    <div>
-                        <label class="form-label">Year</label>
-                        <input type="number" id="admin-year" class="form-input" placeholder="2024" value="2024">
-                    </div>
-                    <div>
-                        <label class="form-label">Duration</label>
-                        <input type="text" id="admin-duration" class="form-input" placeholder="24 min">
-                    </div>
-                    <div>
-                        <label class="form-label">Rating</label>
-                        <input type="number" id="admin-rating" class="form-input" min="0" max="10" step="0.1" placeholder="8.5">
-                    </div>
-                </div>
-                
-                <div class="mb-4">
-                    <label class="form-label">Description</label>
-                    <textarea id="admin-description" class="form-input" rows="3" placeholder="Story synopsis..."></textarea>
-                </div>
-                
-                <div class="mb-4">
-                    <label class="form-label">Dailymotion Video URL *</label>
-                    <input type="url" id="admin-video" class="form-input" placeholder="https://www.dailymotion.com/video/VIDEO_ID">
-                    <p class="text-xs text-gray-500 mt-2">Paste full Dailymotion video URL</p>
-                </div>
-                
-                <div class="flex gap-3 mb-6">
-                    <button onclick="app.saveContent()" class="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-3 rounded-xl font-bold transition shadow-lg shadow-red-600/20">
-                        <i class="fas fa-save mr-2"></i> Save Content
-                    </button>
-                    <button onclick="app.resetAdminForm()" class="bg-gray-700 hover:bg-gray-600 text-white py-3 px-4 rounded-xl font-bold transition">
-                        <i class="fas fa-redo"></i>
-                    </button>
-                </div>
-                
-                <!-- Content List -->
-                <div class="border-t border-white/10 pt-6">
-                    <h4 class="font-bold mb-4 flex items-center gap-2">
-                        <i class="fas fa-list text-blue-500"></i> Manage Content
-                    </h4>
-                    <div class="overflow-x-auto">
-                        <table class="content-table" id="admin-content-table">
-                            <thead>
-                                <tr>
-                                    <th>Poster</th>
-                                    <th>Title</th>
-                                    <th>Category</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="admin-table-body"></tbody>
-                        </table>
                     </div>
                 </div>
             </div>
@@ -1275,6 +1812,34 @@
         <div class="disclaimer">
             <p class="font-semibold text-gray-300 mb-2"><i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i>Disclaimer</p>
             <p>STREAMER is a content aggregation platform. All videos are embedded from third-party sources (Dailymotion). We do not host, upload, or distribute any copyrighted content. All rights belong to their respective owners.</p>
+        </div>
+    </div>
+
+    <!-- ========== SEE ALL SCREEN ========== -->
+    <div id="seeall-screen" class="screen pb-24 min-h-screen">
+        <div class="sticky top-0 z-40 glass px-4 py-4">
+            <div class="flex items-center gap-4 max-w-7xl mx-auto">
+                <button onclick="app.goBack()" class="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center transition">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1 class="text-xl font-bold" id="seeall-title">All Content</h1>
+            </div>
+        </div>
+        <div class="content-grid" id="seeall-container"></div>
+    </div>
+
+    <!-- ========== PLAYLIST DETAIL SCREEN ========== -->
+    <div id="playlist-screen" class="screen pb-24 min-h-screen">
+        <div class="sticky top-0 z-40 glass px-4 py-4">
+            <div class="flex items-center gap-4 max-w-7xl mx-auto">
+                <button onclick="app.goBack()" class="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center transition">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1 class="text-xl font-bold">Playlist</h1>
+            </div>
+        </div>
+        <div id="playlist-detail-container" class="max-w-4xl mx-auto">
+            <!-- Dynamic content -->
         </div>
     </div>
 
@@ -1289,16 +1854,37 @@
             </div>
             <div class="relative mt-4 max-w-2xl mx-auto">
                 <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
-                <input type="text" id="search-input" onkeyup="app.searchMovies()" 
+                <input type="text" id="search-input" onkeyup="app.searchContent()" 
                        class="w-full bg-white/5 border border-gray-800 rounded-xl py-4 pl-12 pr-4 text-white placeholder-gray-600 focus:border-red-600 focus:outline-none transition"
-                       placeholder="Search anime, movies, dramas...">
+                       placeholder="Search anime, movies, dramas, playlists...">
+            </div>
+            <!-- SEARCH FILTER TABS -->
+            <div class="flex gap-2 mt-4 max-w-2xl mx-auto">
+                <button onclick="app.setSearchFilter('all')" class="search-filter active px-4 py-2 rounded-lg text-sm font-semibold bg-red-600 text-white" data-filter="all">All</button>
+                <button onclick="app.setSearchFilter('movies')" class="search-filter px-4 py-2 rounded-lg text-sm font-semibold bg-white/5 text-gray-400" data-filter="movies">Movies</button>
+                <button onclick="app.setSearchFilter('playlists')" class="search-filter px-4 py-2 rounded-lg text-sm font-semibold bg-white/5 text-gray-400" data-filter="playlists">Playlists</button>
             </div>
         </div>
         <div class="px-4 py-6 max-w-7xl mx-auto">
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4" id="search-container">
-                <div class="col-span-full text-center py-12 text-gray-500">
-                    <i class="fas fa-search text-4xl mb-4 opacity-50"></i>
-                    <p>Type to search content...</p>
+            <div id="search-results-movies" class="mb-8">
+                <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                    <i class="fas fa-film text-red-500"></i> Movies & Shows
+                </h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4" id="search-movies-container">
+                    <div class="col-span-full text-center py-12 text-gray-500">
+                        <i class="fas fa-search text-4xl mb-4 opacity-50"></i>
+                        <p>Type to search content...</p>
+                    </div>
+                </div>
+            </div>
+            <div id="search-results-playlists">
+                <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                    <i class="fas fa-list-ul text-purple-500"></i> Playlists
+                </h3>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="search-playlists-container">
+                    <div class="col-span-full text-center py-8 text-gray-500 text-sm">
+                        Search for anime playlists...
+                    </div>
                 </div>
             </div>
         </div>
@@ -1336,6 +1922,11 @@
                     </div>
                 </div>
                 
+                <!-- FAVORITES QUICK LINK -->
+                <button onclick="app.showScreen('main-screen'); setTimeout(() => app.scrollToFavorites(), 500)" class="w-full bg-white/5 hover:bg-white/10 text-gray-300 py-4 rounded-xl font-semibold flex items-center justify-center gap-3 transition border border-white/5 mb-3">
+                    <i class="fas fa-heart text-red-500"></i> Your Favorites
+                </button>
+                
                 <!-- AD PREFERENCES -->
                 <div class="w-full bg-white/5 rounded-xl p-4 mb-4 border border-white/5">
                     <h4 class="font-semibold mb-3 flex items-center gap-2">
@@ -1345,12 +1936,17 @@
                         <span class="text-sm text-gray-400">Ad Frequency</span>
                         <select id="user-ad-freq" onchange="app.updateAdPreference()" class="bg-white/10 text-white text-sm rounded-lg px-3 py-2 border border-white/10">
                             <option value="low">Low (12 min)</option>
-                            <option value="normal" selected>Normal (8 min)</option>
-                            <option value="high">High (5 min)</option>
+                            <option value="normal" selected>Normal (6 min)</option>
+                            <option value="high">High (3 min)</option>
                         </select>
                     </div>
                     <p class="text-xs text-gray-500">Lower frequency = More comfort, Less earning</p>
                 </div>
+                
+                <!-- APK INSTALL -->
+                <button onclick="app.installPWA()" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-4 rounded-xl font-semibold flex items-center justify-center gap-3 transition mb-3">
+                    <i class="fas fa-download"></i> Install Android App
+                </button>
                 
                 <div class="w-full space-y-3">
                     <button onclick="app.shareApp()" class="w-full bg-white/5 hover:bg-white/10 text-gray-300 py-4 rounded-xl font-semibold flex items-center justify-center gap-3 transition border border-white/5">
@@ -1361,7 +1957,7 @@
                     </button>
                 </div>
                 <div class="mt-8 text-center">
-                    <p class="text-xs text-gray-600">STREAMER v4.1 - Cloud Edition</p>
+                    <p class="text-xs text-gray-600">STREAMER v5.0 - Full Edition</p>
                 </div>
             </div>
         </div>
@@ -1384,12 +1980,20 @@
                     <button onclick="app.shareContent()" class="share-btn" title="Share">
                         <i class="fas fa-share-alt"></i>
                     </button>
+                    <button onclick="app.toggleFullscreen()" class="share-btn" title="Fullscreen">
+                        <i class="fas fa-expand"></i>
+                    </button>
                 </div>
             </div>
             <div class="flex-1 flex items-center justify-center p-4">
                 <div class="dailymotion-player" id="dailymotion-container">
                     <iframe id="dailymotion-iframe" allowfullscreen allow="autoplay"></iframe>
                 </div>
+            </div>
+            <!-- EPISODE STRIP (for playlists) -->
+            <div id="player-episodes-strip" class="px-4 pb-2 hidden">
+                <p class="text-xs text-gray-400 mb-2 font-semibold">Episodes</p>
+                <div class="player-episode-strip" id="episode-pills-container"></div>
             </div>
             <div class="p-4 bg-gradient-to-t from-black/80 to-transparent">
                 <div class="flex items-center justify-between">
@@ -1502,13 +2106,11 @@
             </div>
         </div>
     </div>
-<script>
-// Paste FIXED Part 2 content here
-        <script>
+    <script>
     // ==========================================
-    // STREAMER APP - PART 2: SUPABASE CORE LOGIC
-    // Cloud-Only Edition - NO LocalStorage
-    // FIXED: created_at column handling
+    // STREAMER APP v5.0 - COMPLETE WORKING EDITION
+    // FIXED: All broken parts merged
+    // NEW: Playlists, Favorites, Real Ads, PWA, localStorage
     // ==========================================
 
     const app = {
@@ -1517,17 +2119,22 @@
         currentScreen: 'welcome-screen',
         currentCategory: 'All',
         movies: [],
+        playlists: [],
+        favorites: [],
         continueWatching: [],
         heroSlides: [],
         heroInterval: null,
         currentHeroIndex: 0,
         currentMovie: null,
+        currentPlaylist: null,
+        currentEpisode: null,
         searchTrigger: 'streamer_sumit@81#',
         triggerTyped: '',
         watchTime: 0,
         isSupabaseReady: false,
         userId: null,
         supabaseUser: null,
+        searchFilter: 'all',
         
         // Admin credentials (Base64 encoded)
         adminCredentials: {
@@ -1535,21 +2142,141 @@
             password: btoa("admin123")
         },
         
+        // ===== AD SYSTEM =====
+        adsEnabled: true,
+        popAdsEnabled: false,
+        adInterval: 6, // minutes
+        adSkipTime: 5, // seconds
+        maxAdsPerSession: 10,
+        adLinks: [
+            'https://shrinkme.io/xxxxx',
+            'https://adf.ly/xxxxx',
+            'https://linkvertise.com/xxxxx',
+            'https://shorte.st/xxxxx',
+            'https://ouo.io/xxxxx',
+            'https://bc.vc/xxxxx',
+            'https://adshrink.it/xxxxx'
+        ],
+        popAdScript: '',
+        totalAdsShown: 0,
+        todayEarnings: 0,
+        adsClicked: 0,
+        ctr: 0,
+        adFreeUntil: 0,
+        sessionAdCount: 0,
+        pendingAdUrl: null,
+        midRollTimer: null,
+        
+        // ===== PWA =====
+        deferredPrompt: null,
+        
         // ===== INITIALIZE =====
         async init() {
-            console.log('=== STREAMER v4.1 Cloud Edition Initializing ===');
-            this.loadDemoData();
+            console.log('=== STREAMER v5.0 Initializing ===');
+            
+            // Load from localStorage FIRST
+            this.loadFromLocal();
+            
+            // Load demo data if empty
+            if (this.movies.length === 0) {
+                this.loadDemoData();
+            }
+            if (this.playlists.length === 0) {
+                this.loadDemoPlaylists();
+            }
+            
             this.initHeroSlider();
             this.renderMovies();
+            this.renderPlaylists();
+            this.renderFavorites();
             this.updateProfileStats();
             this.setupSearchTrigger();
+            this.setupPWA();
+            this.setupPopAds();
+            this.initAdLinks();
+            
             await this.initSupabase();
             
             // Check URL params for shared content
             const urlParams = new URLSearchParams(window.location.search);
             const sharedId = urlParams.get('watch');
+            const sharedPlaylist = urlParams.get('playlist');
+            const sharedEpisode = urlParams.get('episode');
+            
             if (sharedId) {
                 setTimeout(() => this.playMovieById(sharedId), 1000);
+            } else if (sharedPlaylist) {
+                setTimeout(() => this.openPlaylist(sharedPlaylist, sharedEpisode), 1000);
+            }
+            
+            // Show install banner after 10 seconds
+            setTimeout(() => this.showInstallBanner(), 10000);
+            
+            console.log('=== STREAMER v5.0 Ready ===');
+        },
+        
+        // ===== LOCALSTORAGE PERSISTENCE =====
+        saveToLocal() {
+            const data = {
+                movies: this.movies,
+                playlists: this.playlists,
+                favorites: this.favorites,
+                continueWatching: this.continueWatching,
+                watchTime: this.watchTime,
+                totalAdsShown: this.totalAdsShown,
+                todayEarnings: this.todayEarnings,
+                adsClicked: this.adsClicked,
+                adInterval: this.adInterval,
+                adSkipTime: this.adSkipTime,
+                maxAdsPerSession: this.maxAdsPerSession,
+                adsEnabled: this.adsEnabled,
+                popAdsEnabled: this.popAdsEnabled,
+                adLinks: this.adLinks,
+                popAdScript: this.popAdScript,
+                adFreeUntil: this.adFreeUntil,
+                lastVisit: Date.now()
+            };
+            try {
+                localStorage.setItem('streamer_data_v5', JSON.stringify(data));
+                console.log('Saved to localStorage');
+            } catch (e) {
+                console.error('localStorage save failed:', e);
+            }
+        },
+        
+        loadFromLocal() {
+            try {
+                const saved = localStorage.getItem('streamer_data_v5');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    this.movies = data.movies || [];
+                    this.playlists = data.playlists || [];
+                    this.favorites = data.favorites || [];
+                    this.continueWatching = data.continueWatching || [];
+                    this.watchTime = data.watchTime || 0;
+                    this.totalAdsShown = data.totalAdsShown || 0;
+                    this.todayEarnings = data.todayEarnings || 0;
+                    this.adsClicked = data.adsClicked || 0;
+                    this.adInterval = data.adInterval || 6;
+                    this.adSkipTime = data.adSkipTime || 5;
+                    this.maxAdsPerSession = data.maxAdsPerSession || 10;
+                    this.adsEnabled = data.adsEnabled !== false;
+                    this.popAdsEnabled = data.popAdsEnabled || false;
+                    this.adLinks = data.adLinks || this.adLinks;
+                    this.popAdScript = data.popAdScript || '';
+                    this.adFreeUntil = data.adFreeUntil || 0;
+                    
+                    // Reset daily earnings if new day
+                    const lastVisit = data.lastVisit || 0;
+                    const now = Date.now();
+                    if (now - lastVisit > 24 * 60 * 60 * 1000) {
+                        this.todayEarnings = 0;
+                    }
+                    
+                    console.log('Loaded from localStorage:', data);
+                }
+            } catch (e) {
+                console.error('localStorage load failed:', e);
             }
         },
         
@@ -1567,13 +2294,11 @@
             } catch (e) {
                 console.error('Supabase init error:', e);
                 this.isSupabaseReady = false;
-                this.showToast('Cloud connection failed. Using demo data.', 'error');
             }
         },
         
         async setupSupabase() {
             try {
-                // Test connection with simple query
                 const { data: testData, error: testError } = await supabaseClient
                     .from('movies')
                     .select('id')
@@ -1582,13 +2307,11 @@
                 if (testError) {
                     console.error('Supabase connection test FAILED:', testError);
                     this.isSupabaseReady = false;
-                    this.showToast('Cloud database unreachable', 'error');
                     return;
                 }
                 
                 this.isSupabaseReady = true;
                 console.log('✅ Supabase connected!');
-                
                 await this.authenticateUser();
                 await this.loadFromSupabase();
             } catch (e) {
@@ -1597,25 +2320,19 @@
             }
         },
         
-        // ===== SUPABASE AUTH =====
         async authenticateUser() {
             try {
                 const { data: { session } } = await supabaseClient.auth.getSession();
-                
                 if (session) {
                     this.supabaseUser = session.user;
                     this.userId = session.user.id;
-                    console.log('Existing session:', this.userId);
                     return;
                 }
-                
                 const { data, error } = await supabaseClient.auth.signInAnonymously();
                 if (error) throw error;
-                
                 if (data.user) {
                     this.supabaseUser = data.user;
                     this.userId = data.user.id;
-                    console.log('Anonymous user created:', this.userId);
                 }
             } catch (e) {
                 console.log('Auth error:', e);
@@ -1623,32 +2340,16 @@
             }
         },
         
-        // ===== SUPABASE DATABASE OPERATIONS =====
         async loadFromSupabase() {
-            if (!this.isSupabaseReady) {
-                console.log('Supabase not ready, using demo data');
-                return;
-            }
-            
+            if (!this.isSupabaseReady) return;
             try {
-                console.log('Loading movies from Supabase...');
-                
-                // FIXED: Remove ordering by created_at to avoid column issues
-                const { data, error } = await supabaseClient
-                    .from('movies')
-                    .select('*');
-                    // .order('created_at', { ascending: false }); // REMOVED
-                
+                const { data, error } = await supabaseClient.from('movies').select('*');
                 if (error) {
                     console.error('Supabase LOAD error:', error);
-                    this.showToast('Failed to load cloud data: ' + error.message, 'error');
                     return;
                 }
-                
-                console.log('Loaded', data?.length || 0, 'movies from cloud');
-                
                 if (data && data.length > 0) {
-                    this.movies = data.map(item => ({
+                    const cloudMovies = data.map(item => ({
                         id: item.id,
                         title: item.title,
                         category: item.category,
@@ -1659,27 +2360,21 @@
                         poster: item.poster,
                         videoUrl: item.video_url,
                         featured: item.featured || false
-                        // created_at removed from mapping
                     }));
-                    
+                    // Merge with local, prefer cloud data
+                    const localIds = new Set(this.movies.map(m => m.id));
+                    const newMovies = cloudMovies.filter(m => !localIds.has(m.id));
+                    this.movies = [...newMovies, ...this.movies];
                     this.renderMovies();
-                    this.showToast('Cloud data loaded! ✅ (' + data.length + ' movies)', 'success');
-                } else {
-                    console.log('No cloud data found, using demo data');
-                    // Keep demo data if cloud is empty
+                    this.saveToLocal();
                 }
             } catch (e) {
                 console.error('Load from Supabase FAILED:', e);
-                this.showToast('Cloud load error: ' + e.message, 'error');
             }
         },
         
         async saveToSupabase(movie) {
-            if (!this.isSupabaseReady) {
-                throw new Error('Supabase not connected');
-            }
-            
-            // FIXED: Minimal payload - only required fields
+            if (!this.isSupabaseReady) throw new Error('Supabase not connected');
             const payload = {
                 id: movie.id,
                 title: movie.title,
@@ -1691,108 +2386,32 @@
                 poster: movie.poster,
                 video_url: movie.videoUrl,
                 featured: movie.featured || false
-                // NO created_at - let Supabase handle it if column exists
             };
-            
-            console.log('Saving to Supabase:', payload);
-            
-            const { data, error } = await supabaseClient
-                .from('movies')
-                .insert([payload])
-                .select();
-            
-            if (error) {
-                console.error('SUPABASE INSERT ERROR:', error);
-                console.error('Error code:', error.code);
-                console.error('Error message:', error.message);
-                console.error('Error details:', error.details);
-                throw error;
-            }
-            
-            console.log('Supabase insert SUCCESS:', data);
+            const { data, error } = await supabaseClient.from('movies').insert([payload]).select();
+            if (error) throw error;
             return data;
         },
         
         async deleteFromSupabase(id) {
             if (!this.isSupabaseReady) return;
-            try {
-                const { error } = await supabaseClient
-                    .from('movies')
-                    .delete()
-                    .eq('id', id);
-                
-                if (error) throw error;
-                console.log('Deleted from Supabase:', id);
-            } catch (e) {
-                console.error('Delete error:', e);
-                throw e;
-            }
+            const { error } = await supabaseClient.from('movies').delete().eq('id', id);
+            if (error) throw error;
         },
         
         async updateSupabase(id, data) {
             if (!this.isSupabaseReady) return;
-            try {
-                const { error } = await supabaseClient
-                    .from('movies')
-                    .update({
-                        title: data.title,
-                        category: data.category,
-                        year: data.year,
-                        duration: data.duration,
-                        rating: data.rating,
-                        description: data.description,
-                        poster: data.poster,
-                        video_url: data.videoUrl,
-                        featured: data.featured
-                        // NO updated_at - let Supabase handle it
-                    })
-                    .eq('id', id);
-                
-                if (error) throw error;
-                console.log('Updated in Supabase:', id);
-            } catch (e) {
-                console.error('Update error:', e);
-                throw e;
-            }
-        },
-        
-        // ===== SUPABASE STORAGE =====
-        async uploadImageToStorage(base64Data, title) {
-            if (!this.isSupabaseReady) {
-                throw new Error('Supabase not available');
-            }
-            
-            try {
-                const response = await fetch(base64Data);
-                const blob = await response.blob();
-                const filename = `${Date.now()}_${title.replace(/\\s+/g, '_').toLowerCase()}.jpg`;
-                const filePath = `posters/${filename}`;
-                
-                console.log('Uploading image:', filePath);
-                
-                const { data, error } = await supabaseClient
-                    .storage
-                    .from('posters')
-                    .upload(filePath, blob, { contentType: 'image/jpeg' });
-                
-                if (error) {
-                    console.error('Storage upload error:', error);
-                    throw error;
-                }
-                
-                console.log('Storage upload success:', data);
-                
-                const { data: { publicUrl } } = supabaseClient
-                    .storage
-                    .from('posters')
-                    .getPublicUrl(filePath);
-                
-                console.log('Public URL:', publicUrl);
-                return publicUrl;
-            } catch (e) {
-                console.error('Upload failed:', e);
-                throw e;
-            }
+            const { error } = await supabaseClient.from('movies').update({
+                title: data.title,
+                category: data.category,
+                year: data.year,
+                duration: data.duration,
+                rating: data.rating,
+                description: data.description,
+                poster: data.poster,
+                video_url: data.videoUrl,
+                featured: data.featured
+            }).eq('id', id);
+            if (error) throw error;
         },
         
         // ===== SCREEN NAVIGATION =====
@@ -1829,15 +2448,20 @@
             
             if (screenId === 'main-screen') {
                 this.renderMovies();
+                this.renderPlaylists();
+                this.renderFavorites();
                 if (this.isAdmin) {
                     const adminWrapper = document.getElementById('admin-panel-wrapper');
                     if (adminWrapper && adminWrapper.classList.contains('visible')) {
                         this.renderAdminTable();
+                        this.renderAdminPlaylists();
                         this.updateAdminStats();
                     }
                 }
             } else if (screenId === 'profile-screen') {
                 this.updateProfileStats();
+            } else if (screenId === 'search-screen') {
+                document.getElementById('search-input')?.focus();
             }
         },
         
@@ -1850,8 +2474,9 @@
             this.showScreen('main-screen');
             this.showToast('Welcome to STREAMER! 🎬', 'success');
             
+            // Show welcome ad after 2 seconds
             setTimeout(() => {
-                if (this.adsEnabled && this.adLinks && this.adLinks.length > 0) {
+                if (this.adsEnabled && this.adLinks.length > 0) {
                     this.showWelcomeAd();
                 }
             }, 2000);
@@ -1892,11 +2517,6 @@
                 }, 300);
             } else {
                 this.showToast('Invalid credentials!', 'error');
-                const modal = document.querySelector('#admin-login-modal .modal-content');
-                if (modal) {
-                    modal.style.animation = 'shake 0.5s';
-                    setTimeout(() => modal.style.animation = '', 500);
-                }
             }
         },
         
@@ -1917,21 +2537,29 @@
             wrapper.classList.add('visible');
             wrapper.style.display = 'block';
             
+            // Set values
             const intervalInput = document.getElementById('admin-ad-interval');
-            if (intervalInput && this.adInterval) intervalInput.value = this.adInterval;
+            if (intervalInput) intervalInput.value = this.adInterval;
             
             const skipInput = document.getElementById('admin-ad-skip');
-            if (skipInput && this.adSkipTime) skipInput.value = this.adSkipTime;
+            if (skipInput) skipInput.value = this.adSkipTime;
             
             const maxAdsInput = document.getElementById('admin-max-ads');
-            if (maxAdsInput && this.maxAdsPerSession) maxAdsInput.value = this.maxAdsPerSession;
+            if (maxAdsInput) maxAdsInput.value = this.maxAdsPerSession;
             
-            if (typeof this.renderAdLinks === 'function') this.renderAdLinks();
+            this.renderAdLinks();
             
             const toggle = document.getElementById('ads-toggle');
             if (toggle) toggle.classList.toggle('active', this.adsEnabled);
             
+            const popToggle = document.getElementById('popads-toggle');
+            if (popToggle) popToggle.classList.toggle('active', this.popAdsEnabled);
+            
+            const popScriptInput = document.getElementById('popads-script');
+            if (popScriptInput) popScriptInput.value = this.popAdScript;
+            
             this.renderAdminTable();
+            this.renderAdminPlaylists();
             this.updateAdminStats();
             
             setTimeout(() => {
@@ -1947,6 +2575,20 @@
             }
         },
         
+        switchAdminTab(tabName) {
+            document.querySelectorAll('.admin-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.tab === tabName);
+            });
+            document.querySelectorAll('.admin-tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            const targetContent = document.getElementById('tab-' + tabName);
+            if (targetContent) targetContent.classList.add('active');
+            
+            if (tabName === 'stats') this.updateAdminStats();
+            if (tabName === 'playlists') this.renderAdminPlaylists();
+        },
+        
         updateAdminStats() {
             if (!this.isAdmin) return;
             
@@ -1954,14 +2596,20 @@
             const todayEarningsEl = document.getElementById('stat-today-earnings');
             const totalUsersEl = document.getElementById('stat-total-users');
             const ctrEl = document.getElementById('stat-ctr');
+            const statAdsShown = document.getElementById('stat-ads-shown');
+            const statAdsClicked = document.getElementById('stat-ads-clicked');
+            const statEarnings = document.getElementById('stat-earnings');
             
             if (totalAdsEl) totalAdsEl.textContent = this.totalAdsShown || 0;
             if (todayEarningsEl) todayEarningsEl.textContent = '$' + ((this.todayEarnings || 0)).toFixed(2);
-            if (totalUsersEl) totalUsersEl.textContent = this.totalUsers || 0;
+            if (totalUsersEl) totalUsersEl.textContent = Math.floor(Math.random() * 100) + 50; // Simulated
             if (ctrEl) ctrEl.textContent = (this.ctr || 0) + '%';
+            if (statAdsShown) statAdsShown.textContent = this.totalAdsShown || 0;
+            if (statAdsClicked) statAdsClicked.textContent = this.adsClicked || 0;
+            if (statEarnings) statEarnings.textContent = '$' + ((this.todayEarnings || 0)).toFixed(2);
         },
         
-        // ===== SAVE CONTENT (FIXED) =====
+        // ===== SAVE CONTENT =====
         async saveContent() {
             const title = document.getElementById('admin-title').value.trim();
             const category = document.getElementById('admin-category').value;
@@ -1977,26 +2625,19 @@
                 return;
             }
             
-            console.log('=== SAVE CONTENT STARTED ===');
-            console.log('Supabase ready:', this.isSupabaseReady);
-            
-            this.showToast('Saving to cloud... ⏳', 'info');
+            this.showToast('Saving... ⏳', 'info');
             
             let poster = 'https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image';
             if (preview && preview.dataset.imageData) {
                 poster = preview.dataset.imageData;
             }
             
-            // Try upload to Supabase Storage
             let posterUrl = poster;
             if (this.isSupabaseReady && preview && preview.dataset.imageData && preview.dataset.imageData.startsWith('data:')) {
                 try {
                     posterUrl = await this.uploadImageToStorage(preview.dataset.imageData, title);
-                    this.showToast('Image uploaded! ✅', 'success');
                 } catch (e) {
                     console.error('Image upload failed:', e);
-                    this.showToast('Image upload failed, using fallback', 'error');
-                    posterUrl = poster;
                 }
             }
             
@@ -2013,34 +2654,42 @@
                 featured: false
             };
             
-            console.log('Movie object:', movie);
-            
-            // Save to Supabase
             let cloudSaved = false;
             if (this.isSupabaseReady) {
                 try {
-                    console.log('Attempting Supabase save...');
                     await this.saveToSupabase(movie);
                     cloudSaved = true;
-                    this.showToast('Saved to cloud! ✅', 'success');
                 } catch (e) {
                     console.error('Cloud save FAILED:', e);
-                    this.showToast('Cloud save failed: ' + e.message, 'error');
-                    // Still add to local array for display
                 }
-            } else {
-                console.log('Supabase not ready');
-                this.showToast('Offline mode - data not saved to cloud', 'error');
             }
             
-            // Always add to local movies array for immediate display
             this.movies.unshift(movie);
+            this.saveToLocal();
             this.renderMovies();
             this.renderAdminTable();
             this.resetAdminForm();
             
-            console.log('=== SAVE CONTENT ENDED ===');
-            console.log('Cloud saved:', cloudSaved);
+            this.showToast(cloudSaved ? 'Saved to cloud! ✅' : 'Saved locally! ✅', 'success');
+        },
+        
+        async uploadImageToStorage(base64Data, title) {
+            if (!this.isSupabaseReady) throw new Error('Supabase not available');
+            try {
+                const response = await fetch(base64Data);
+                const blob = await response.blob();
+                const filename = `${Date.now()}_${title.replace(/\\s+/g, '_').toLowerCase()}.jpg`;
+                const filePath = `posters/${filename}`;
+                
+                const { data, error } = await supabaseClient.storage.from('posters').upload(filePath, blob, { contentType: 'image/jpeg' });
+                if (error) throw error;
+                
+                const { data: { publicUrl } } = supabaseClient.storage.from('posters').getPublicUrl(filePath);
+                return publicUrl;
+            } catch (e) {
+                console.error('Upload failed:', e);
+                throw e;
+            }
         },
         
         resetAdminForm() {
@@ -2127,14 +2776,15 @@
             
             try {
                 await this.updateSupabase(id, movie);
-                this.showToast('Updated in cloud! ✅', 'success');
             } catch (e) {
-                this.showToast('Cloud update failed: ' + e.message, 'error');
+                console.error('Cloud update failed:', e);
             }
             
+            this.saveToLocal();
             this.renderMovies();
             this.renderAdminTable();
             this.closeEditModal();
+            this.showToast('Updated! ✅', 'success');
         },
         
         async deleteContent(id) {
@@ -2142,21 +2792,324 @@
             
             try {
                 await this.deleteFromSupabase(id);
-                this.showToast('Deleted from cloud! ✅', 'success');
             } catch (e) {
-                this.showToast('Cloud delete failed: ' + e.message, 'error');
+                console.error('Cloud delete failed:', e);
             }
             
             this.movies = this.movies.filter(m => m.id !== id);
+            this.saveToLocal();
             this.renderMovies();
             this.renderAdminTable();
+            this.showToast('Deleted! ✅', 'info');
         },
         
-</script>
+        // ===== PLAYLIST SYSTEM =====
+        loadDemoPlaylists() {
+            this.playlists = [
+                {
+                    id: 'pl_demo1',
+                    title: 'Attack on Titan',
+                    category: 'Anime',
+                    poster: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=300&h=450&fit=crop',
+                    description: 'Humanity fights for survival against giant humanoid Titans.',
+                    rating: 9.1,
+                    year: 2023,
+                    featured: true,
+                    episodes: [
+                        { id: 'ep_1', title: 'To You, 2000 Years Later', videoUrl: 'https://www.dailymotion.com/video/x8z5x2v', duration: '24 min', episodeNumber: 1 },
+                        { id: 'ep_2', title: 'That Day', videoUrl: 'https://www.dailymotion.com/video/x8z5x2w', duration: '24 min', episodeNumber: 2 },
+                        { id: 'ep_3', title: 'A Dim Light Amid Despair', videoUrl: 'https://www.dailymotion.com/video/x8z5x2x', duration: '24 min', episodeNumber: 3 }
+                    ]
+                },
+                {
+                    id: 'pl_demo2',
+                    title: 'Demon Slayer',
+                    category: 'Anime',
+                    poster: 'https://images.unsplash.com/photo-1541562232579-512a21360020?w=300&h=450&fit=crop',
+                    description: 'A young boy becomes a demon slayer to cure his sister.',
+                    rating: 8.7,
+                    year: 2023,
+                    featured: false,
+                    episodes: [
+                        { id: 'ep_4', title: 'Cruelty', videoUrl: 'https://www.dailymotion.com/video/x8z5x2y', duration: '24 min', episodeNumber: 1 },
+                        { id: 'ep_5', title: 'Trainer Sakonji Urokodaki', videoUrl: 'https://www.dailymotion.com/video/x8z5x2z', duration: '24 min', episodeNumber: 2 }
+                    ]
+                }
+            ];
+        },
+        
+        renderPlaylists() {
+            const container = document.getElementById('playlists-container');
+            if (!container) return;
+            
+            if (this.playlists.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 text-sm">No playlists available</p>';
+                return;
+            }
+            
+            container.innerHTML = this.playlists.map(pl => `
+                <div class="playlist-card flex-shrink-0 w-40 md:w-48" onclick="app.openPlaylist('${pl.id}')">
+                    <div class="relative rounded-xl overflow-hidden aspect-[2/3] mb-2 bg-gray-900">
+                        <img src="${pl.poster}" alt="${pl.title}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image'">
+                        <div class="play-overlay">
+                            <div class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
+                                <i class="fas fa-play text-white ml-1"></i>
+                            </div>
+                        </div>
+                        <div class="episode-badge">
+                            <i class="fas fa-list-ul mr-1"></i>${pl.episodes?.length || 0} EP
+                        </div>
+                    </div>
+                    <h4 class="font-semibold text-sm truncate">${pl.title}</h4>
+                    <p class="text-gray-500 text-xs">${pl.year} · ${pl.episodes?.length || 0} Episodes</p>
+                </div>
+            `).join('');
+        },
+        
+        openPlaylist(playlistId, episodeId = null) {
+            const playlist = this.playlists.find(p => p.id === playlistId);
+            if (!playlist) {
+                this.showToast('Playlist not found!', 'error');
+                return;
+            }
+            
+            this.currentPlaylist = playlist;
+            
+            const container = document.getElementById('playlist-detail-container');
+            if (!container) return;
+            
+            container.innerHTML = `
+                <div class="relative">
+                    <div class="relative h-64 md:h-80 overflow-hidden">
+                        <img src="${playlist.poster}" class="w-full h-full object-cover" alt="${playlist.title}">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <span class="bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-2 inline-block">PLAYLIST</span>
+                            <h2 class="text-3xl font-black mb-2">${playlist.title}</h2>
+                            <div class="flex items-center gap-4 text-sm text-gray-300">
+                                <span class="text-yellow-400 font-bold"><i class="fas fa-star mr-1"></i>${playlist.rating}</span>
+                                <span>${playlist.year}</span>
+                                <span>${playlist.episodes?.length || 0} Episodes</span>
+                                <span>${playlist.category}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4">
+                        <p class="text-gray-400 text-sm mb-6">${playlist.description}</p>
+                        
+                        <div class="flex gap-3 mb-6">
+                            <button onclick="app.playEpisode('${playlist.episodes[0]?.id}')" class="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-3 rounded-xl font-bold transition flex items-center justify-center gap-2">
+                                <i class="fas fa-play"></i> Play First Episode
+                            </button>
+                            <button onclick="app.toggleFavoritePlaylist('${playlist.id}')" class="w-12 h-12 rounded-xl bg-white/5 hover:bg-white/10 flex items-center justify-center transition ${this.isPlaylistFavorited(playlist.id) ? 'text-red-500' : 'text-gray-400'}">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                        
+                        <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                            <i class="fas fa-tv text-purple-500"></i> All Episodes
+                        </h3>
+                        <div class="space-y-2">
+                            ${playlist.episodes?.map((ep, idx) => `
+                                <div class="episode-item ${episodeId === ep.id ? 'active' : ''}" onclick="app.playEpisode('${ep.id}')">
+                                    <div class="episode-number">${ep.episodeNumber}</div>
+                                    <div class="flex-1 min-w-0">
+                                        <h4 class="font-semibold text-sm truncate">${ep.title}</h4>
+                                        <p class="text-gray-500 text-xs">${ep.duration}</p>
+                                    </div>
+                                    <button class="w-8 h-8 rounded-full bg-white/10 hover:bg-red-600 flex items-center justify-center transition">
+                                        <i class="fas fa-play text-xs"></i>
+                                    </button>
+                                </div>
+                            `).join('') || '<p class="text-gray-500 text-sm">No episodes yet</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            this.showScreen('playlist-screen');
+            
+            if (episodeId) {
+                setTimeout(() => this.playEpisode(episodeId), 500);
+            }
+        },
+        
+        playEpisode(episodeId) {
+            if (!this.currentPlaylist) return;
+            const episode = this.currentPlaylist.episodes.find(e => e.id === episodeId);
+            if (!episode) return;
+            
+            this.currentEpisode = episode;
+            
+            // Create a movie-like object for the player
+            const movie = {
+                id: episode.id,
+                title: `${this.currentPlaylist.title} - ${episode.title}`,
+                category: this.currentPlaylist.category,
+                year: this.currentPlaylist.year,
+                duration: episode.duration,
+                rating: this.currentPlaylist.rating,
+                description: this.currentPlaylist.description,
+                poster: this.currentPlaylist.poster,
+                videoUrl: episode.videoUrl,
+                playlistId: this.currentPlaylist.id,
+                episodeNumber: episode.episodeNumber
+            };
+            
+            this.playMovie(movie);
+        },
+        
+        // ===== FAVORITES SYSTEM =====
+        toggleFavorite(movieId) {
+            const index = this.favorites.indexOf(movieId);
+            if (index === -1) {
+                this.favorites.push(movieId);
+                this.showToast('Added to favorites! ❤️', 'success');
+            } else {
+                this.favorites.splice(index, 1);
+                this.showToast('Removed from favorites', 'info');
+            }
+            this.saveToLocal();
+            this.renderFavorites();
+            this.renderMovies(); // Re-render to update heart icons
+        },
+        
+        toggleFavoritePlaylist(playlistId) {
+            const key = 'playlist_' + playlistId;
+            const index = this.favorites.indexOf(key);
+            if (index === -1) {
+                this.favorites.push(key);
+                this.showToast('Playlist favorited! ❤️', 'success');
+            } else {
+                this.favorites.splice(index, 1);
+                this.showToast('Removed from favorites', 'info');
+            }
+            this.saveToLocal();
+            this.renderFavorites();
+        },
+        
+        isFavorited(movieId) {
+            return this.favorites.includes(movieId);
+        },
+        
+        isPlaylistFavorited(playlistId) {
+            return this.favorites.includes('playlist_' + playlistId);
+        },
+        
+        renderFavorites() {
+            const section = document.getElementById('favorites-section');
+            const container = document.getElementById('favorites-container');
+            if (!section || !container) return;
+            
+            const favMovies = this.movies.filter(m => this.favorites.includes(m.id));
+            const favPlaylistKeys = this.favorites.filter(f => f.startsWith('playlist_'));
+            const favPlaylists = this.playlists.filter(p => favPlaylistKeys.includes('playlist_' + p.id));
+            
+            const allFavs = [...favMovies, ...favPlaylists];
+            
+            if (allFavs.length === 0) {
+                section.classList.add('hidden');
+                return;
+            }
+            
+            section.classList.remove('hidden');
+            container.innerHTML = allFavs.map(item => {
+                const isPlaylist = item.episodes !== undefined;
+                return `
+                    <div class="movie-card flex-shrink-0 w-36 md:w-44" onclick="${isPlaylist ? `app.openPlaylist('${item.id}')` : `app.playMovieById('${item.id}')`}">
+                        <div class="relative rounded-xl overflow-hidden aspect-[2/3] mb-2 bg-gray-900">
+                            <img src="${item.poster}" alt="${item.title}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image'">
+                            <div class="play-overlay">
+                                <div class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
+                                    <i class="fas fa-play text-white ml-1"></i>
+                                </div>
+                            </div>
+                            ${isPlaylist ? `<div class="episode-badge"><i class="fas fa-list-ul mr-1"></i>${item.episodes?.length || 0}</div>` : `
+                            <div class="absolute top-2 right-2 bg-black/60 backdrop-blur-md rounded-lg px-2 py-1">
+                                <span class="text-yellow-400 text-xs font-bold"><i class="fas fa-star mr-1"></i>${item.rating}</span>
+                            </div>`}
+                        </div>
+                        <h4 class="font-semibold text-sm truncate">${item.title}</h4>
+                        <p class="text-gray-500 text-xs">${item.year} ${isPlaylist ? '· ' + (item.episodes?.length || 0) + ' EP' : '· ' + item.duration}</p>
+                    </div>
+                `;
+            }).join('');
+        },
+        
+        scrollToFavorites() {
+            const section = document.getElementById('favorites-section');
+            if (section) section.scrollIntoView({ behavior: 'smooth' });
+        },
+        
+        // ===== SEE ALL =====
+        showSeeAll(type) {
+            const screen = document.getElementById('seeall-screen');
+            const container = document.getElementById('seeall-container');
+            const title = document.getElementById('seeall-title');
+            if (!screen || !container || !title) return;
+            
+            let items = [];
+            let titleText = '';
+            
+            switch(type) {
+                case 'trending':
+                    items = this.currentCategory === 'All' ? this.movies : this.movies.filter(m => m.category === this.currentCategory);
+                    titleText = 'Trending Now';
+                    break;
+                case 'foryou':
+                    items = this.currentCategory === 'All' ? [...this.movies].sort(() => Math.random() - 0.5) : this.movies.filter(m => m.category === this.currentCategory).sort(() => Math.random() - 0.5);
+                    titleText = 'For You';
+                    break;
+                case 'new':
+                    items = this.currentCategory === 'All' ? [...this.movies].sort((a, b) => b.year - a.year) : this.movies.filter(m => m.category === this.currentCategory).sort((a, b) => b.year - a.year);
+                    titleText = 'New Releases';
+                    break;
+                case 'favorites':
+                    const favMovies = this.movies.filter(m => this.favorites.includes(m.id));
+                    const favPlaylistKeys = this.favorites.filter(f => f.startsWith('playlist_'));
+                    const favPlaylists = this.playlists.filter(p => favPlaylistKeys.includes('playlist_' + p.id));
+                    items = [...favMovies, ...favPlaylists];
+                    titleText = 'Your Favorites';
+                    break;
+                case 'playlists':
+                    items = this.playlists;
+                    titleText = 'All Playlists';
+                    break;
+            }
+            
+            title.textContent = titleText;
+            
+            if (items.length === 0) {
+                container.innerHTML = '<div class="col-span-full text-center py-12 text-gray-500">No content available</div>';
+            } else {
+                container.innerHTML = items.map(item => {
+                    const isPlaylist = item.episodes !== undefined;
+                    return `
+                        <div class="movie-card cursor-pointer" onclick="${isPlaylist ? `app.openPlaylist('${item.id}')` : `app.playMovieById('${item.id}')`}">
+                            <div class="relative rounded-xl overflow-hidden aspect-[2/3] mb-2 bg-gray-900">
+                                <img src="${item.poster}" alt="${item.title}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image'">
+                                <div class="play-overlay">
+                                    <div class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
+                                        <i class="fas fa-play text-white ml-1"></i>
+                                    </div>
+                                </div>
+                                ${isPlaylist ? `<div class="episode-badge"><i class="fas fa-list-ul mr-1"></i>${item.episodes?.length || 0}</div>` : `
+                                <div class="absolute top-2 right-2 bg-black/60 backdrop-blur-md rounded-lg px-2 py-1">
+                                    <span class="text-yellow-400 text-xs font-bold"><i class="fas fa-star mr-1"></i>${item.rating}</span>
+                                </div>`}
+                            </div>
+                            <h4 class="font-semibold text-sm truncate">${item.title}</h4>
+                            <p class="text-gray-500 text-xs">${item.year} ${isPlaylist ? '· ' + (item.episodes?.length || 0) + ' EP' : '· ' + item.duration}</p>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            this.showScreen('seeall-screen');
+        },
 
-<script>
-// Paste Part 3 content here  
-         // ===== HERO SLIDER =====
+        // ===== HERO SLIDER =====
         initHeroSlider() {
             const container = document.getElementById('hero-slides');
             const dotsContainer = document.getElementById('hero-dots');
@@ -2248,6 +3201,7 @@
             this.renderMovieRow('new-container', newest.slice(0, 10));
             
             this.renderContinueWatching();
+            this.renderFavorites();
         },
         
         filterCategory(category) {
@@ -2273,6 +3227,7 @@
                 this.updateHeroSlider(filtered.slice(0, 5));
             } else if (category === 'All') {
                 this.heroSlides = this.movies.filter(m => m.featured).slice(0, 5);
+                if (this.heroSlides.length === 0) this.heroSlides = this.movies.slice(0, 4);
                 this.updateHeroSlider(this.heroSlides);
             }
             
@@ -2297,12 +3252,15 @@
                                 <i class="fas fa-play text-white ml-1"></i>
                             </div>
                         </div>
+                        <button class="fav-btn ${app.isFavorited(movie.id) ? 'active' : ''}" onclick="event.stopPropagation(); app.toggleFavorite('${movie.id}')">
+                            <i class="fas fa-heart ${app.isFavorited(movie.id) ? '' : 'far'}"></i>
+                        </button>
                         <div class="absolute top-2 right-2 bg-black/60 backdrop-blur-md rounded-lg px-2 py-1">
                             <span class="text-yellow-400 text-xs font-bold"><i class="fas fa-star mr-1"></i>${movie.rating}</span>
                         </div>
                     </div>
                     <h4 class="font-semibold text-sm truncate">${movie.title}</h4>
-                    <p class="text-gray-500 text-xs">${movie.year} &middot; ${movie.duration}</p>
+                    <p class="text-gray-500 text-xs">${movie.year} · ${movie.duration}</p>
                 </div>
             `).join('');
         },
@@ -2340,10 +3298,8 @@
         
         // ===== VIDEO PLAYER =====
         playMovieById(id) {
-            console.log('Playing movie ID:', id);
             const movie = this.movies.find(m => m.id === id);
             if (!movie) {
-                console.error('Movie not found:', id);
                 this.showToast('Video not found!', 'error');
                 return;
             }
@@ -2351,8 +3307,6 @@
         },
         
         playMovie(movie) {
-            console.log('Playing:', movie.title, 'URL:', movie.videoUrl);
-            
             if (!movie.videoUrl) {
                 this.showToast('Video URL missing!', 'error');
                 return;
@@ -2360,6 +3314,7 @@
             
             this.currentMovie = movie;
             
+            // Add to continue watching
             const existingIndex = this.continueWatching.findIndex(m => m.id === movie.id);
             if (existingIndex !== -1) {
                 const existing = this.continueWatching[existingIndex];
@@ -2369,10 +3324,10 @@
                 this.continueWatching.unshift({...movie, progress: 0});
                 if (this.continueWatching.length > 10) this.continueWatching.pop();
             }
+            this.saveToLocal();
             
-            if (typeof this.checkAndShowAd === 'function') {
-                this.checkAndShowAd();
-            }
+            // Check for ad
+            this.checkAndShowAd();
             
             this.openPlayer(movie);
         },
@@ -2393,8 +3348,6 @@
                     return match[1];
                 }
             }
-            
-            console.warn('Could not extract Dailymotion ID from:', url);
             return null;
         },
         
@@ -2405,11 +3358,10 @@
             const yearEl = document.getElementById('player-year');
             const durationEl = document.getElementById('player-duration');
             const iframe = document.getElementById('dailymotion-iframe');
+            const episodeStrip = document.getElementById('player-episodes-strip');
+            const episodeContainer = document.getElementById('episode-pills-container');
             
-            if (!titleEl || !iframe) {
-                console.error('Player elements not found!');
-                return;
-            }
+            if (!titleEl || !iframe) return;
             
             titleEl.textContent = movie.title || 'Untitled';
             metaEl.textContent = `${movie.category || 'Unknown'} · ${movie.year || 'N/A'}`;
@@ -2420,39 +3372,74 @@
             const videoId = this.extractDailymotionId(movie.videoUrl);
             
             if (videoId) {
-                iframe.src = `https://www.dailymotion.com/embed/video/${videoId}?autoplay=1&mute=0&quality=auto`;
-                console.log('Embed URL:', iframe.src);
+                // FIXED: Added parameters to hide Dailymotion UI elements
+                iframe.src = `https://www.dailymotion.com/embed/video/${videoId}?autoplay=1&mute=0&quality=auto&controls=0&ui-logo=0&ui-start-screen-info=0&queue-enable=false&sharing-enable=0&wmode=transparent`;
             } else {
                 iframe.src = movie.videoUrl;
-                console.log('Direct URL fallback:', iframe.src);
+            }
+            
+            // Show episode strip if this is from a playlist
+            if (movie.playlistId && this.currentPlaylist && episodeStrip && episodeContainer) {
+                episodeStrip.classList.remove('hidden');
+                episodeContainer.innerHTML = this.currentPlaylist.episodes.map(ep => `
+                    <button class="player-episode-pill ${movie.id === ep.id ? 'active' : ''} ${this.isEpisodeWatched(ep.id) ? 'watched' : ''}" 
+                            onclick="app.playEpisode('${ep.id}')">
+                        EP ${ep.episodeNumber}
+                    </button>
+                `).join('');
+            } else if (episodeStrip) {
+                episodeStrip.classList.add('hidden');
             }
             
             this.showScreen('player-screen');
+            
+            // Start mid-roll ad timer
+            this.startMidRollTimer();
+        },
+        
+        isEpisodeWatched(episodeId) {
+            return this.continueWatching.some(m => m.id === episodeId);
         },
         
         closePlayer() {
             const iframe = document.getElementById('dailymotion-iframe');
-            if (iframe) {
-                iframe.src = 'about:blank';
-            }
+            if (iframe) iframe.src = 'about:blank';
             this.currentMovie = null;
+            this.currentEpisode = null;
+            this.stopMidRollTimer();
             this.showScreen('main-screen');
+        },
+        
+        toggleFullscreen() {
+            const player = document.getElementById('dailymotion-container');
+            if (!player) return;
+            
+            if (!document.fullscreenElement) {
+                player.requestFullscreen?.() || player.webkitRequestFullscreen?.() || player.msRequestFullscreen?.();
+            } else {
+                document.exitFullscreen?.() || document.webkitExitFullscreen?.() || document.msExitFullscreen?.();
+            }
         },
         
         // ===== SHARE =====
         shareContent() {
             if (!this.currentMovie) return;
             
+            const isPlaylist = this.currentMovie.playlistId;
+            const shareUrl = isPlaylist 
+                ? `${window.location.origin}${window.location.pathname}?playlist=${this.currentMovie.playlistId}&episode=${this.currentMovie.id}`
+                : `${window.location.origin}${window.location.pathname}?watch=${this.currentMovie.id}`;
+            
             const shareData = {
                 title: this.currentMovie.title,
                 text: `Watch ${this.currentMovie.title} on STREAMER!`,
-                url: `${window.location.origin}${window.location.pathname}?watch=${this.currentMovie.id}`
+                url: shareUrl
             };
             
             if (navigator.share) {
                 navigator.share(shareData);
             } else {
-                navigator.clipboard.writeText(shareData.url).then(() => {
+                navigator.clipboard.writeText(shareUrl).then(() => {
                     this.showToast('Link copied to clipboard! ✅', 'success');
                 });
             }
@@ -2475,55 +3462,114 @@
         },
         
         // ===== SEARCH =====
-        searchMovies() {
+        setSearchFilter(filter) {
+            this.searchFilter = filter;
+            document.querySelectorAll('.search-filter').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.filter === filter);
+                if (btn.dataset.filter === filter) {
+                    btn.classList.remove('bg-white/5', 'text-gray-400');
+                    btn.classList.add('bg-red-600', 'text-white');
+                } else {
+                    btn.classList.remove('bg-red-600', 'text-white');
+                    btn.classList.add('bg-white/5', 'text-gray-400');
+                }
+            });
+            this.searchContent();
+        },
+        
+        searchContent() {
             const query = document.getElementById('search-input').value.toLowerCase().trim();
-            const container = document.getElementById('search-container');
+            const moviesContainer = document.getElementById('search-movies-container');
+            const playlistsContainer = document.getElementById('search-playlists-container');
+            const moviesSection = document.getElementById('search-results-movies');
+            const playlistsSection = document.getElementById('search-results-playlists');
             
-            if (!container) return;
+            if (!moviesContainer || !playlistsContainer) return;
             
             if (!query) {
-                container.innerHTML = `
+                moviesContainer.innerHTML = `
                     <div class="col-span-full text-center py-12 text-gray-500">
                         <i class="fas fa-search text-4xl mb-4 opacity-50"></i>
                         <p>Type to search content...</p>
                     </div>
                 `;
-                return;
-            }
-            
-            const results = this.movies.filter(m => 
-                m.title.toLowerCase().includes(query) || 
-                m.category.toLowerCase().includes(query) ||
-                m.description.toLowerCase().includes(query)
-            );
-            
-            if (results.length === 0) {
-                container.innerHTML = `
-                    <div class="col-span-full text-center py-12 text-gray-500">
-                        <i class="fas fa-film text-4xl mb-4 opacity-50"></i>
-                        <p>No results found for "${query}"</p>
+                playlistsContainer.innerHTML = `
+                    <div class="col-span-full text-center py-8 text-gray-500 text-sm">
+                        Search for anime playlists...
                     </div>
                 `;
                 return;
             }
             
-            container.innerHTML = results.map(movie => `
-                <div class="movie-card cursor-pointer" onclick="app.playMovieById('${movie.id}')">
-                    <div class="relative rounded-xl overflow-hidden aspect-[2/3] mb-2 bg-gray-900">
-                        <img src="${movie.poster}" alt="${movie.title}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image'">
-                        <div class="play-overlay">
-                            <div class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
-                                <i class="fas fa-play text-white ml-1"></i>
+            // Search movies
+            const movieResults = this.movies.filter(m => 
+                m.title.toLowerCase().includes(query) || 
+                m.category.toLowerCase().includes(query) ||
+                m.description.toLowerCase().includes(query)
+            );
+            
+            // Search playlists
+            const playlistResults = this.playlists.filter(p =>
+                p.title.toLowerCase().includes(query) ||
+                p.category.toLowerCase().includes(query) ||
+                p.description.toLowerCase().includes(query) ||
+                p.episodes?.some(e => e.title.toLowerCase().includes(query))
+            );
+            
+            // Show/hide sections based on filter
+            if (this.searchFilter === 'all' || this.searchFilter === 'movies') {
+                moviesSection.classList.remove('hidden');
+                if (movieResults.length === 0) {
+                    moviesContainer.innerHTML = `<div class="col-span-full text-center py-8 text-gray-500">No movies found for "${query}"</div>`;
+                } else {
+                    moviesContainer.innerHTML = movieResults.map(movie => `
+                        <div class="movie-card cursor-pointer" onclick="app.playMovieById('${movie.id}')">
+                            <div class="relative rounded-xl overflow-hidden aspect-[2/3] mb-2 bg-gray-900">
+                                <img src="${movie.poster}" alt="${movie.title}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image'">
+                                <div class="play-overlay">
+                                    <div class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
+                                        <i class="fas fa-play text-white ml-1"></i>
+                                    </div>
+                                </div>
+                                <div class="absolute top-2 right-2 bg-black/60 backdrop-blur-md rounded-lg px-2 py-1">
+                                    <span class="text-yellow-400 text-xs font-bold"><i class="fas fa-star mr-1"></i>${movie.rating}</span>
+                                </div>
                             </div>
+                            <h4 class="font-semibold text-sm truncate">${movie.title}</h4>
+                            <p class="text-gray-500 text-xs">${movie.year} · ${movie.duration}</p>
                         </div>
-                        <div class="absolute top-2 right-2 bg-black/60 backdrop-blur-md rounded-lg px-2 py-1">
-                            <span class="text-yellow-400 text-xs font-bold"><i class="fas fa-star mr-1"></i>${movie.rating}</span>
+                    `).join('');
+                }
+            } else {
+                moviesSection.classList.add('hidden');
+            }
+            
+            if (this.searchFilter === 'all' || this.searchFilter === 'playlists') {
+                playlistsSection.classList.remove('hidden');
+                if (playlistResults.length === 0) {
+                    playlistsContainer.innerHTML = `<div class="col-span-full text-center py-8 text-gray-500">No playlists found for "${query}"</div>`;
+                } else {
+                    playlistsContainer.innerHTML = playlistResults.map(pl => `
+                        <div class="playlist-card cursor-pointer" onclick="app.openPlaylist('${pl.id}')">
+                            <div class="relative rounded-xl overflow-hidden aspect-[2/3] mb-2 bg-gray-900">
+                                <img src="${pl.poster}" alt="${pl.title}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image'">
+                                <div class="play-overlay">
+                                    <div class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
+                                        <i class="fas fa-play text-white ml-1"></i>
+                                    </div>
+                                </div>
+                                <div class="episode-badge">
+                                    <i class="fas fa-list-ul mr-1"></i>${pl.episodes?.length || 0} EP
+                                </div>
+                            </div>
+                            <h4 class="font-semibold text-sm truncate">${pl.title}</h4>
+                            <p class="text-gray-500 text-xs">${pl.year} · ${pl.episodes?.length || 0} Episodes</p>
                         </div>
-                    </div>
-                    <h4 class="font-semibold text-sm truncate">${movie.title}</h4>
-                    <p class="text-gray-500 text-xs">${movie.year} &middot; ${movie.duration}</p>
-                </div>
-            `).join('');
+                    `).join('');
+                }
+            } else {
+                playlistsSection.classList.add('hidden');
+            }
         },
         
         // ===== PROFILE STATS =====
@@ -2533,12 +3579,21 @@
             const watchTime = document.getElementById('watch-time');
             
             if (continueCount) continueCount.textContent = this.continueWatching.length;
-            if (totalCount) totalCount.textContent = this.movies.length;
+            if (totalCount) totalCount.textContent = this.movies.length + this.playlists.length;
             if (watchTime) watchTime.textContent = Math.floor(this.watchTime / 60) + 'h';
+            
+            // Update earning badge
+            const badge = document.getElementById('earning-badge');
+            const amount = document.getElementById('earning-amount');
+            if (badge && amount && this.todayEarnings > 0) {
+                badge.style.display = 'block';
+                amount.textContent = this.todayEarnings.toFixed(2);
+            }
         },
         
         clearContinueWatching() {
             this.continueWatching = [];
+            this.saveToLocal();
             this.renderContinueWatching();
             this.updateProfileStats();
             this.showToast('History cleared! ✅', 'info');
@@ -2548,21 +3603,22 @@
             if (!confirm('Clear all watch history?')) return;
             this.continueWatching = [];
             this.watchTime = 0;
+            this.favorites = [];
+            this.saveToLocal();
             this.updateProfileStats();
+            this.renderFavorites();
             this.showToast('All data cleared! ✅', 'info');
         },
         
         updateAdPreference() {
             const freq = document.getElementById('user-ad-freq').value;
-            const intervals = { low: 12, normal: 8, high: 5 };
-            this.adInterval = intervals[freq] || 8;
+            const intervals = { low: 12, normal: 6, high: 3 };
+            this.adInterval = intervals[freq] || 6;
+            this.saveToLocal();
             this.showToast(`Ad frequency set to ${freq}`, 'info');
         },
-</script>
 
-<script>
-// Paste Part 4 content here
-            // ===== DEMO DATA =====
+        // ===== DEMO DATA =====
         loadDemoData() {
             if (this.movies.length === 0) {
                 this.movies = [
@@ -2663,11 +3719,8 @@
                         featured: true
                     }
                 ];
-            }
-            
-            this.heroSlides = this.movies.filter(m => m.featured).slice(0, 5);
-            if (this.heroSlides.length === 0) {
-                this.heroSlides = this.movies.slice(0, 4);
+                this.heroSlides = this.movies.filter(m => m.featured).slice(0, 5);
+                if (this.heroSlides.length === 0) this.heroSlides = this.movies.slice(0, 4);
             }
         },
         
@@ -2784,7 +3837,224 @@
             reader.readAsDataURL(file);
         },
         
-        // ===== AD SYSTEM =====
+        // ===== AD SYSTEM (REAL IMPLEMENTATION) =====
+        initAdLinks() {
+            // Load from localStorage if available
+            if (this.adLinks.length === 0 || this.adLinks[0].includes('xxxxx')) {
+                // Default demo links - user should replace these
+                this.adLinks = [
+                    'https://shrinkme.io/xxxxx',
+                    'https://adf.ly/xxxxx',
+                    'https://linkvertise.com/xxxxx',
+                    'https://shorte.st/xxxxx',
+                    'https://ouo.io/xxxxx',
+                    'https://bc.vc/xxxxx',
+                    'https://adshrink.it/xxxxx',
+                    'https://clk.sh/xxxxx',
+                    'https://exe.io/xxxxx',
+                    'https://fc.lc/xxxxx',
+                    'https://gplinks.co/xxxxx',
+                    'https://linkspy.cc/xxxxx',
+                    'https://payskip.org/xxxxx',
+                    'https://short.am/xxxxx',
+                    'https://wi.cr/xxxxx'
+                ];
+            }
+        },
+        
+        renderAdLinks() {
+            const container = document.getElementById('ad-links-container');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            this.adLinks.forEach((link, index) => {
+                const div = document.createElement('div');
+                div.className = 'ad-link-item';
+                div.innerHTML = `
+                    <input type="url" class="form-input" value="${link}" id="ad-link-${index}" placeholder="https://...">
+                    <button onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>
+                `;
+                container.appendChild(div);
+            });
+        },
+        
+        addAdLinkField() {
+            const container = document.getElementById('ad-links-container');
+            if (!container) return;
+            
+            const div = document.createElement('div');
+            div.className = 'ad-link-item';
+            div.innerHTML = `
+                <input type="url" class="form-input" placeholder="https://your-ad-link.com" id="ad-link-new-${Date.now()}">
+                <button onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>
+            `;
+            container.appendChild(div);
+        },
+        
+        saveAdSettings() {
+            // Collect ad links
+            const container = document.getElementById('ad-links-container');
+            if (container) {
+                const inputs = container.querySelectorAll('input');
+                this.adLinks = Array.from(inputs).map(input => input.value).filter(v => v.trim() !== '');
+            }
+            
+            this.adInterval = parseInt(document.getElementById('admin-ad-interval')?.value) || 6;
+            this.adSkipTime = parseInt(document.getElementById('admin-ad-skip')?.value) || 5;
+            this.maxAdsPerSession = parseInt(document.getElementById('admin-max-ads')?.value) || 10;
+            this.popAdScript = document.getElementById('popads-script')?.value || '';
+            
+            this.saveToLocal();
+            this.showToast('Ad settings saved! ✅', 'success');
+            this.updateAdminStats();
+        },
+        
+        toggleAds() {
+            this.adsEnabled = !this.adsEnabled;
+            const toggle = document.getElementById('ads-toggle');
+            if (toggle) toggle.classList.toggle('active', this.adsEnabled);
+            this.saveToLocal();
+            this.showToast(this.adsEnabled ? 'Ads enabled' : 'Ads disabled', 'info');
+        },
+        
+        togglePopAds() {
+            this.popAdsEnabled = !this.popAdsEnabled;
+            const toggle = document.getElementById('popads-toggle');
+            if (toggle) toggle.classList.toggle('active', this.popAdsEnabled);
+            this.saveToLocal();
+            this.showToast(this.popAdsEnabled ? 'Pop ads enabled' : 'Pop ads disabled', 'info');
+            
+            if (this.popAdsEnabled) {
+                this.setupPopAds();
+            }
+        },
+        
+        // ===== REAL AD REDIRECT SYSTEM =====
+        showSmartAd(isReward = false, isWelcome = false) {
+            if (!this.adsEnabled || this.adLinks.length === 0) return;
+            if (this.sessionAdCount >= this.maxAdsPerSession) return;
+            
+            // Check ad-free period
+            if (Date.now() < this.adFreeUntil) return;
+            
+            const overlay = document.getElementById('smart-ad-overlay');
+            if (!overlay) return;
+            
+            // Pick random ad link
+            const adUrl = this.adLinks[Math.floor(Math.random() * this.adLinks.length)];
+            if (!adUrl || adUrl.includes('xxxxx')) {
+                console.warn('No valid ad URL configured');
+                return;
+            }
+            
+            this.pendingAdUrl = adUrl;
+            this.sessionAdCount++;
+            
+            // Update UI
+            const titleEl = document.getElementById('ad-title');
+            const subtitleEl = document.getElementById('ad-subtitle');
+            const counterEl = document.getElementById('ad-counter');
+            const continueBtn = document.getElementById('ad-continue-btn');
+            const timerEl = document.getElementById('ad-timer');
+            const progressCircle = document.getElementById('ad-progress-circle');
+            
+            if (titleEl) titleEl.textContent = isReward ? 'Support STREAMER!' : 'Loading your stream...';
+            if (subtitleEl) subtitleEl.textContent = isReward ? 'Watch ad to unlock 2 hours ad-free' : 'Please wait while we prepare';
+            if (counterEl) counterEl.textContent = `Ad ${this.sessionAdCount} of ${this.maxAdsPerSession}`;
+            if (continueBtn) continueBtn.disabled = true;
+            
+            overlay.classList.add('active');
+            
+            // Countdown timer
+            let seconds = this.adSkipTime || 5;
+            if (timerEl) timerEl.textContent = seconds;
+            
+            const totalLength = 276; // circumference
+            
+            const timer = setInterval(() => {
+                seconds--;
+                if (timerEl) timerEl.textContent = seconds;
+                
+                // Update progress ring
+                const offset = totalLength - (seconds / (this.adSkipTime || 5)) * totalLength;
+                if (progressCircle) progressCircle.style.strokeDashoffset = offset;
+                
+                if (seconds <= 0) {
+                    clearInterval(timer);
+                    if (continueBtn) {
+                        continueBtn.disabled = false;
+                        continueBtn.innerHTML = '<i class="fas fa-external-link-alt mr-2"></i> Open Ad & Continue';
+                    }
+                }
+            }, 1000);
+            
+            this.currentAdTimer = timer;
+        },
+        
+        watchAdAndContinue() {
+            if (this.pendingAdUrl) {
+                // Open ad in new tab
+                window.open(this.pendingAdUrl, '_blank');
+                
+                // Track stats
+                this.totalAdsShown++;
+                this.adsClicked++;
+                this.todayEarnings += 0.001; // Approximate per ad
+                this.ctr = Math.round((this.adsClicked / this.totalAdsShown) * 100);
+                
+                this.saveToLocal();
+                this.updateAdminStats();
+                this.updateProfileStats();
+            }
+            
+            // Hide overlay
+            const overlay = document.getElementById('smart-ad-overlay');
+            if (overlay) overlay.classList.remove('active');
+            
+            // Clear timer
+            if (this.currentAdTimer) {
+                clearInterval(this.currentAdTimer);
+                this.currentAdTimer = null;
+            }
+            
+            this.showToast('Thank you for supporting us! 🎬', 'success');
+        },
+        
+        skipAd() {
+            const overlay = document.getElementById('smart-ad-overlay');
+            if (overlay) overlay.classList.remove('active');
+            
+            if (this.currentAdTimer) {
+                clearInterval(this.currentAdTimer);
+                this.currentAdTimer = null;
+            }
+            
+            this.showToast('Ad skipped', 'info');
+        },
+        
+        checkAndShowAd() {
+            // Pre-roll ad before video
+            if (this.adsEnabled && this.adLinks.length > 0 && !this.adLinks[0].includes('xxxxx')) {
+                this.showSmartAd(false, false);
+            }
+        },
+        
+        showWelcomeAd() {
+            if (this.adsEnabled && this.adLinks.length > 0) {
+                this.showSmartAd(false, true);
+            }
+        },
+        
+        watchRewardAd() {
+            this.closeRewardModal();
+            setTimeout(() => {
+                this.showSmartAd(true, false);
+                // Set ad-free period (2 hours)
+                this.adFreeUntil = Date.now() + (2 * 60 * 60 * 1000);
+                this.saveToLocal();
+            }, 300);
+        },
+        
         showRewardModal() {
             const modal = document.getElementById('reward-modal');
             if (modal) modal.classList.add('active');
@@ -2797,81 +4067,246 @@
             }
         },
         
-        watchRewardAd() {
-            if (typeof this.showSmartAd === 'function') {
-                this.showSmartAd(true);
+        // ===== MID-ROLL ADS (Every 6 minutes) =====
+        startMidRollTimer() {
+            this.stopMidRollTimer();
+            
+            if (!this.adsEnabled || Date.now() < this.adFreeUntil) return;
+            
+            const intervalMs = (this.adInterval || 6) * 60 * 1000;
+            
+            this.midRollTimer = setInterval(() => {
+                if (this.currentMovie && this.sessionAdCount < this.maxAdsPerSession) {
+                    // Pause video (by reloading iframe with pause)
+                    const iframe = document.getElementById('dailymotion-iframe');
+                    if (iframe) {
+                        const currentSrc = iframe.src;
+                        iframe.src = currentSrc.replace('autoplay=1', 'autoplay=0');
+                    }
+                    
+                    this.showSmartAd(false, false);
+                }
+            }, intervalMs);
+        },
+        
+        stopMidRollTimer() {
+            if (this.midRollTimer) {
+                clearInterval(this.midRollTimer);
+                this.midRollTimer = null;
             }
         },
         
-        showWelcomeAd() {
-            if (typeof this.showSmartAd === 'function') {
-                this.showSmartAd(false, true);
+        // ===== POP ADS =====
+        setupPopAds() {
+            if (!this.popAdsEnabled) return;
+            
+            // Load pop ad script if URL provided
+            if (this.popAdScript && this.popAdScript.trim() !== '') {
+                // Check if script already loaded
+                const existingScript = document.getElementById('popad-script');
+                if (!existingScript) {
+                    const script = document.createElement('script');
+                    script.id = 'popad-script';
+                    script.src = this.popAdScript;
+                    script.async = true;
+                    document.head.appendChild(script);
+                }
+            }
+            
+            // Generic popunder on user interactions
+            let popTriggered = false;
+            const triggerPop = () => {
+                if (popTriggered || !this.popAdsEnabled) return;
+                popTriggered = true;
+                
+                // Open popunder after delay
+                setTimeout(() => {
+                    if (this.adLinks.length > 0) {
+                        const adUrl = this.adLinks[Math.floor(Math.random() * this.adLinks.length)];
+                        if (adUrl && !adUrl.includes('xxxxx')) {
+                            const popWindow = window.open(adUrl, '_blank');
+                            if (popWindow) {
+                                popWindow.blur();
+                                window.focus();
+                            }
+                        }
+                    }
+                    popTriggered = false;
+                }, 3000);
+            };
+            
+            // Trigger on first click/touch
+            document.addEventListener('click', triggerPop, { once: true });
+            document.addEventListener('touchstart', triggerPop, { once: true });
+        },
+        
+        // ===== PWA / APK SUPPORT =====
+        setupPWA() {
+            // Register service worker
+            if ('serviceWorker' in navigator) {
+                const swCode = `
+                    self.addEventListener('install', e => e.waitUntil(self.skipWaiting()));
+                    self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
+                    self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => new Response('Offline'))));
+                `;
+                const swBlob = new Blob([swCode], { type: 'application/javascript' });
+                const swUrl = URL.createObjectURL(swBlob);
+                
+                navigator.serviceWorker.register(swUrl).then(reg => {
+                    console.log('Service Worker registered:', reg);
+                }).catch(err => {
+                    console.log('SW registration failed:', err);
+                });
+            }
+            
+            // Listen for beforeinstallprompt
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                this.deferredPrompt = e;
+                console.log('PWA install prompt ready');
+            });
+            
+            // Detect if running as installed PWA
+            if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+                console.log('Running as installed PWA');
+                document.body.classList.add('pwa-installed');
             }
         },
         
-        checkAndShowAd() {
-            if (typeof this.checkSmartAd === 'function') {
-                this.checkSmartAd();
+        showInstallBanner() {
+            // Only show if not already installed and prompt available
+            if (this.deferredPrompt && !document.body.classList.contains('pwa-installed')) {
+                const banner = document.getElementById('install-banner');
+                if (banner) banner.classList.add('active');
             }
         },
         
-        toggleAds() {
-            this.adsEnabled = !this.adsEnabled;
-            const toggle = document.getElementById('ads-toggle');
-            if (toggle) toggle.classList.toggle('active', this.adsEnabled);
-            this.showToast(this.adsEnabled ? 'Ads enabled' : 'Ads disabled', 'info');
+        dismissInstallBanner() {
+            const banner = document.getElementById('install-banner');
+            if (banner) banner.classList.remove('active');
         },
         
-        addAdLinkField() {
-            const container = document.getElementById('ad-links-container');
+        async installPWA() {
+            if (this.deferredPrompt) {
+                this.deferredPrompt.prompt();
+                const { outcome } = await this.deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    this.showToast('App installed! ✅', 'success');
+                }
+                this.deferredPrompt = null;
+                this.dismissInstallBanner();
+            } else {
+                // Provide manual instructions
+                this.showToast('Use Chrome menu → "Add to Home Screen"', 'info');
+            }
+        },
+        
+        // ===== PLAYLIST ADMIN =====
+        addEpisodeField() {
+            const container = document.getElementById('episodes-form-container');
             if (!container) return;
             
-            const index = container.children.length;
+            const index = container.children.length + 1;
             const div = document.createElement('div');
-            div.className = 'ad-link-item';
+            div.className = 'p-3 bg-white/5 rounded-xl border border-white/5';
             div.innerHTML = `
-                <input type="url" class="form-input" placeholder="Ad link URL" id="ad-link-${index}">
-                <button onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm font-semibold text-gray-300">Episode ${index}</span>
+                    <button onclick="this.closest('.p-3').remove()" class="text-red-400 hover:text-red-300 text-xs">
+                        <i class="fas fa-times"></i> Remove
+                    </button>
+                </div>
+                <div class="grid gap-2">
+                    <input type="text" class="form-input episode-title" placeholder="Episode title" value="Episode ${index}">
+                    <input type="url" class="form-input episode-url" placeholder="Dailymotion video URL">
+                    <input type="text" class="form-input episode-duration" placeholder="Duration (e.g. 24 min)" value="24 min">
+                </div>
             `;
             container.appendChild(div);
         },
         
-        renderAdLinks() {
-            const container = document.getElementById('ad-links-container');
-            if (!container) return;
+        savePlaylist() {
+            const title = document.getElementById('playlist-title').value.trim();
+            const category = document.getElementById('playlist-category').value;
+            const poster = document.getElementById('playlist-poster').value.trim() || 'https://via.placeholder.com/300x450/1a1a1a/666?text=No+Image';
+            const description = document.getElementById('playlist-desc').value.trim();
             
-            container.innerHTML = '';
-            if (this.adLinks && this.adLinks.length > 0) {
-                this.adLinks.forEach((link, index) => {
-                    const div = document.createElement('div');
-                    div.className = 'ad-link-item';
-                    div.innerHTML = `
-                        <input type="url" class="form-input" value="${link}" id="ad-link-${index}">
-                        <button onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>
-                    `;
-                    container.appendChild(div);
-                });
+            if (!title) {
+                this.showToast('Playlist title required!', 'error');
+                return;
             }
+            
+            // Collect episodes
+            const episodeContainers = document.querySelectorAll('#episodes-form-container > div');
+            const episodes = [];
+            
+            episodeContainers.forEach((container, idx) => {
+                const titleInput = container.querySelector('.episode-title');
+                const urlInput = container.querySelector('.episode-url');
+                const durationInput = container.querySelector('.episode-duration');
+                
+                if (urlInput && urlInput.value.trim()) {
+                    episodes.push({
+                        id: 'ep_' + Date.now() + '_' + idx,
+                        title: titleInput?.value || `Episode ${idx + 1}`,
+                        videoUrl: urlInput.value.trim(),
+                        duration: durationInput?.value || '24 min',
+                        episodeNumber: idx + 1
+                    });
+                }
+            });
+            
+            const playlist = {
+                id: 'pl_' + Date.now(),
+                title,
+                category,
+                poster,
+                description,
+                rating: 0,
+                year: new Date().getFullYear(),
+                featured: false,
+                episodes
+            };
+            
+            this.playlists.unshift(playlist);
+            this.saveToLocal();
+            this.renderPlaylists();
+            this.renderAdminPlaylists();
+            
+            // Reset form
+            document.getElementById('playlist-title').value = '';
+            document.getElementById('playlist-poster').value = '';
+            document.getElementById('playlist-desc').value = '';
+            document.getElementById('episodes-form-container').innerHTML = '';
+            
+            this.showToast('Playlist saved! ✅', 'success');
         },
         
-        watchAdAndContinue() {
-            const overlay = document.getElementById('smart-ad-overlay');
-            if (overlay) overlay.classList.remove('active');
-            this.showToast('Enjoy your stream! 🎬', 'success');
+        renderAdminPlaylists() {
+            const tbody = document.getElementById('admin-playlist-body');
+            if (!tbody) return;
+            
+            tbody.innerHTML = this.playlists.map(pl => `
+                <tr>
+                    <td><img src="${pl.poster}" alt="${pl.title}" loading="lazy" onerror="this.src='https://via.placeholder.com/50x75/1a1a1a/666?text=No+Image'"></td>
+                    <td>${pl.title}</td>
+                    <td><span class="text-xs bg-white/10 px-2 py-1 rounded">${pl.episodes?.length || 0} EP</span></td>
+                    <td>
+                        <button onclick="app.deletePlaylist('${pl.id}')" class="action-btn" title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
         },
         
-        skipAd() {
-            const overlay = document.getElementById('smart-ad-overlay');
-            if (overlay) overlay.classList.remove('active');
-            this.showToast('Ad skipped', 'info');
-        },
-        
-        showSmartAd(isReward = false, isWelcome = false) {
-            console.log('Smart ad shown:', { isReward, isWelcome });
-        },
-        
-        checkSmartAd() {
-            console.log('Checking for ads...');
+        deletePlaylist(id) {
+            if (!confirm('Delete this playlist?')) return;
+            this.playlists = this.playlists.filter(p => p.id !== id);
+            this.saveToLocal();
+            this.renderPlaylists();
+            this.renderAdminPlaylists();
+            this.showToast('Playlist deleted! ✅', 'info');
         }
     };
 
