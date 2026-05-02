@@ -1502,11 +1502,13 @@
             </div>
         </div>
     </div>
-  <script>
+<script>
+// Paste FIXED Part 2 content here
+        <script>
     // ==========================================
     // STREAMER APP - PART 2: SUPABASE CORE LOGIC
     // Cloud-Only Edition - NO LocalStorage
-    // Fixed: RLS compatibility, error handling, retry
+    // FIXED: created_at column handling
     // ==========================================
 
     const app = {
@@ -1630,10 +1632,12 @@
             
             try {
                 console.log('Loading movies from Supabase...');
+                
+                // FIXED: Remove ordering by created_at to avoid column issues
                 const { data, error } = await supabaseClient
                     .from('movies')
-                    .select('*')
-                    .order('created_at', { ascending: false });
+                    .select('*');
+                    // .order('created_at', { ascending: false }); // REMOVED
                 
                 if (error) {
                     console.error('Supabase LOAD error:', error);
@@ -1654,12 +1658,12 @@
                         description: item.description,
                         poster: item.poster,
                         videoUrl: item.video_url,
-                        featured: item.featured || false,
-                        createdAt: item.created_at
+                        featured: item.featured || false
+                        // created_at removed from mapping
                     }));
                     
                     this.renderMovies();
-                    this.showToast('Cloud data loaded! ✅', 'success');
+                    this.showToast('Cloud data loaded! ✅ (' + data.length + ' movies)', 'success');
                 } else {
                     console.log('No cloud data found, using demo data');
                     // Keep demo data if cloud is empty
@@ -1675,7 +1679,7 @@
                 throw new Error('Supabase not connected');
             }
             
-            // FIXED: Do NOT include created_at - let Supabase handle it
+            // FIXED: Minimal payload - only required fields
             const payload = {
                 id: movie.id,
                 title: movie.title,
@@ -1687,7 +1691,7 @@
                 poster: movie.poster,
                 video_url: movie.videoUrl,
                 featured: movie.featured || false
-                // created_at is handled by Supabase default now()
+                // NO created_at - let Supabase handle it if column exists
             };
             
             console.log('Saving to Supabase:', payload);
@@ -1740,7 +1744,7 @@
                         poster: data.poster,
                         video_url: data.videoUrl,
                         featured: data.featured
-                        // updated_at is handled by Supabase
+                        // NO updated_at - let Supabase handle it
                     })
                     .eq('id', id);
                 
@@ -2147,8 +2151,12 @@
             this.renderMovies();
             this.renderAdminTable();
         },
+        
+</script>
 
-      // ===== HERO SLIDER =====
+<script>
+// Paste Part 3 content here  
+         // ===== HERO SLIDER =====
         initHeroSlider() {
             const container = document.getElementById('hero-slides');
             const dotsContainer = document.getElementById('hero-dots');
@@ -2550,8 +2558,11 @@
             this.adInterval = intervals[freq] || 8;
             this.showToast(`Ad frequency set to ${freq}`, 'info');
         },
+</script>
 
-    // ===== DEMO DATA =====
+<script>
+// Paste Part 4 content here
+            // ===== DEMO DATA =====
         loadDemoData() {
             if (this.movies.length === 0) {
                 this.movies = [
